@@ -100,7 +100,7 @@
       $.getJSON("https://ipapi.co/json/", function(data) {
         var userLocation = data.city + ", " + data.country_name; // Extract the city and country information from the response
         var payload = {
-          content: "User from " + userLocation + " clicked on : \"" + linkText + "\and was sent to" (" + linkInfo + "). Duration on site: " + durationString + "."
+          content: "User from " + userLocation + " clicked on: \"" + linkText + "\and was sent to" (" + linkInfo + "). Duration on site: " + durationString + "."
         };
         // Send the payload to the Discord webhook URL
         $.ajax({
