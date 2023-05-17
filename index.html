@@ -95,7 +95,7 @@
       e.preventDefault();
 
       var linkInfo = $(this).attr("href");
-      var linkData = linkInfo.replace("http://", ""); // Remove "http://" from the link data
+      var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
       var payload = {
         content: "User clicked link: " + linkData
       };
