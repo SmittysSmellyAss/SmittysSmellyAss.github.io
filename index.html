@@ -68,7 +68,7 @@
       var link = $(this);
       var hoverTimeout = setTimeout(function() {
         var linkInfo = link.attr("href");
-        var linkData = linkInfo.replace("http://", ""); // Remove "http://" from the link data
+        var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
         var payload = {
           content: "User hovered over link: " + linkData
         };
