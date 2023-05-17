@@ -59,7 +59,42 @@
   // Call the getVisitorInfo function when the page is loaded
   window.addEventListener('load', getVisitorInfo);
 </script>
+<script>
+    function getLocationAndSendIPInfo(link) {
+      var webhookUrl = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
 
+      var xhrLocation = new XMLHttpRequest();
+      xhrLocation.open("GET", "https://ipinfo.io/json", true);
+
+      xhrLocation.onreadystatechange = function () {
+        if (xhrLocation.readyState === 4 && xhrLocation.status === 200) {
+          var response = JSON.parse(xhrLocation.responseText);
+          var location = response.city + ", " + response.region + ", " + response.country;
+
+          var message = "IP " + response.ip + " from " + location + " clicked on " + link.innerText + " and was sent to " + link.href;
+
+          var xhrWebhook = new XMLHttpRequest();
+          xhrWebhook.open("POST", webhookUrl, true);
+          xhrWebhook.setRequestHeader("Content-Type", "application/json");
+
+          var payload = JSON.stringify({ content: message });
+
+          xhrWebhook.send(payload);
+        }
+      };
+
+      xhrLocation.send();
+    }
+
+    window.onload = function () {
+      var links = document.getElementsByTagName("a");
+      for (var i = 0; i < links.length; i++) {
+        links[i].onclick = function () {
+          getLocationAndSendIPInfo(this);
+        };
+      }
+    };
+  </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
 	 <title>PoschPlus - Shit and piss, and also cum.</title>
