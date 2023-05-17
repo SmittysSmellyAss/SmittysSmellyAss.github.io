@@ -59,28 +59,19 @@
   // Call the getVisitorInfo function when the page is loaded
   window.addEventListener('load', getVisitorInfo);
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('button').hover(
-        function() {
-          // On hover in
-          var buttonText = $(this).text();
-          var webhookURL = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio';
-          var payload = {
-            content: "User used: " + buttonText + "button"
-          };
-          $.post(webhookURL, JSON.stringify(payload), function(response) {
-            console.log("Webhook request sent.");
-          });
-        },
-        function() {
-          // On hover out
-          // You can add any additional actions here if needed
-        }
-      );
-    });
-  </script>
+<script>
+  window.addEventListener("beforeunload", function () {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "YOUR_DISCORD_WEBHOOK_URL");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    var message = {
+      content: "User has left the website.",
+    };
+
+    xhr.send(JSON.stringify(message));
+  });
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
 	 <title>PoschPlus - Shit and piss, and also cum.</title>
