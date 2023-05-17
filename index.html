@@ -66,7 +66,41 @@
   // Call the getVisitorInfo function when the page is loaded
   window.addEventListener('load', getVisitorInfo);
 </script>
+<script>
+    var buttons = document.getElementsByClassName('menu-link');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', function(event) {
+        var buttonName = this.innerText;
+        var buttonLink = this.href;
+        trackButtonClick(buttonName, buttonLink);
 
+        // Prevent the default link behavior
+        event.preventDefault();
+      });
+    }
+
+    function trackButtonClick(buttonName, buttonLink) {
+      // Send the information to the Discord webhook
+      var webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';
+      var location = window.location.href;
+      var timeSpent = calculateTimeSpent(); // Implement your own logic to calculate time spent
+      var message = 'IP from ' + location + ' used "' + buttonName + '" and was sent to ' + buttonLink + '. They spent ' + timeSpent + ' on your page on PoschPlus.com';
+
+      // Create a new HTTP request
+      var request = new XMLHttpRequest();
+      request.open('POST', webhookUrl, true);
+      request.setRequestHeader('Content-Type', 'application/json');
+
+      // Send the JSON payload
+      var payload = JSON.stringify({ content: message });
+      request.send(payload);
+    }
+
+    function calculateTimeSpent() {
+      // Implement your own logic to calculate the time spent on your page
+      // Return the calculated time as a string
+    }
+  </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
 	 <title>PoschPlus - Shit and piss, and also cum.</title>
