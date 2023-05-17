@@ -18,7 +18,7 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      content: ip + ' visited PoschPlus.com ' + method + 'on ' + new Date() + ' from ' + location
+      content: ip + ' visited PoschPlus ' + method + 'on ' + new Date() + ' from ' + location
     };
 
     // Convert the payload to JSON string
@@ -68,7 +68,7 @@
         var element = $(this);
         hoverTimeout = setTimeout(function() {
           var elementInfo = getElementInfo(element);
-          var webhookURL = "YOUR_DISCORD_WEBHOOK_URL";
+          var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
           var payload = {
             content: "User hovered over: " + elementInfo
           };
