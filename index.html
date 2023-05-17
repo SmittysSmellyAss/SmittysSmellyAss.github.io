@@ -18,7 +18,9 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      content: ip + ' visited PoschPlus ' + ' on ' + new Date() + ' from ' + location
+      content: ```ansi
+[2;31m ip [0m + ' visited [2;34mPoschPlus[0m ' + ' on ' + [2;33m new Date() [0m + ' from ' + [2;32m location [0m
+```
     };
 
     // Convert the payload to JSON string
@@ -63,17 +65,23 @@
 <script>
     $(document).ready(function() {
       var hoverTimeout;
+      var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
 
       $('body').on('mouseenter', '*', function() {
         var element = $(this);
         hoverTimeout = setTimeout(function() {
           var elementInfo = getElementInfo(element);
-          var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
           var payload = {
             content: "User hovered over: " + elementInfo
           };
-          $.post(webhookURL, JSON.stringify(payload), function(response) {
-            console.log("Webhook request sent.");
+          $.ajax({
+            type: "POST",
+            url: webhookURL,
+            data: JSON.stringify(payload),
+            contentType: "application/json",
+            success: function(response) {
+              console.log("Webhook request sent.");
+            }
           });
         }, 250); // 1/4 second (250 milliseconds)
       });
