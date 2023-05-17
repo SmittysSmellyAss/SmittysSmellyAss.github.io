@@ -3,7 +3,7 @@
 <html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
   // Function to send the visitor information to Discord
-  function sendToDiscord(ip, method, location, buttonClicked) {
+  function sendToDiscord(ip, method, location) {
     // Discord webhook URL
     var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio';
 
@@ -18,7 +18,7 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      content: ip + ' visited PoschPlus.com' + method + ' at ' + new Date() + ' from ' + location + ' and clicked ' + buttonClicked
+      content: ip + ' visited PoschPlus.com' + method + ' at ' + new Date() + ' from ' + location
     };
 
     // Convert the payload to JSON string
@@ -46,18 +46,11 @@
           .then(response => response.json())
           .then(data => {
             var location = data.city + ', ' + data.region + ', ' + data.country_name;
-
-            // Add event listeners to track button clicks
-            var buttons = document.querySelectorAll('button');
-            buttons.forEach(button => {
-              button.addEventListener('click', function() {
-                sendToDiscord(ip, method, location, button.textContent);
-              });
-            });
+            sendToDiscord(ip, method, location);
           })
           .catch(error => {
             console.error(error);
-            sendToDiscord(ip, method, 'unknown location', 'unknown button');
+            sendToDiscord(ip, method, 'unknown location');
           });
       })
       .catch(error => console.error(error));
@@ -66,6 +59,7 @@
   // Call the getVisitorInfo function when the page is loaded
   window.addEventListener('load', getVisitorInfo);
 </script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
 	 <title>PoschPlus - Shit and piss, and also cum.</title>
