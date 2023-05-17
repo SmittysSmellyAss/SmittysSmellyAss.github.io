@@ -3,7 +3,7 @@
 <html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
   var startTime = new Date(); // Store the start time when the page loads
-  var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio'; // Discord webhook URL
+  var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJLD-2mFnXYxtYY73PS5h0ttTUio'; // Discord webhook URL
 
   // Function to send visitor information to Discord
   function sendVisitorInfoToDiscord(ip, method, location, timeSpent, siteLeftTo) {
@@ -60,8 +60,8 @@
             sendVisitorInfoToDiscord(ip, method, location, timeSpent, '');
 
             // Capture the leaving event to get the site left to
-            window.addEventListener('beforeunload', function(event) {
-              var siteLeftTo = event.currentTarget.location.href;
+            window.addEventListener('unload', function() {
+              var siteLeftTo = window.location.href;
 
               // Send the leaving visitor information to Discord
               sendVisitorInfoToDiscord(ip, method, location, timeSpent, siteLeftTo);
