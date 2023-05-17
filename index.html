@@ -60,49 +60,7 @@
   window.addEventListener('load', getVisitorInfo);
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-      var hoverTimeout;
-      var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
 
-      $('body').on('mouseenter', '*', function() {
-        var element = $(this);
-        hoverTimeout = setTimeout(function() {
-          var elementInfo = getElementInfo(element);
-          var payload = {
-            content: "User hovered over: " + elementInfo
-          };
-          $.ajax({
-            type: "POST",
-            url: webhookURL,
-            data: JSON.stringify(payload),
-            contentType: "application/json",
-            success: function(response) {
-              console.log("Webhook request sent.");
-            }
-          });
-        }, 250); // 1/4 second (250 milliseconds)
-      });
-
-      $('body').on('mouseleave', '*', function() {
-        clearTimeout(hoverTimeout);
-      });
-
-      function getElementInfo(element) {
-        var tag = element.prop("tagName");
-        var id = element.attr("id");
-        var classes = element.attr("class");
-        var info = tag;
-        if (id) {
-          info += " #" + id;
-        }
-        if (classes) {
-          info += " ." + classes.replace(/\s+/g, '.');
-        }
-        return info;
-      }
-    });
-  </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
 	 <title>PoschPlus - Shit and piss, and also cum.</title>
