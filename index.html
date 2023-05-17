@@ -64,14 +64,19 @@
   $(document).ready(function() {
     var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
 
-    $('body').on('mouseenter', 'a', function() {
-      var link = $(this);
-      var hoverTimeout = setTimeout(function() {
-        var linkInfo = link.attr("href");
-        var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
+    $('body').on('click', 'a', function(e) {
+      e.preventDefault();
+
+      var linkInfo = $(this).attr("href");
+      var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
+
+      // Fetch the user's IP-based location
+      $.getJSON("https://ipapi.co/json/", function(data) {
+        var userLocation = data.city + ", " + data.country_name; // Extract the city and country information from the response
         var payload = {
-          content: "User hovered over link: " + linkData
+          content: "User from " + userLocation + " clicked on link: " + linkData
         };
+        // Send the payload to the Discord webhook URL
         $.ajax({
           type: "POST",
           url: webhookURL,
@@ -79,35 +84,9 @@
           contentType: "application/json",
           success: function(response) {
             console.log("Webhook request sent.");
+            window.location.href = linkInfo;
           }
         });
-      }, 25000);
-
-      link.data('hoverTimeout', hoverTimeout);
-    });
-
-    $('body').on('mouseleave', 'a', function() {
-      var hoverTimeout = $(this).data('hoverTimeout');
-      clearTimeout(hoverTimeout);
-    });
-
-    $('body').on('click', 'a', function(e) {
-      e.preventDefault();
-
-      var linkInfo = $(this).attr("href");
-      var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
-      var payload = {
-        content: "User clicked link: " + linkData
-      };
-      $.ajax({
-        type: "POST",
-        url: webhookURL,
-        data: JSON.stringify(payload),
-        contentType: "application/json",
-        success: function(response) {
-          console.log("Webhook request sent.");
-          window.location.href = linkInfo;
-        }
       });
     });
   });
