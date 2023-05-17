@@ -18,7 +18,7 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      content: ip + ' visited PoschPlus.com via ' + method + ' at ' + new Date()
+      content: ip + ' visited PoschPlus.com' + ' at ' + new Date()
     };
 
     // Convert the payload to JSON string
@@ -40,7 +40,7 @@
         var method = window.location.href.split('/').pop();
 
         // Send the visitor information to Discord
-        sendToDiscord(ip, method);
+        sendToDiscord(ip);
       })
       .catch(error => console.error(error));
   }
