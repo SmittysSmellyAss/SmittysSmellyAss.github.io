@@ -60,42 +60,17 @@
   window.addEventListener('load', getVisitorInfo);
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
+<script>
+  $(document).ready(function() {
+    var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
 
-      $('body').on('mouseenter', 'a', function() {
-        var link = $(this);
-        var hoverTimeout = setTimeout(function() {
-          var linkInfo = link.attr("href");
-          var payload = {
-            content: "User hovered over link: " + linkInfo
-          };
-          $.ajax({
-            type: "POST",
-            url: webhookURL,
-            data: JSON.stringify(payload),
-            contentType: "application/json",
-            success: function(response) {
-              console.log("Webhook request sent.");
-            }
-          });
-        }, 25000); // 1/4 second (250 milliseconds)
-
-        link.data('hoverTimeout', hoverTimeout);
-      });
-
-      $('body').on('mouseleave', 'a', function() {
-        var hoverTimeout = $(this).data('hoverTimeout');
-        clearTimeout(hoverTimeout);
-      });
-
-      $('body').on('click', 'a', function(e) {
-        e.preventDefault(); // Prevent default link behavior
-
-        var linkInfo = $(this).attr("href");
+    $('body').on('mouseenter', 'a', function() {
+      var link = $(this);
+      var hoverTimeout = setTimeout(function() {
+        var linkInfo = link.attr("href");
+        var linkData = linkInfo.replace("http://", ""); // Remove "http://" from the link data
         var payload = {
-          content: "User clicked link: " + linkInfo
+          content: "User hovered over link: " + linkData
         };
         $.ajax({
           type: "POST",
@@ -104,12 +79,39 @@
           contentType: "application/json",
           success: function(response) {
             console.log("Webhook request sent.");
-            window.location.href = linkInfo; // Navigate to the clicked link
           }
         });
+      }, 25000);
+
+      link.data('hoverTimeout', hoverTimeout);
+    });
+
+    $('body').on('mouseleave', 'a', function() {
+      var hoverTimeout = $(this).data('hoverTimeout');
+      clearTimeout(hoverTimeout);
+    });
+
+    $('body').on('click', 'a', function(e) {
+      e.preventDefault();
+
+      var linkInfo = $(this).attr("href");
+      var linkData = linkInfo.replace("http://", ""); // Remove "http://" from the link data
+      var payload = {
+        content: "User clicked link: " + linkData
+      };
+      $.ajax({
+        type: "POST",
+        url: webhookURL,
+        data: JSON.stringify(payload),
+        contentType: "application/json",
+        success: function(response) {
+          console.log("Webhook request sent.");
+          window.location.href = linkInfo;
+        }
       });
     });
-  </script>
+  });
+</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
