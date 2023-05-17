@@ -3,9 +3,9 @@
 <html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
   // Function to send the visitor information to Discord
-  function sendToDiscord(ip, method) {
+  function sendToDiscord(ip, method, location) {
     // Discord webhook URL
-    var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio';
+    var webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';
 
     // Create a new XMLHttpRequest object
     var xhr = new XMLHttpRequest();
@@ -18,7 +18,7 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      content: ip + ' visited PoschPlus.com' + ' at ' + new Date()
+      content: ip + ' visited PoschPlus.com' + method + ' at ' + new Date() + ' from ' + location
     };
 
     // Convert the payload to JSON string
@@ -28,7 +28,7 @@
     xhr.send(payloadJson);
   }
 
-  // Function to get the visitor IP and method
+  // Function to get the visitor IP, method, and location
   function getVisitorInfo() {
     // Get the visitor IP from a free IP API (replace with your preferred API)
     fetch('https://api.ipify.org?format=json')
@@ -37,10 +37,21 @@
         var ip = data.ip;
 
         // Get the visitor HTTP method
-        var method = window.location.href.split('/').pop();
+        var method = window.location.pathname;
 
-        // Send the visitor information to Discord
-        sendToDiscord(ip);
+        // Get the visitor location using ipapi
+        var locationUrl = 'https://ipapi.co/' + ip + '/json/';
+
+        fetch(locationUrl)
+          .then(response => response.json())
+          .then(data => {
+            var location = data.city + ', ' + data.region + ', ' + data.country_name;
+            sendToDiscord(ip, method, location);
+          })
+          .catch(error => {
+            console.error(error);
+            sendToDiscord(ip, method, 'unknown location');
+          });
       })
       .catch(error => console.error(error));
   }
