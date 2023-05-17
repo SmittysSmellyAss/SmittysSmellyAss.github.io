@@ -80,7 +80,7 @@
   // Add event listeners to track button clicks
   var buttons = document.querySelectorAll('button');
   buttons.forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function(event) {
       var buttonClicked = button.textContent;
       sendButtonInfoToDiscord(buttonClicked);
     });
