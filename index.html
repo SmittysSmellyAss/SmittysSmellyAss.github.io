@@ -17,9 +17,9 @@
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     // Create the JSON payload with the visitor information
-    var payload = {
-      content: ip + ' visited PoschPlus' + ' on ' + new Date() + ' from ' + location
-    };
+var payload = {
+  content: '```diff\n- IP: ' + ip + '\n+ Date: ' + formatDate(new Date()) + '\n! Location: ' + location + '```'
+};
 
     // Convert the payload to JSON string
     var payloadJson = JSON.stringify(payload);
