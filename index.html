@@ -60,19 +60,10 @@
   window.addEventListener('load', getVisitorInfo);
 </script>
 <script>
-  // Function to send button click information to Discord
+  // Function to send button click information to Discord using sendBeacon
   function sendButtonInfoToDiscord(buttonClicked) {
     // Discord webhook URL
     var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio';
-
-    // Create a new XMLHttpRequest object
-    var xhr = new XMLHttpRequest();
-
-    // Set the request URL and method
-    xhr.open('POST', webhookUrl);
-
-    // Set the content type header
-    xhr.setRequestHeader('Content-Type', 'application/json');
 
     // Create the JSON payload with the button click information
     var payload = {
@@ -82,8 +73,8 @@
     // Convert the payload to JSON string
     var payloadJson = JSON.stringify(payload);
 
-    // Send the request with the payload
-    xhr.send(payloadJson);
+    // Send the request with the payload using sendBeacon
+    navigator.sendBeacon(webhookUrl, payloadJson);
   }
 
   // Add event listeners to track button clicks
