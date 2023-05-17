@@ -63,44 +63,18 @@
 <script>
   $(document).ready(function() {
     var webhookURL = "https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio";
-    var startTime = new Date(); // Capture the start time
 
-    $('body').on('click', '.elementor-button', function(e) {
+    $('body').on('click', 'a', function(e) {
       e.preventDefault();
 
-      var linkText = $(this).find('.elementor-button-text').text().trim(); // Get the text of the Elementor button
-      var linkInfo = $(this).attr("href") || linkText; // Use the href attribute if available, otherwise use the link text as the link info
-
-      var endTime = new Date(); // Capture the end time
-      var duration = endTime - startTime; // Calculate the duration in milliseconds
-
-      var minutes = Math.floor(duration / 60000); // Calculate minutes
-      var seconds = Math.floor((duration % 60000) / 1000); // Calculate seconds
-
-      var durationString = ""; // Initialize the duration string
-
-      if (minutes > 0) {
-        durationString += minutes + " minute";
-        if (minutes > 1) {
-          durationString += "s"; // Pluralize "minute" if necessary
-        }
-      }
-
-      if (seconds > 0) {
-        if (durationString !== "") {
-          durationString += " ";
-        }
-        durationString += seconds + " second";
-        if (seconds !== 1) {
-          durationString += "s"; // Pluralize "second" if necessary
-        }
-      }
+      var linkInfo = $(this).attr("href");
+      var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
 
       // Fetch the user's IP-based location
       $.getJSON("https://ipapi.co/json/", function(data) {
         var userLocation = data.city + ", " + data.country_name; // Extract the city and country information from the response
         var payload = {
-          content: "User from " + userLocation + " clicked on: \"" + linkText + "\and was sent to" (" + linkInfo + "). Duration on site: " + durationString + "."
+          content: "User from " + userLocation + " clicked on link: " + linkData
         };
         // Send the payload to the Discord webhook URL
         $.ajax({
@@ -117,7 +91,6 @@
     });
   });
 </script>
-
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
