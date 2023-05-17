@@ -18,7 +18,7 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      ccontent: ip + ' visited PoschPlus ' + ' on ' + new Date() + ' from ' + location
+      content: ip + ' visited PoschPlus.com' + method + ' at ' + new Date() + ' from ' + location
     };
 
     // Convert the payload to JSON string
@@ -59,7 +59,7 @@
   // Call the getVisitorInfo function when the page is loaded
   window.addEventListener('load', getVisitorInfo);
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
