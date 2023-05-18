@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CS:GO Gallery</title>
+  <style>
+    body {
+      background-color: #000000;
+      font-family: Arial, sans-serif;
+      color: #FFFFFF;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .icon {
+      width: 50px;
+      height: 50px;
+      margin: 10px;
+    }
+    
+    .gallery {
+      width: 800px;
+      height: 600px;
+      margin: 50px auto;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    
+    .indicator {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    
+    .indicator span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #FFFFFF;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Icons -->
+  <div class="container">
+    <img class="icon" src="csgo_icon1.png" alt="CS:GO Icon 1">
+    <img class="icon" src="csgo_icon2.png" alt="CS:GO Icon 2">
+    <img class="icon" src="csgo_icon3.png" alt="CS:GO Icon 3">
+    <!-- Add more icons here -->
+  </div>
+
+  <!-- Image Gallery -->
+  <div class="gallery">
+    <!-- Use JavaScript to dynamically load images into these elements -->
+  </div>
+
+  <!-- Bottom Indicators -->
+  <div class="indicator">
+    <!-- Use JavaScript to dynamically add indicators based on the number of images -->
+  </div>
+
+  <script>
+    // JavaScript code to load images and create the gallery
+
+    // Array of image URLs (replace with your own URLs)
+    var imageUrls = [
+      "image1.jpg",
+      "image2.jpg",
+      "image3.jpg",
+      // Add more image URLs here
+    ];
+
+    // Get the gallery container
+    var gallery = document.querySelector(".gallery");
+
+    // Loop through the image URLs
+    for (var i = 0; i < imageUrls.length; i++) {
+      // Create an image element
+      var image = document.createElement("img");
+      image.classList.add("gallery-image");
+      image.src = imageUrls[i];
+
+      // Only display the image if it exists
+      image.onload = function() {
+        if (this.complete && this.naturalHeight !== 0) {
+          this.style.display = "block";
+        }
+      };
+
+      // Append the image to the gallery
+      gallery.appendChild(image);
+    }
+
+    // JavaScript code to create the indicators
+
+    // Get the indicators container
+    var indicatorContainer = document.querySelector(".indicator");
+
+    // Loop through the image URLs again to create indicators
+    for (var i = 0; i < imageUrls.length; i++) {
+      // Create a span element for the indicator
+      var indicator = document.createElement("span");
+
+      // Add a click event listener to the indicator
