@@ -27,8 +27,8 @@
       width: 800px;
       height: 600px;
       margin: 50px auto;
-      overflow: hidden;
-      position: relative;
+      overflow: auto;
+      white-space: nowrap;
     }
     
     .gallery-image {
@@ -98,7 +98,7 @@
       // Only display the image if it exists
       image.onload = function() {
         if (this.complete && this.naturalHeight !== 0) {
-          this.style.display = "block";
+          this.style.display = "inline-block";
         }
       };
 
@@ -124,6 +124,34 @@
       // Append the indicator to the container
       indicatorContainer.appendChild(indicator);
     }
+
+    // JavaScript code for swipe functionality
+    var galleryContainer = document.querySelector(".gallery");
+    var startX = 0;
+    var dist = 0;
+
+    galleryContainer.addEventListener("touchstart", function(event) {
+      startX = event.touches[0].pageX;
+    });
+
+    galleryContainer.addEventListener("touchmove", function(event) {
+      var touch = event.touches[0] || event.changedTouches[0];
+      dist = touch.pageX - startX;
+    });
+
+    galleryContainer.addEventListener("touchend", function() {
+      // Swipe threshold, adjust as needed
+      var threshold = 100;
+
+      if (dist > threshold) {
+        galleryContainer.scrollLeft -= galleryContainer.offsetWidth;
+      } else if (dist < -threshold) {
+        galleryContainer.scrollLeft += galleryContainer.offsetWidth;
+      }
+
+      startX = 0;
+      dist = 0;
+    });
   </script>
 </body>
 </html>
