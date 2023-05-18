@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>CS:GO Gallery</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick.css"/>
   <style>
     body {
       background-color: #000000;
@@ -23,57 +24,26 @@
       margin: 10px;
     }
 
-    .swiper-container {
+    .carousel {
       width: 600px;
       height: 400px;
       margin: 50px auto;
     }
 
-    .swiper-wrapper {
-      perspective: 1000px;
-    }
-
-    .swiper-slide {
+    .carousel-slide {
       text-align: center;
       font-size: 18px;
       background: #000000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      transform-style: preserve-3d;
       border-radius: 20px;
-      width: 400px;
-      height: 250px;
-      opacity: 0.6;
-      transition: transform 0.5s, opacity 0.5s;
+      height: 300px;
     }
 
-    .swiper-slide img {
+    .carousel-slide img {
       max-width: 100%;
       max-height: 100%;
       border-radius: 20px;
     }
-
-    .swiper-slide-active {
-      transform: translateZ(0) scale(1);
-      opacity: 1;
-      transition: transform 0.5s, opacity 0.5s;
-    }
-
-    .swiper-slide-prev {
-      transform: translateX(-150px) translateZ(-200px) scale(0.8);
-      transition: transform 0.5s, opacity 0.5s;
-      z-index: 1;
-    }
-
-    .swiper-slide-next {
-      transform: translateX(150px) translateZ(-200px) scale(0.8);
-      transition: transform 0.5s, opacity 0.5s;
-      z-index: 1;
-    }
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 </head>
 <body>
   <!-- Top Icons -->
@@ -85,33 +55,41 @@
   </div>
 
   <!-- Image Gallery -->
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1">
-      </div>
-      <div class="swiper-slide">
-        <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2">
-      </div>
-      <div class="swiper-slide">
-        <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 3">
-      </div>
-      <!-- Add more slides here -->
+  <div class="carousel">
+    <div class="carousel-slide">
+      <img src="image1.jpg" alt="Image 1">
     </div>
+    <div class="carousel-slide">
+      <img src="image2.jpg" alt="Image 2">
+    </div>
+    <div class="carousel-slide">
+      <img src="image3.jpg" alt="Image 3">
+    </div>
+    <!-- Add more slides here -->
   </div>
 
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick.min.js"></script>
   <script>
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 'auto',
-      centeredSlides: true,
-      spaceBetween: 20,
-      grabCursor: true,
-      loop: true,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+    $(document).ready(function(){
+      $('.carousel').slick({
+        centerMode: true,
+        centerPadding: '60px',
+        slidesToShow: 3,
+        prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+        nextArrow: '<button type="button" class="slick-next">Next</button>',
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              centerPadding: '40px',
+              slidesToShow: 1
+            }
+          }
+        ]
+      });
     });
   </script>
 </body>
