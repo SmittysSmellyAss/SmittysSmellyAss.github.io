@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CS:GO Gallery</title>
+  <title>CS:GO Shame Wall</title>
   <style>
     body {
       background-color: #000000;
@@ -10,40 +10,52 @@
       margin: 0;
       padding: 0;
     }
-    
+
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
     }
-    
+
     .icon {
       width: 50px;
       height: 50px;
       margin: 10px;
     }
-    
-    .gallery {
+
+    .carousel {
       width: 800px;
       height: 600px;
       margin: 50px auto;
-      overflow: auto;
-      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
     }
-    
-    .gallery-image {
+
+    .carousel-inner {
+      display: flex;
+      width: 300%;
+      transition: transform 0.6s ease;
+    }
+
+    .carousel-item {
+      flex: 0 0 33.33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .carousel-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: none;
     }
-    
+
     .indicator {
       display: flex;
       justify-content: center;
       margin-top: 20px;
     }
-    
+
     .indicator span {
       display: inline-block;
       width: 10px;
@@ -65,8 +77,10 @@
   </div>
 
   <!-- Image Gallery -->
-  <div class="gallery">
-    <!-- Use JavaScript to dynamically load images into these elements -->
+  <div class="carousel">
+    <div class="carousel-inner">
+      <!-- Use JavaScript to dynamically load images into these elements -->
+    </div>
   </div>
 
   <!-- Bottom Indicators -->
@@ -75,7 +89,7 @@
   </div>
 
   <script>
-    // JavaScript code to load images and create the gallery
+    // JavaScript code to load images and create the carousel
 
     // Array of image URLs
     var imageUrls = [
@@ -85,25 +99,25 @@
       "https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg"
     ];
 
-    // Get the gallery container
-    var gallery = document.querySelector(".gallery");
+    // Get the carousel inner container
+    var carouselInner = document.querySelector(".carousel-inner");
 
     // Loop through the image URLs
     for (var i = 0; i < imageUrls.length; i++) {
+      // Create a carousel item
+      var carouselItem = document.createElement("div");
+      carouselItem.classList.add("carousel-item");
+
       // Create an image element
       var image = document.createElement("img");
-      image.classList.add("gallery-image");
+      image.classList.add("carousel-image");
       image.src = imageUrls[i];
 
-      // Only display the image if it exists
-      image.onload = function() {
-        if (this.complete && this.naturalHeight !== 0) {
-          this.style.display = "inline-block";
-        }
-      };
+      // Append the image to the carousel item
+      carouselItem.appendChild(image);
 
-      // Append the image to the gallery
-      gallery.appendChild(image);
+      // Append the carousel item to the carousel inner container
+      carouselInner.appendChild(carouselItem);
     }
 
     // JavaScript code to create the indicators
@@ -111,7 +125,7 @@
     // Get the indicators container
     var indicatorContainer = document.querySelector(".indicator");
 
-    // Loop through the image URLs again to create indicators
+    // Loop through the image URLs to create indicators
     for (var i = 0; i < imageUrls.length; i++) {
       // Create a span element for the indicator
       var indicator = document.createElement("span");
@@ -125,33 +139,51 @@
       indicatorContainer.appendChild(indicator);
     }
 
-    // JavaScript code for swipe functionality
-    var galleryContainer = document.querySelector(".gallery");
-    var startX = 0;
-    var dist = 0;
+    // JavaScript code for carousel functionality
+    var carousel = document.querySelector(".carousel");
+    var carouselInner = document.querySelector(".carousel-inner");
+    var carouselItems = document.querySelectorAll(".carousel-item");
+    var indicators = document.querySelectorAll(".indicator span");
 
-    galleryContainer.addEventListener("touchstart", function(event) {
-      startX = event.touches[0].pageX;
-    });
+    var currentIndex = 0;
 
-    galleryContainer.addEventListener("touchmove", function(event) {
-      var touch = event.touches[0] || event.changedTouches[0];
-      dist = touch.pageX - startX;
-    });
+    function showSlide(index) {
+      // Update the current index
+      currentIndex = index;
 
-    galleryContainer.addEventListener("touchend", function() {
-      // Swipe threshold, adjust as needed
-      var threshold = 100;
+      // Update the carousel inner container position
+      var translateX = -currentIndex * carousel.offsetWidth / 3;
+      carouselInner.style.transform = "translateX(" + translateX + "px)";
 
-      if (dist > threshold) {
-        galleryContainer.scrollLeft -= galleryContainer.offsetWidth;
-      } else if (dist < -threshold) {
-        galleryContainer.scrollLeft += galleryContainer.offsetWidth;
+      // Update the active indicator
+      for (var i = 0; i < indicators.length; i++) {
+        indicators[i].classList.remove("active");
       }
+      indicators[currentIndex].classList.add("active");
+    }
 
-      startX = 0;
-      dist = 0;
+    // Show the initial slide
+    showSlide(currentIndex);
+
+    // Previous slide button
+    var prevButton = document.createElement("button");
+    prevButton.innerText = "Previous";
+    prevButton.addEventListener("click", function() {
+      if (currentIndex > 0) {
+        showSlide(currentIndex - 1);
+      }
     });
+    carousel.appendChild(prevButton);
+
+    // Next slide button
+    var nextButton = document.createElement("button");
+    nextButton.innerText = "Next";
+    nextButton.addEventListener("click", function() {
+      if (currentIndex < carouselItems.length - 1) {
+        showSlide(currentIndex + 1);
+      }
+    });
+    carousel.appendChild(nextButton);
   </script>
 </body>
 </html>
