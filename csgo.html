@@ -24,8 +24,8 @@
     }
 
     .swiper-container {
-      width: 800px;
-      height: 600px;
+      width: 600px;
+      height: 400px;
       margin: 50px auto;
     }
 
@@ -43,6 +43,8 @@
       position: relative;
       transform-style: preserve-3d;
       border-radius: 20px;
+      width: 400px;
+      height: 250px;
     }
 
     .swiper-slide img {
@@ -54,18 +56,17 @@
     .swiper-slide-prev,
     .swiper-slide-next {
       opacity: 0.6;
-      transform: translateZ(-100px) scale(0.8) rotateY(45deg);
-      transition: transform 0.5s;
+      transform: translateZ(-50px) scale(0.8);
     }
 
-    .swiper-slide-active {
-      transform: translateZ(0) scale(1);
-      transition: transform 0.5s;
+    .swiper-slide-prev {
+      transform-origin: left center;
+      z-index: 1;
     }
 
-    .swiper-slide-next.swiper-slide-active,
-    .swiper-slide-prev.swiper-slide-active {
-      transform: translateZ(-100px) scale(0.8) rotateY(0deg);
+    .swiper-slide-next {
+      transform-origin: right center;
+      z-index: 1;
     }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -93,8 +94,6 @@
       </div>
       <!-- Add more slides here -->
     </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
   </div>
 
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -109,22 +108,6 @@
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
-      on: {
-        slideChangeTransitionStart: function() {
-          var activeSlide = this.slides[this.activeIndex];
-          activeSlide.style.transform = 'translateZ(0) scale(1)';
-          activeSlide.style.transition = 'transform 0.5s';
-        },
-        slideChangeTransitionEnd: function() {
-          var prevSlide = this.slides[this.previousIndex];
-          prevSlide.style.transform = 'translateZ(-100px) scale(0.8) rotateY(45deg)';
-          prevSlide.style.transition = 'transform 0.5s';
-
-          var nextSlide = this.slides[this.activeIndex === 0 ? this.slides.length - 1 : this.activeIndex - 1];
-          nextSlide.style.transform = 'translateZ(-100px) scale(0.8) rotateY(-45deg)';
-          nextSlide.style.transition = 'transform 0.5s';
-        }
-      }
     });
   </script>
 </body>
