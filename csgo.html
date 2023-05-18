@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>CS:GO Gallery</title>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick.css"/>
   <style>
     body {
       background-color: #000000;
@@ -24,49 +23,26 @@
       margin: 10px;
     }
 
-    .carousel {
+    .swiper-container {
       width: 600px;
       height: 400px;
       margin: 50px auto;
     }
 
-    .carousel-slide {
+    .swiper-slide {
       text-align: center;
       font-size: 18px;
       background: #000000;
       border-radius: 20px;
-      height: 300px;
     }
 
-    .carousel-slide img {
+    .swiper-slide img {
       max-width: 100%;
       max-height: 100%;
       border-radius: 20px;
     }
-
-    .slick-prev,
-    .slick-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 24px;
-      z-index: 1;
-      background-color: rgba(0, 0, 0, 0.5);
-      border: none;
-      color: #FFFFFF;
-      padding: 10px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-
-    .slick-prev {
-      left: -40px;
-    }
-
-    .slick-next {
-      right: -40px;
-    }
   </style>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 </head>
 <body>
   <!-- Top Icons -->
@@ -78,41 +54,54 @@
   </div>
 
   <!-- Image Gallery -->
-  <div class="carousel">
-    <div class="carousel-slide">
-      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1">
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1">
+      </div>
+      <div class="swiper-slide">
+        <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2">
+      </div>
+      <div class="swiper-slide">
+        <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 3">
+      </div>
+      <!-- Add more slides here -->
     </div>
-    <div class="carousel-slide">
-      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2">
-    </div>
-    <div class="carousel-slide">
-      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 3">
-    </div>
-    <!-- Add more slides here -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
-    $(document).ready(function(){
-      $('.carousel').slick({
-        centerMode: true,
-        centerPadding: '60px',
-        slidesToShow: 3,
-        prevArrow: '<button type="button" class="slick-prev">Previous</button>',
-        nextArrow: '<button type="button" class="slick-next">Next</button>',
-        responsive: [
-          {
-            breakpoint: 768,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              centerPadding: '40px',
-              slidesToShow: 1
-            }
-          }
-        ]
-      });
+    var swiper = new Swiper('.swiper-container', {
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      spaceBetween: 20,
+      grabCursor: true,
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      on: {
+        init: function () {
+          this.slides.removeClass('swiper-slide-active-prev swiper-slide-active-next');
+          var activeSlide = this.slides.eq(this.activeIndex);
+          var prevSlide = activeSlide.prev();
+          var nextSlide = activeSlide.next();
+          prevSlide.addClass('swiper-slide-active-prev');
+          nextSlide.addClass('swiper-slide-active-next');
+        },
+        slideChange: function () {
+          this.slides.removeClass('swiper-slide-active-prev swiper-slide-active-next');
+          var activeSlide = this.slides.eq(this.activeIndex);
+          var prevSlide = activeSlide.prev();
+          var nextSlide = activeSlide.next();
+          prevSlide.addClass('swiper-slide-active-prev');
+          nextSlide.addClass('swiper-slide-active-next');
+        }
+      }
     });
   </script>
 </body>
