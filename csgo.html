@@ -43,6 +43,29 @@
       max-height: 100%;
       border-radius: 20px;
     }
+
+    .slick-prev,
+    .slick-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: #FFFFFF;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .slick-prev {
+      left: -40px;
+    }
+
+    .slick-next {
+      right: -40px;
+    }
   </style>
 </head>
 <body>
@@ -57,13 +80,13 @@
   <!-- Image Gallery -->
   <div class="carousel">
     <div class="carousel-slide">
-      <img src="image1.jpg" alt="Image 1">
+      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1">
     </div>
     <div class="carousel-slide">
-      <img src="image2.jpg" alt="Image 2">
+      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2">
     </div>
     <div class="carousel-slide">
-      <img src="image3.jpg" alt="Image 3">
+      <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 3">
     </div>
     <!-- Add more slides here -->
   </div>
