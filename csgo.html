@@ -45,6 +45,8 @@
       border-radius: 20px;
       width: 400px;
       height: 250px;
+      opacity: 0.6;
+      transition: transform 0.5s, opacity 0.5s;
     }
 
     .swiper-slide img {
@@ -53,19 +55,21 @@
       border-radius: 20px;
     }
 
-    .swiper-slide-prev,
-    .swiper-slide-next {
-      opacity: 0.6;
-      transform: translateZ(-50px) scale(0.8);
+    .swiper-slide-active {
+      transform: translateZ(0) scale(1);
+      opacity: 1;
+      transition: transform 0.5s, opacity 0.5s;
     }
 
     .swiper-slide-prev {
-      transform-origin: left center;
+      transform: translateX(-150px) translateZ(-200px) scale(0.8);
+      transition: transform 0.5s, opacity 0.5s;
       z-index: 1;
     }
 
     .swiper-slide-next {
-      transform-origin: right center;
+      transform: translateX(150px) translateZ(-200px) scale(0.8);
+      transition: transform 0.5s, opacity 0.5s;
       z-index: 1;
     }
   </style>
