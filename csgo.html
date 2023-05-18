@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CS:GO Shame</title>
+  <title>CS:GO Shame Wall (really, can't belive you lost to me)</title>
   <style>
     body {
       background-color: #000000;
@@ -29,6 +29,10 @@
       margin: 50px auto;
     }
 
+    .swiper-wrapper {
+      perspective: 1000px;
+    }
+
     .swiper-slide {
       text-align: center;
       font-size: 18px;
@@ -36,11 +40,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
+      transform-style: preserve-3d;
+      border-radius: 20px;
     }
 
     .swiper-slide img {
       max-width: 100%;
       max-height: 100%;
+      border-radius: 20px;
+    }
+
+    .swiper-slide-prev,
+    .swiper-slide-next {
+      opacity: 0.6;
+      transform: translateZ(-100px) scale(0.8);
     }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
