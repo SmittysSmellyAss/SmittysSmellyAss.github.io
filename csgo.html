@@ -58,9 +58,9 @@
 <body>
   <!-- Top Icons -->
   <div class="container">
-    <img class="icon" src="https://cdn2.iconfinder.com/data/icons/popular-games-1/50/csgo_squircle-512.png" alt="CS:GO Icon 1">
-    <img class="icon" src="https://cdn2.iconfinder.com/data/icons/popular-games-1/50/csgo_squircle-512.png" alt="CS:GO Icon 2">
-    <img class="icon" src="https://cdn2.iconfinder.com/data/icons/popular-games-1/50/csgo_squircle-512.png" alt="CS:GO Icon 3">
+    <img class="icon" src="csgo_icon1.png" alt="CS:GO Icon 1">
+    <img class="icon" src="csgo_icon2.png" alt="CS:GO Icon 2">
+    <img class="icon" src="csgo_icon3.png" alt="CS:GO Icon 3">
     <!-- Add more icons here -->
   </div>
 
@@ -77,12 +77,12 @@
   <script>
     // JavaScript code to load images and create the gallery
 
-    // Array of image URLs (replace with your own URLs)
+    // Array of image URLs
     var imageUrls = [
       "https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg",
       "https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg",
       "https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg",
-      // Add more image URLs here
+      "https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg"
     ];
 
     // Get the gallery container
@@ -117,3 +117,13 @@
       var indicator = document.createElement("span");
 
       // Add a click event listener to the indicator
+      indicator.addEventListener("click", function() {
+        // Logic to handle indicator click
+      });
+
+      // Append the indicator to the container
+      indicatorContainer.appendChild(indicator);
+    }
+  </script>
+</body>
+</html>
