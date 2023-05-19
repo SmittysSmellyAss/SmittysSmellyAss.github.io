@@ -138,72 +138,8 @@
         width: 50px; /* Adjust the width as desired */
         height: 50px; /* Adjust the height as desired */
     }
-</style>
+  </style>
 
-<a href="http://poschplus.com" target="_blank">
-    <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
-</a>
-
-<script>
-    var image = document.getElementById('bouncing-image');
-    var mouseX, mouseY;
-    var speedX = Math.random() * 10 - 5;
-    var speedY = Math.random() * 10 - 5;
-
-    function updatePosition() {
-        var imageRect = image.getBoundingClientRect();
-        var imageWidth = imageRect.width;
-        var imageHeight = imageRect.height;
-
-        var windowWidth = window.innerWidth;
-        var windowHeight = window.innerHeight;
-
-        var newX = imageRect.left + speedX;
-        var newY = imageRect.top + speedY;
-
-        if (newX < 0 || newX + imageWidth > windowWidth) {
-            speedX *= -1;
-        }
-
-        if (newY < 0 || newY + imageHeight > windowHeight) {
-            speedY *= -1;
-        }
-
-        image.style.left = newX + 'px';
-        image.style.top = newY + 'px';
-    }
-
-    function updateMousePosition(event) {
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-    }
-
-    function checkCollision() {
-        var imageRect = image.getBoundingClientRect();
-        var imageWidth = imageRect.width;
-        var imageHeight = imageRect.height;
-
-        if (mouseX > imageRect.left && mouseX < imageRect.left + imageWidth &&
-            mouseY > imageRect.top && mouseY < imageRect.top + imageHeight) {
-            speedX *= -1;
-            speedY *= -1;
-        }
-    }
-
-    function animate() {
-        updatePosition();
-        checkCollision();
-        requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    document.addEventListener('mousemove', updateMousePosition);
-</script>
-  
-  
-  
-  
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
 <body>
@@ -223,7 +159,6 @@
     <div><img src="https://cdn.discordapp.com/attachments/1103479109373411418/1108933926052954134/image.png" width="1920" height="1080"></div>
     <div><img src="https://cdn.discordapp.com/attachments/1103479109373411418/1108938398649040907/image.png" width="1920" height="1080"></div>
     <div><img src="https://cdn.discordapp.com/attachments/1103479109373411418/1108933926052954134/image.png" width="1920" height="1080"></div>
-
   </div>
 
   <div class="bottom-image-container">
@@ -235,24 +170,24 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
-    $(document).ready(function(){
-      $('.carousel').slick({
+    $(document).ready(function() {
+      var carousel = $('.carousel');
+
+      carousel.slick({
         dots: false,
         arrows: true,
         prevArrow: '<button type="button" class="slick-prev">Previous</button>',
         nextArrow: '<button type="button" class="slick-next">Next</button>',
         infinite: true,
+        autoplay: true,
+        autoplaySpeed: 10000, // Adjust the time interval (in milliseconds)
         speed: 500,
-        slidesToShow: 1,
-        centerMode: true,
-        centerPadding: '0',
+        fade: true,
+        cssEase: 'linear'
       });
 
-      $('.shaker-img').mouseover(function() {
-        $(this).addClass('shake-faster');
-        setTimeout(function() {
-          $(this).addClass('burst').fadeOut(3000);
-        }.bind(this), 3000);
+      $('.shaker-img').click(function() {
+        $(this).addClass('burst');
       });
     });
   </script>
