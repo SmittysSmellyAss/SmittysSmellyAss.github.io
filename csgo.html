@@ -89,10 +89,17 @@
       width: 50px;
       height: 50px;
       animation: shake 3s infinite;
+      transition: transform 0.3s;
+      cursor: pointer;
     }
 
-    .shake-faster {
-      animation-duration: 1s !important;
+    .shaker img:hover {
+      animation-duration: 0.5s !important;
+      transform: scale(1.2);
+    }
+
+    .shaker img.burst {
+      animation: burst 0.5s;
     }
 
     @keyframes shake {
@@ -112,14 +119,25 @@
         transform: rotate(0);
       }
     }
+
+    @keyframes burst {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2);
+      }
+    }
   </style>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
 <body>
   <div class="shaker">
-    <img src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
-    <img src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
-    <img src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+    <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+    <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+    <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
   </div>
 
   <div class="top-image-container">
@@ -143,7 +161,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function(){
       $('.carousel').slick({
         dots: false,
         arrows: true,
@@ -156,13 +174,11 @@
         centerPadding: '0',
       });
 
-      $('.shaker img').mouseover(function() {
+      $('.shaker-img').mouseover(function() {
         $(this).addClass('shake-faster');
-      });
-
-      $('.shaker img').on('animationend', function() {
-        $(this).removeClass('shake-faster');
-        $(this).fadeOut(3000);
+        setTimeout(function() {
+          $(this).addClass('burst').fadeOut(3000);
+        }.bind(this), 3000);
       });
     });
   </script>
