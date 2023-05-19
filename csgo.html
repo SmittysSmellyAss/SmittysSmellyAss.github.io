@@ -1,127 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>CSGO</title>
   <style>
     body {
-      background-image: url('https://wallpapers.com/images/featured-full/cs-go-background-vb6tq1iva1c5g1ae.jpg');
-      background-size: cover;
-      background-position: center;
+      margin: 0;
+      padding: 0;
     }
-    
-    .gallery {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+
+    .carousel {
+      width: 80%;
+      margin: 0 auto;
+      margin-top: 50px;
     }
-    
-    .gallery img {
-      max-width: 80%;
-      max-height: 80%;
-      object-fit: contain;
-    }
-    
-    .dots {
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-    }
-    
-    .dot {
-      height: 10px;
-      width: 10px;
-      background-color: #bbb;
-      border-radius: 50%;
-      margin: 0 5px;
-      transition: background-color 0.3s ease;
-    }
-    
-    .dot.active {
-      background-color: #717171;
+
+    .carousel img {
+      width: 100%;
+      height: auto;
     }
   </style>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
 <body>
-  <div class="gallery">
-    <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1">
-    <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2">
-    <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 3">
-    <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 4">
-    <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 5">
+  <div class="carousel">
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 3"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 4"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 5"></div>
   </div>
 
-  <div class="dots"></div>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
-    var galleryIndex = 0;
-    var gallery = document.querySelector('.gallery');
-    var images = document.querySelectorAll('.gallery img');
-    var dots = document.getElementsByClassName('dot');
-    var touchstartX = 0;
-    var touchendX = 0;
-
-    showImage(galleryIndex);
-
-    gallery.addEventListener('touchstart', handleTouchStart, false);
-    gallery.addEventListener('touchend', handleTouchEnd, false);
-
-    function showImage(n) {
-      if (n >= images.length) {
-        galleryIndex = 0;
-      } else if (n < 0) {
-        galleryIndex = images.length - 1;
-      }
-
-      for (var i = 0; i < images.length; i++) {
-        images[i].style.display = 'none';
-      }
-
-      for (var i = 0; i < dots.length; i++) {
-        dots[i].classList.remove('active');
-      }
-
-      images[galleryIndex].style.display = 'block';
-      dots[galleryIndex].classList.add('active');
-    }
-
-    function nextImage() {
-      showImage(galleryIndex += 1);
-    }
-
-    function previousImage() {
-      showImage(galleryIndex -= 1);
-    }
-
-    function handleTouchStart(event) {
-      touchstartX = event.changedTouches[0].screenX;
-    }
-
-    function handleTouchEnd(event) {
-      touchendX = event.changedTouches[0].screenX;
-      handleSwipeGesture();
-    }
-
-    function handleSwipeGesture() {
-      if (touchendX < touchstartX) {
-        nextImage();
-      }
-
-      if (touchendX > touchstartX) {
-        previousImage();
-      }
-    }
-
-    var dotsContainer = document.querySelector('.dots');
-
-    for (var i = 0; i < 5; i++) {
-      var dot = document.createElement('span');
-      dot.className = 'dot';
-      dot.addEventListener('click', function () {
-        showImage(Array.from(dotsContainer.children).indexOf(this));
+    $(document).ready(function(){
+      $('.carousel').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        centerMode: true,
+        variableWidth: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              variableWidth: true,
+              slidesToShow: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              arrows: false,
+              centerMode: true,
+              variableWidth: true,
+              slidesToShow: 1
+            }
+          }
+        ]
       });
-      dotsContainer.appendChild(dot);
-    }
+    });
   </script>
 </body>
 </html>
