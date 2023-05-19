@@ -86,8 +86,8 @@
     }
 
     .shaker img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       animation: shake 3s infinite;
       transition: transform 0.3s;
       cursor: pointer;
@@ -154,33 +154,33 @@
 
   <div class="bottom-image-container">
     <a href="http://www.poschplus.com" target="_blank">
-      <img class="bottom-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Cool Logo">
+      <img class="bottom-image" src="https://images.pexels.com/photos/7994439/pexels-photo-7994439.jpeg" alt="Bottom Image">
     </a>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
       $('.carousel').slick({
-        dots: false,
         arrows: true,
         prevArrow: '<button type="button" class="slick-prev">Previous</button>',
         nextArrow: '<button type="button" class="slick-next">Next</button>',
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        centerMode: true,
-        centerPadding: '0',
-      });
-
-      $('.shaker-img').mouseover(function() {
-        $(this).addClass('shake-faster');
-        setTimeout(function() {
-          $(this).addClass('burst').fadeOut(3000);
-        }.bind(this), 3000);
+        autoplay: true,
+        autoplaySpeed: 2000
       });
     });
+
+    setInterval(addNewShaker, 30000);
+
+    function addNewShaker() {
+      var shakerContainer = document.querySelector('.shaker');
+      var shakerImg = document.createElement('img');
+      shakerImg.classList.add('shaker-img');
+      shakerImg.src = 'https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png';
+      shakerImg.alt = 'Shaker Image';
+      shakerContainer.appendChild(shakerImg);
+    }
   </script>
 </body>
 </html>
