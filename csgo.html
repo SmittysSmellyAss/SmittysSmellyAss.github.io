@@ -131,6 +131,77 @@
       }
     }
   </style>
+  
+  <style>
+    #bouncing-image {
+        position: absolute;
+    }
+</style>
+
+<a href="http://poschplus.com" target="_blank">
+    <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
+</a>
+
+<script>
+    var image = document.getElementById('bouncing-image');
+    var mouseX, mouseY;
+    var speedX = Math.random() * 10 - 5;
+    var speedY = Math.random() * 10 - 5;
+
+    function updatePosition() {
+        var imageRect = image.getBoundingClientRect();
+        var imageWidth = imageRect.width;
+        var imageHeight = imageRect.height;
+
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+
+        var newX = imageRect.left + speedX;
+        var newY = imageRect.top + speedY;
+
+        if (newX < 0 || newX + imageWidth > windowWidth) {
+            speedX *= -1;
+        }
+
+        if (newY < 0 || newY + imageHeight > windowHeight) {
+            speedY *= -1;
+        }
+
+        image.style.left = newX + 'px';
+        image.style.top = newY + 'px';
+    }
+
+    function updateMousePosition(event) {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+    }
+
+    function checkCollision() {
+        var imageRect = image.getBoundingClientRect();
+        var imageWidth = imageRect.width;
+        var imageHeight = imageRect.height;
+
+        if (mouseX > imageRect.left && mouseX < imageRect.left + imageWidth &&
+            mouseY > imageRect.top && mouseY < imageRect.top + imageHeight) {
+            speedX *= -1;
+            speedY *= -1;
+        }
+    }
+
+    function animate() {
+        updatePosition();
+        checkCollision();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    document.addEventListener('mousemove', updateMousePosition);
+</script>
+  
+  
+  
+  
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
 <body>
