@@ -73,10 +73,49 @@
       width: 70%;
       max-width: 500px;
     }
+
+    .shaker {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+    }
+
+    .shaker img {
+      animation: shake 3s infinite;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: rotate(0);
+      }
+      25% {
+        transform: rotate(5deg);
+      }
+      50% {
+        transform: rotate(-5deg);
+      }
+      75% {
+        transform: rotate(3deg);
+      }
+      100% {
+        transform: rotate(0);
+      }
+    }
   </style>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
 <body>
+  <div class="shaker">
+    <img src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+    <img src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+    <img src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+  </div>
+
   <div class="top-image-container">
     <img class="top-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108910960351133802/3595a5432a6b445481bdb5d1c4bd3fb10851feb2da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
   </div>
@@ -98,7 +137,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
       $('.carousel').slick({
         dots: false,
         arrows: true,
@@ -109,6 +148,17 @@
         slidesToShow: 1,
         centerMode: true,
         centerPadding: '0',
+      });
+
+      // Add shake effect on mouseover
+      $('.shaker img').mouseover(function() {
+        $(this).addClass('shake-faster');
+      });
+
+      // Remove shake effect after 3 seconds
+      $('.shaker img').on('animationend', function() {
+        $(this).removeClass('shake-faster');
+        $(this).fadeOut(3000);
       });
     });
   </script>
