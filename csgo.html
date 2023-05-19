@@ -139,25 +139,29 @@
   
   
   
-  <style>
+    <style>
+    body {
+      position: relative;
+      overflow: hidden;
+    }
+    
     #bouncing-image {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100px;
-      height: 100px;
+      width: 50px;
+      height: 50px;
       cursor: pointer;
       z-index: 9999;
     }
   </style>
- 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var image = document.getElementById('bouncing-image');
       var container = document.documentElement;
 
-      var posX = Math.random() * (container.offsetWidth - image.offsetWidth);
-      var posY = Math.random() * (container.offsetHeight - image.offsetHeight);
+      var posX = Math.random() * (container.clientWidth - image.offsetWidth);
+      var posY = Math.random() * (container.clientHeight - image.offsetHeight);
       var directionX = 1;
       var directionY = 1;
       var speedX = 2;
@@ -167,10 +171,10 @@
         posX += speedX * directionX;
         posY += speedY * directionY;
 
-        if (posX <= 0 || posX >= container.offsetWidth - image.offsetWidth) {
+        if (posX <= 0 || posX >= container.clientWidth - image.offsetWidth) {
           directionX *= -1;
         }
-        if (posY <= 0 || posY >= container.offsetHeight - image.offsetHeight) {
+        if (posY <= 0 || posY >= container.clientHeight - image.offsetHeight) {
           directionY *= -1;
         }
 
