@@ -52,6 +52,17 @@
       right: 10px;
     }
 
+    .top-image-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .top-image {
+      width: 80%;
+      max-width: 500px;
+    }
+
     .bottom-image-container {
       display: flex;
       flex-direction: column;
@@ -59,13 +70,17 @@
     }
 
     .bottom-image {
-      width: 50%;
+      width: 70%;
       max-width: 500px;
     }
   </style>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
 <body>
+  <div class="top-image-container">
+    <img class="top-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108910960351133802/3595a5432a6b445481bdb5d1c4bd3fb10851feb2da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
+  </div>
+
   <div class="carousel">
     <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1"></div>
     <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2"></div>
