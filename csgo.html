@@ -16,6 +16,42 @@
       background-position: center;
     }
 
+    .carousel {
+      position: relative;
+      width: 80%;
+      margin-bottom: 20px;
+    }
+
+    .carousel img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .carousel .slick-prev,
+    .carousel .slick-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 10px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .carousel .slick-prev {
+      left: 10px;
+    }
+
+    .carousel .slick-next {
+      right: 10px;
+    }
+
     .top-image-container {
       display: flex;
       justify-content: center;
@@ -25,55 +61,56 @@
     .top-image {
       width: 80%;
       max-width: 500px;
-      animation: shake 2s infinite ease-in-out;
     }
 
-    @keyframes shake {
-      0% { transform: rotate(0deg); }
-      20% { transform: rotate(-5deg); }
-      40% { transform: rotate(3deg); }
-      60% { transform: rotate(-2deg); }
-      80% { transform: rotate(1deg); }
-      100% { transform: rotate(0deg); }
+    .bottom-image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bottom-image {
+      width: 70%;
+      max-width: 500px;
     }
   </style>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
 <body>
   <div class="top-image-container">
-    <img class="top-image" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Top Image">
-    <img class="top-image" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Top Image">
-    <img class="top-image" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Top Image">
-    <!-- Add more image elements as needed -->
+    <img class="top-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108910960351133802/3595a5432a6b445481bdb5d1c4bd3fb10851feb2da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
   </div>
 
-  <!-- Rest of the code remains unchanged -->
-  
+  <div class="carousel">
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 1"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 2"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 3"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 4"></div>
+    <div><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--7q3tE-xl--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg" alt="Image 5"></div>
+  </div>
+
+  <div class="bottom-image-container">
+    <a href="http://www.dev.poschplus.com" target="_blank">
+      <img class="bottom-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Cool Logo">
+    </a>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
-    // Get all the top image elements
-    const topImages = document.querySelectorAll('.top-image');
-
-    // Add event listeners for mouseover and click
-    topImages.forEach(image => {
-      image.addEventListener('mouseover', increaseSpeed);
-      image.addEventListener('click', burstImage);
-    });
-
-    // Function to increase the shaking speed on mouseover
-    function increaseSpeed(event) {
-      const image = event.target;
-      image.style.animationDuration = '0.5s';
-    }
-
-    // Function to burst the image on click
-    function burstImage(event) {
-      const image = event.target;
-      image.style.animation = 'burst 0.5s forwards';
-
-      // Remove the image element after the animation ends
-      image.addEventListener('animationend', () => {
-        image.remove();
+    $(document).ready(function(){
+      $('.carousel').slick({
+        dots: false,
+        arrows: true,
+        prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+        nextArrow: '<button type="button" class="slick-next">Next</button>',
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        centerMode: true,
+        centerPadding: '0',
       });
-    }
+    });
   </script>
 </body>
 </html>
