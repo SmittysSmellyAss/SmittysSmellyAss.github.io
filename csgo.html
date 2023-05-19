@@ -16,6 +16,7 @@
     }
 
     .carousel {
+      position: relative;
       width: 80%;
     }
 
@@ -24,6 +25,29 @@
       margin: 0 auto;
       max-width: 100%;
       height: auto;
+    }
+
+    .carousel .slick-prev,
+    .carousel .slick-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 10px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .carousel .slick-prev {
+      left: 10px;
+    }
+
+    .carousel .slick-next {
+      right: 10px;
     }
   </style>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
@@ -43,7 +67,9 @@
     $(document).ready(function(){
       $('.carousel').slick({
         dots: false,
-        arrows: false,
+        arrows: true,
+        prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+        nextArrow: '<button type="button" class="slick-next">Next</button>',
         infinite: true,
         speed: 500,
         slidesToShow: 1,
