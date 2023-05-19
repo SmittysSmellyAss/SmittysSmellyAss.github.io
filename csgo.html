@@ -86,7 +86,13 @@
     }
 
     .shaker img {
+      width: 50px;
+      height: 50px;
       animation: shake 3s infinite;
+    }
+
+    .shake-faster {
+      animation-duration: 1s !important;
     }
 
     @keyframes shake {
@@ -150,12 +156,10 @@
         centerPadding: '0',
       });
 
-      // Add shake effect on mouseover
       $('.shaker img').mouseover(function() {
         $(this).addClass('shake-faster');
       });
 
-      // Remove shake effect after 3 seconds
       $('.shaker img').on('animationend', function() {
         $(this).removeClass('shake-faster');
         $(this).fadeOut(3000);
