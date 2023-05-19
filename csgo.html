@@ -132,13 +132,69 @@
     }
   </style>
   
+  
+  
+  
+  
+  
+  
+  
   <style>
     #bouncing-image {
-        position: absolute;
-        width: 50px; /* Adjust the width as desired */
-        height: 50px; /* Adjust the height as desired */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      z-index: 9999;
     }
   </style>
+ 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var image = document.getElementById('bouncing-image');
+      var container = document.documentElement;
+
+      var posX = Math.random() * (container.offsetWidth - image.offsetWidth);
+      var posY = Math.random() * (container.offsetHeight - image.offsetHeight);
+      var directionX = 1;
+      var directionY = 1;
+      var speedX = 2;
+      var speedY = 2;
+
+      function animateImage() {
+        posX += speedX * directionX;
+        posY += speedY * directionY;
+
+        if (posX <= 0 || posX >= container.offsetWidth - image.offsetWidth) {
+          directionX *= -1;
+        }
+        if (posY <= 0 || posY >= container.offsetHeight - image.offsetHeight) {
+          directionY *= -1;
+        }
+
+        image.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+        requestAnimationFrame(animateImage);
+      }
+
+      image.addEventListener('click', function() {
+        window.location.href = '/cow';
+      });
+
+      animateImage();
+    });
+  </script>
+</head>
+<body>
+  <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
+</body>
+  
+  
+  
+  
+  
+  
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
