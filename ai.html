@@ -3,47 +3,48 @@
 <head>
   <title>AI Image Carousel</title>
   <style>
-    body {
-      background-color: black;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .carousel {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .carousel img {
-      width: 100%;
-      height: auto;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-    
-    .carousel .prev,
-    .carousel .next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-      z-index: 2;
-    }
-    
-    .carousel .prev {
-      left: 20px;
-    }
-    
-    .carousel .next {
-      right: 20px;
-    }
-  </style>
+  body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .carousel img {
+    width: 80%; /* Set the desired width of the image */
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    margin: auto; /* Center the image horizontally */
+  }
+  
+  .carousel .prev,
+  .carousel .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .carousel .prev {
+    left: 20px;
+  }
+  
+  .carousel .next {
+    right: 20px;
+  }
+</style>
 </head>
 <body>
   <div class="carousel">
