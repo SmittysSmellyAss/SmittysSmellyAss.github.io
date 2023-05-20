@@ -1,126 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Image Carousel</title>
+  <title>Swipeable Image Gallery Carousel</title>
   <style>
-  body {
-    background-color: black;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .carousel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .carousel img {
-    width: 80%; /* Set the desired width of the image */
-    height: auto;
-    margin: auto; /* Center the image horizontally */
-  }
-  
-  .carousel .prev,
-  .carousel .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    color: white;
-    cursor: pointer;
-    z-index: 2;
-  }
-  
-  .carousel .prev {
-    left: 20px;
-  }
-  
-  .carousel .next {
-    right: 20px;
-  }
-</style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .carousel {
+      width: 400px;
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      transition: transform 0.5s ease;
+    }
+
+    .carousel-image:not(:first-child) {
+      transform: translateX(100%);
+    }
+  </style>
 </head>
 <body>
-  <div class="carousel">
-    <img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image">
-    <img src="https://cdn.discordapp.com/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg" alt="Image">
-    
-    
-    
-    
-    <div class="prev">&#10094;</div>
-    <div class="next">&#10095;</div>
+  <div class="container">
+    <div class="carousel">
+      <img class="carousel-image" src="image1.jpg" alt="Image 1">
+      <img class="carousel-image" src="image2.jpg" alt="Image 2">
+      <img class="carousel-image" src="image3.jpg" alt="Image 3">
+    </div>
   </div>
 
   <script>
     const carousel = document.querySelector('.carousel');
-    const images = Array.from(carousel.getElementsByTagName('img'));
+    const images = document.querySelectorAll('.carousel-image');
+
     let currentIndex = 0;
 
     function showImage(index) {
-      images.forEach(img => img.classList.remove('active'));
-      images[index].classList.add('active');
+      images.forEach((image, i) => {
+        image.style.transform = `translateX(${100 * (i - index)}%)`;
+      });
     }
 
-    function goToNextImage() {
+    function swipeRight() {
       currentIndex = (currentIndex + 1) % images.length;
       showImage(currentIndex);
     }
 
-    function goToPrevImage() {
+    function swipeLeft() {
       currentIndex = (currentIndex - 1 + images.length) % images.length;
       showImage(currentIndex);
     }
 
-    function autoScroll() {
-      goToNextImage();
-    }
-
-    const prevButton = document.querySelector('.prev');
-    const nextButton = document.querySelector('.next');
-
-    prevButton.addEventListener('click', goToPrevImage);
-    nextButton.addEventListener('click', goToNextImage);
-
-    setInterval(autoScroll, 7000); // Auto scroll every 7 seconds
-
     carousel.addEventListener('touchstart', handleTouchStart, false);
     carousel.addEventListener('touchmove', handleTouchMove, false);
 
-    let xDown = null;
-    let yDown = null;
+    let startX = null;
 
     function handleTouchStart(event) {
-      const firstTouch = event.touches[0];
-      xDown = firstTouch.clientX;
-      yDown = firstTouch.clientY;
+      startX = event.touches[0].clientX;
     }
 
     function handleTouchMove(event) {
-      if (!xDown || !yDown) {
-        return;
+      if (!startX) return;
+
+      const currentX = event.touches[0].clientX;
+      const diffX = startX - currentX;
+
+      if (diffX > 0) {
+        swipeRight();
+      } else {
+        swipeLeft();
       }
 
-      const xUp = event.touches[0].clientX;
-      const yUp = event.touches[0].clientY;
-
-      const xDiff = xDown - xUp;
-      const yDiff = yDown - yUp;
-
-      if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        if (xDiff > 0) {
-          goToNextImage();
-        } else {
-          goToPrevImage();
-        }
-      }
-
-      xDown = null;
-      yDown = null;
+      startX = null;
     }
   </script>
 </body>
