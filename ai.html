@@ -21,8 +21,6 @@
   .carousel img {
     width: 80%; /* Set the desired width of the image */
     height: auto;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
     margin: auto; /* Center the image horizontally */
   }
   
@@ -48,11 +46,12 @@
 </head>
 <body>
   <div class="carousel">
-    <img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image">
-    <img src="https://media.discordapp.net/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg" alt="Image">
-    <!-- Add more images between here -->
+    <img class="active" src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image">
+    <img class="active" src="https://cdn.discordapp.com/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg" alt="Image">
     
-    <!-- Add more images between here -->
+    
+    
+    
     <div class="prev">&#10094;</div>
     <div class="next">&#10095;</div>
   </div>
@@ -63,8 +62,8 @@
     let currentIndex = 0;
 
     function showImage(index) {
-      images.forEach(img => img.style.opacity = 0);
-      images[index].style.opacity = 1;
+      images.forEach(img => img.classList.remove('active'));
+      images[index].classList.add('active');
     }
 
     function goToNextImage() {
