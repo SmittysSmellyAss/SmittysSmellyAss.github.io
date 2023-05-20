@@ -21,6 +21,7 @@
     .carousel {
       width: 400px;
       height: 300px;
+      overflow: hidden;
     }
 
     .carousel-image {
@@ -54,9 +55,9 @@
 <body>
   <div class="container">
     <div class="carousel">
-      <img class="carousel-image" src="https://media.discordapp.net/attachments/1093727912835944449/1108142125012496474/imagine.png" alt="Image 1">
-      <img class="carousel-image" src="https://media.discordapp.net/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg" alt="Image 2">
-      <img class="carousel-image" src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image 3">
+      <div><img class="carousel-image" src="https://media.discordapp.net/attachments/1093727912835944449/1108142125012496474/imagine.png" alt="Image 1"></div>
+      <div><img class="carousel-image" src="https://media.discordapp.net/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg" alt="Image 2"></div>
+      <div><img class="carousel-image" src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image 3"></div>
     </div>
     <div class="prev">&#10094;</div>
     <div class="next">&#10095;</div>
@@ -67,6 +68,8 @@
   <script>
     $(document).ready(function(){
       $('.carousel').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
         arrows: false,
         swipe: true,
         autoplay: true,
