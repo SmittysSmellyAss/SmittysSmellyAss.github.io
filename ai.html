@@ -2,11 +2,13 @@
 <html>
 <head>
   <title>Swipeable Image Gallery Carousel</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.8.1/slick.css" />
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
+      background-color: #333;
     }
 
     .container {
@@ -19,21 +21,33 @@
     .carousel {
       width: 400px;
       height: 300px;
-      overflow: hidden;
-      position: relative;
     }
 
     .carousel-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      position: absolute;
-      top: 0;
-      transition: transform 0.5s ease;
     }
 
-    .carousel-image:not(:first-child) {
-      transform: translateX(100%);
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
     }
   </style>
 </head>
@@ -44,53 +58,29 @@
       <img class="carousel-image" src="https://media.discordapp.net/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg" alt="Image 2">
       <img class="carousel-image" src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image 3">
     </div>
+    <div class="prev">&#10094;</div>
+    <div class="next">&#10095;</div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.slick/1.8.1/slick.min.js"></script>
   <script>
-    const carousel = document.querySelector('.carousel');
-    const images = document.querySelectorAll('.carousel-image');
-
-    let currentIndex = 0;
-
-    function showImage(index) {
-      images.forEach((image, i) => {
-        image.style.transform = `translateX(${100 * (i - index)}%)`;
+    $(document).ready(function(){
+      $('.carousel').slick({
+        arrows: false,
+        swipe: true,
+        autoplay: true,
+        autoplaySpeed: 8000
       });
-    }
 
-    function swipeRight() {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage(currentIndex);
-    }
+      $('.prev').click(function(){
+        $('.carousel').slick('slickPrev');
+      });
 
-    function swipeLeft() {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage(currentIndex);
-    }
-
-    carousel.addEventListener('touchstart', handleTouchStart, false);
-    carousel.addEventListener('touchmove', handleTouchMove, false);
-
-    let startX = null;
-
-    function handleTouchStart(event) {
-      startX = event.touches[0].clientX;
-    }
-
-    function handleTouchMove(event) {
-      if (!startX) return;
-
-      const currentX = event.touches[0].clientX;
-      const diffX = startX - currentX;
-
-      if (diffX > 0) {
-        swipeRight();
-      } else {
-        swipeLeft();
-      }
-
-      startX = null;
-    }
+      $('.next').click(function(){
+        $('.carousel').slick('slickNext');
+      });
+    });
   </script>
 </body>
 </html>
