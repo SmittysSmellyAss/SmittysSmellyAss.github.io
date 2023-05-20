@@ -1,79 +1,252 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Swipeable Image Gallery Carousel</title>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.8.1/slick.css" />
+  <title>Recently AI Generated</title>
   <style>
-    html, body {
-      height: 100%;
+    body {
       margin: 0;
       padding: 0;
-      background-color: #333;
-    }
-
-    .container {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      height: 100vh;
+      background-image: url('https://images4.alphacoders.com/936/936378.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
     .carousel {
-      width: 400px;
-      height: 300px;
-      overflow: hidden;
+      position: relative;
+      width: 80%;
+      margin-bottom: 20px;
     }
 
-    .carousel-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .carousel img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
     }
 
-    .prev,
-    .next {
+    .carousel .slick-prev,
+    .carousel .slick-next {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       font-size: 24px;
+      background-color: rgba(255, 255, 255, 0.3);
       color: #fff;
-      background-color: rgba(0, 0, 0, 0.5);
       padding: 10px;
+      border: none;
+      outline: none;
       cursor: pointer;
       z-index: 1;
     }
 
-    .prev {
+    .carousel .slick-prev {
       left: 10px;
     }
 
-    .next {
+    .carousel .slick-next {
       right: 10px;
     }
+
+    .top-image-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .top-image {
+      width: 80%;
+      max-width: 500px;
+    }
+
+    .bottom-image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bottom-image {
+      width: 70%;
+      max-width: 500px;
+    }
+
+    .shaker {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+    }
+
+    .shaker img {
+      width: 50px;
+      height: 50px;
+      animation: shake 3s infinite;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .shaker img:hover {
+      animation-duration: 0.5s !important;
+      transform: scale(1.2);
+    }
+
+    .shaker img.burst {
+      animation: burst 0.5s;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: rotate(0);
+      }
+      25% {
+        transform: rotate(5deg);
+      }
+      50% {
+        transform: rotate(-5deg);
+      }
+      75% {
+        transform: rotate(3deg);
+      }
+      100% {
+        transform: rotate(0);
+      }
+    }
+
+    @keyframes burst {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2);
+      }
+    }
   </style>
+  
+  
+  
+  
+  
+  
+  
+  
+    <style>
+    body {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #bouncing-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var image = document.getElementById('bouncing-image');
+      var container = document.documentElement;
+
+      var posX = Math.random() * (container.clientWidth - image.offsetWidth);
+      var posY = Math.random() * (container.clientHeight - image.offsetHeight);
+      var directionX = 1;
+      var directionY = 1;
+      var speedX = 2;
+      var speedY = 2;
+
+      function animateImage() {
+        posX += speedX * directionX;
+        posY += speedY * directionY;
+
+        if (posX <= 0 || posX >= container.clientWidth - image.offsetWidth) {
+          directionX *= -1;
+        }
+        if (posY <= 0 || posY >= container.clientHeight - image.offsetHeight) {
+          directionY *= -1;
+        }
+
+        image.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+        requestAnimationFrame(animateImage);
+      }
+
+      image.addEventListener('click', function() {
+        window.location.href = '/cow';
+      });
+
+      animateImage();
+    });
+  </script>
 </head>
 <body>
-  <div class="container">
-    <div class="carousel">
-      <div><img class="carousel-image" src="https://media.discordapp.net/attachments/1093727912835944449/1108142125012496474/imagine.png" alt="Image 1"></div>
-      <div><img class="carousel-image" src="https://media.discordapp.net/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg" alt="Image 2"></div>
-      <div><img class="carousel-image" src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image 3"></div>
-    </div>
-    <div class="prev">&#10094;</div>
-    <div class="next">&#10095;</div>
+  <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
+</body>
+  
+  
+  
+  
+  
+  
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
+</head>
+<body>
+  <div class="shaker">
+    <img class="shaker-img" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Shaker Image">
+    <img class="shaker-img" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Shaker Image">
+    <img class="shaker-img" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Shaker Image">
+  </div>
+
+  <div class="top-image-container">
+    <img class="top-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1109288657984159774/e15e916bf280f8ce6af87e2123c7351af659f290da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
+  </div>
+
+  <div class="carousel">
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1108142125012496474/imagine.png"></div>
+
+  </div>
+
+  <div class="bottom-image-container">
+    <a href="http://www.poschplus.com" target="_blank">
+      <img class="bottom-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Cool Logo">
+    </a>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.slick/1.8.1/slick.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
-    $(document).ready(function(){
-      $('.carousel').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
+    $(document).ready(function() {
+      var carousel = $('.carousel');
+
+      carousel.slick({
+        dots: false,
         arrows: true,
-        swipe: true,
+        prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+        nextArrow: '<button type="button" class="slick-next">Next</button>',
+        infinite: true,
         autoplay: true,
-        autoplaySpeed: 8000
+        autoplaySpeed: 10000, // Adjust the time interval (in milliseconds)
+        speed: 500,
+        fade: true,
+        cssEase: 'linear'
+      });
+
+      $('.shaker-img').click(function() {
+        $(this).addClass('burst');
       });
     });
   </script>
