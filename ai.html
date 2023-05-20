@@ -1,16 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Image</title>
+  <title>AI Image Carousel</title>
   <style>
     body {
       background-color: black;
       margin: 0;
       padding: 0;
     }
+    
+    .carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .carousel img {
+      width: 100%;
+      height: auto;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    
+    .carousel .prev,
+    .carousel .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      z-index: 2;
+    }
+    
+    .carousel .prev {
+      left: 20px;
+    }
+    
+    .carousel .next {
+      right: 20px;
+    }
   </style>
 </head>
 <body>
-  <img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image">
+  <div class="carousel">
+    <img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg" alt="Image">
+    <!-- Add more images between here -->
+    
+    <!-- Add more images between here -->
+    <div class="prev">&#10094;</div>
+    <div class="next">&#10095;</div>
+  </div>
+
+  <script>
+    const carousel = document.querySelector('.carousel');
+    const images = Array.from(carousel.getElementsByTagName('img'));
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images.forEach(img => img.style.opacity = 0);
+      images[index].style.opacity = 1;
+    }
+
+    function goToNextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    }
+
+    function goToPrevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    }
+
+    function autoScroll() {
+      goToNextImage();
+    }
+
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+
+    prevButton.addEventListener('click', goToPrevImage);
+    nextButton.addEventListener('click', goToNextImage);
+
+    setInterval(autoScroll, 7000); // Auto scroll every 7 seconds
+
+    carousel.addEventListener('touchstart', handleTouchStart, false);
+    carousel.addEventListener('touchmove', handleTouchMove, false);
+
+    let xDown = null;
+    let yDown = null;
+
+    function handleTouchStart(event) {
+      const firstTouch = event.touches[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+    }
+
+    function handleTouchMove(event) {
+      if (!xDown || !yDown) {
+        return;
+      }
+
+      const xUp = event.touches[0].clientX;
+      const yUp = event.touches[0].clientY;
+
+      const xDiff = xDown - xUp;
+      const yDiff = yDown - yUp;
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0) {
+          goToNextImage();
+        } else {
+          goToPrevImage();
+        }
+      }
+
+      xDown = null;
+      yDown = null;
+    }
+  </script>
 </body>
 </html>
