@@ -213,37 +213,34 @@
     <img class="top-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1109288657984159774/e15e916bf280f8ce6af87e2123c7351af659f290da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
   </div>
 
-    <div class="carousel"></div>
+   <div class="carousel">
 
-  <script>
-    // Function to fetch image file names from the local directory
-    function fetchImages() {
-      // Replace 'images/' with the path to your local directory
-      const directoryPath = 'images/';
+     
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112250535270162462/00050-1460419223.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112250059959058502/00107-592088145.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112235065154490478/00004-2463575879.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112233930779803738/00027-338920751.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112231829785808996/00096-3315038542.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112229800799633438/00084-819796853.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112228381786910811/imagine.png"></div>    
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112226596238135377/bbbbb.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112225405429096458/dddd.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1112224413673336983/imagine.png"></div>    
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109277173635883049/00527-3415738640.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1111476986276220959/00169-1010341190.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1110293985844527194/00149-64930867.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1110289988274372718/00155-2922803392.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1110048222707191909/00057-1113539159.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109503051267580005/00062-2812671764.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109334939910025246/00047-2399143072.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109310220750041229/imagine.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109304240385577060/imagine.png"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109295346510725210/00659-48171905.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1109291993420550174/00521-2493874686.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1108186567429861427/00007-3199060443.jpg"></div>
+    <div><img src="https://cdn.discordapp.com/attachments/1093727912835944449/1108142125012496474/imagine.png"></div>
 
-      fetch(directoryPath)
-        .then(response => response.text())
-        .then(data => {
-          const parser = new DOMParser();
-          const html = parser.parseFromString(data, 'text/html');
-          const imageElements = html.querySelectorAll('a[href$=".jpg"], a[href$=".png"], a[href$=".jpeg"], a[href$=".gif"]');
-
-          const carousel = document.querySelector('.carousel');
-
-          imageElements.forEach(element => {
-            const imageUrl = directoryPath + element.getAttribute('href');
-            const image = document.createElement('img');
-            image.src = imageUrl;
-            carousel.appendChild(image);
-          });
-        })
-        .catch(error => console.log(error));
-    }
-
-    // Call the function to fetch and display images
-    fetchImages();
-  </script>
-
+  </div>
   <div class="bottom-image-container">
     <a href="http://www.poschplus.com" target="_blank">
       <img class="bottom-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Cool Logo">
