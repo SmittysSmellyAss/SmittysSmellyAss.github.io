@@ -175,12 +175,12 @@
       animateImage();
     });
       
-      $('.carousel').slick();
-
-      // Auto scroll to the next slide every 7 seconds
-      setInterval(function() {
-        $('.carousel').slick('slickNext');
-      }, 7000);
+      $('.carousel').slick({
+    autoplay: true,        // Enable autoplay
+    autoplaySpeed: 7000,   // Set autoplay speed in milliseconds
+    pauseOnHover: true     // Pause autoplay when hovering over the carousel
+  });
+});
   </script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
