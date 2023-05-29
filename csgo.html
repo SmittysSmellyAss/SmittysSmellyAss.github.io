@@ -127,9 +127,45 @@
       }
     }
   </style>
-  
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var image = document.getElementById('bouncing-image');
+      var container = document.documentElement;
+
+      var posX = Math.random() * (container.clientWidth - image.offsetWidth);
+      var posY = Math.random() * (container.clientHeight - image.offsetHeight);
+      var directionX = 1;
+      var directionY = 1;
+      var speedX = 2;
+      var speedY = 2;
+
+      function animateImage() {
+        posX += speedX * directionX;
+        posY += speedY * directionY;
+
+        if (posX <= 0 || posX >= container.clientWidth - image.offsetWidth) {
+          directionX *= -1;
+        }
+        if (posY <= 0 || posY >= container.clientHeight - image.offsetHeight) {
+          directionY *= -1;
+        }
+
+        image.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+        requestAnimationFrame(animateImage);
+      }
+
+      image.addEventListener('click', function() {
+        window.location.href = '/cow';
+      });
+
+      animateImage();
+    });
+  </script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
+  <body>
+  <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
+</body>
 <body>
   <div class="shaker">
     <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
