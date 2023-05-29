@@ -17,49 +17,132 @@
       cursor: pointer;
       z-index: 9999;
     }
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('https://wallpapers.com/images/featured-full/cs-go-background-vb6tq1iva1c5g1ae.jpg');
+    background-size: cover;
+    background-position: center;
+  }
 
-    /* Rest of the CSS styles */
+  .carousel {
+    position: relative;
+    width: 80%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio (adjust as needed) */
+    margin: 0 auto;
+    overflow: hidden;
+  }
 
-    .carousel {
-      position: relative;
+  .carousel img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+    /* Additional styles to center the carousel */
+    .slick-list {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slick-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Rest of the styles */
+
+    .top-image-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .top-image {
       width: 80%;
-      height: 0;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio (adjust as needed) */
-      margin: 0 auto;
-      overflow: hidden;
+      max-width: 500px;
     }
 
-    .carousel img {
-      display: block;
-      margin: 0 auto;
+    .bottom-image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bottom-image {
+      width: 70%;
+      max-width: 500px;
+    }
+
+    .shaker {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      height: 50px;
     }
 
-    .slick-prev,
-    .slick-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-      font-size: 30px;
-      color: white;
+    .shaker img {
+      width: 50px;
+      height: 50px;
+      animation: shake 3s infinite;
+      transition: transform 0.3s;
       cursor: pointer;
     }
 
-    .slick-prev {
-      left: 10px;
+    .shaker img:hover {
+      animation-duration: 0.5s !important;
+      transform: scale(1.2);
     }
 
-    .slick-next {
-      right: 10px;
+    .shaker img.burst {
+      animation: burst 0.5s;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: rotate(0);
+      }
+      25% {
+        transform: rotate(5deg);
+      }
+      50% {
+        transform: rotate(-5deg);
+      }
+      75% {
+        transform: rotate(3deg);
+      }
+      100% {
+        transform: rotate(0);
+      }
+    }
+
+    @keyframes burst {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2);
+      }
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-  <script>
-    $(document).ready(function() {
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
       var image = document.getElementById('bouncing-image');
       var container = document.documentElement;
 
@@ -90,25 +173,30 @@
       });
 
       animateImage();
-
-      $('.carousel').slick({
-        prevArrow: '<div class="slick-prev"><</div>',
-        nextArrow: '<div class="slick-next">></div>',
-        autoplay: true,
-        autoplaySpeed: 10000
-      });
     });
   </script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
-<body>
+  <body>
   <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
+</body>
+<body>
+  <div class="shaker">
+    <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+    <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+    <img class="shaker-img burst" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+  </div>
+
+  <div class="top-image-container">
+    <img class="top-image" src="https://media.discordapp.net/attachments/1103479109373411418/1109264718666940497/56a5dd0a53584e8afa92b84a8ae9878bcbd33f87da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
+  </div>
 
   <div class="carousel">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108933926052954134/image.png?width=1426&height=804" alt="Image 1">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108938398649040907/image.png" alt="Image 2">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108955481352962109/image.png" alt="Image 3">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1112572649508442212/image.png" alt="Image 4">
+
   </div>
 
 
