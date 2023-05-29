@@ -17,47 +17,56 @@
       cursor: pointer;
       z-index: 9999;
     }
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-image: url('https://wallpapers.com/images/featured-full/cs-go-background-vb6tq1iva1c5g1ae.jpg');
-    background-size: cover;
-    background-position: center;
-  }
 
-  .carousel {
-    position: relative;
-    width: 80%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio (adjust as needed) */
-    margin: 0 auto;
-    overflow: hidden;
-  }
+    /* Rest of the CSS styles */
 
-  .carousel img {
-    display: block;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-    /* Additional styles to center the carousel */
-    .slick-list {
+    body {
+      margin: 0;
+      padding: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      height: 100vh;
+      background-image: url('https://wallpapers.com/images/featured-full/cs-go-background-vb6tq1iva1c5g1ae.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
-    .slick-slide {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .carousel {
+      position: relative;
+      width: 80%;
+      height: 0;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio (adjust as needed) */
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .carousel img {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .slick-prev,
+    .slick-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .slick-prev {
+      left: 10px;
+    }
+
+    .slick-next {
+      right: 10px;
     }
 
     /* Rest of the styles */
@@ -141,46 +150,10 @@
       }
     }
   </style>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var image = document.getElementById('bouncing-image');
-      var container = document.documentElement;
-
-      var posX = Math.random() * (container.clientWidth - image.offsetWidth);
-      var posY = Math.random() * (container.clientHeight - image.offsetHeight);
-      var directionX = 1;
-      var directionY = 1;
-      var speedX = 2;
-      var speedY = 2;
-
-      function animateImage() {
-        posX += speedX * directionX;
-        posY += speedY * directionY;
-
-        if (posX <= 0 || posX >= container.clientWidth - image.offsetWidth) {
-          directionX *= -1;
-        }
-        if (posY <= 0 || posY >= container.clientHeight - image.offsetHeight) {
-          directionY *= -1;
-        }
-
-        image.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
-        requestAnimationFrame(animateImage);
-      }
-
-      image.addEventListener('click', function() {
-        window.location.href = '/cow';
-      });
-
-      animateImage();
-    });
-  </script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
-  <body>
-  <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
-</body>
 <body>
+  <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
+
   <div class="shaker">
     <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
     <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
@@ -196,21 +169,40 @@
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108938398649040907/image.png" alt="Image 2">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108955481352962109/image.png" alt="Image 3">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1112572649508442212/image.png" alt="Image 4">
-
   </div>
-
 
   <a href="https://dev.poschplus.com">
-  <img class="bottom-image" src="https://media.discordapp.net/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Bottom Image 1">
-</a>
-
-  </div>
+    <img class="bottom-image" src="https://media.discordapp.net/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Bottom Image 1">
+  </a>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
     $(document).ready(function() {
-      $('.carousel').slick();
+      $('.carousel').slick({
+        prevArrow: '<div class="slick-prev">&#8249;</div>',
+        nextArrow: '<div class="slick-next">&#8250;</div>',
+        autoplay: true,
+        autoplaySpeed: 10000
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const image = document.getElementById('bouncing-image');
+      image.addEventListener('mouseover', () => {
+        image.style.animationPlayState = 'running';
+      });
+      image.addEventListener('mouseout', () => {
+        image.style.animationPlayState = 'paused';
+      });
+
+      const shakerImgs = document.querySelectorAll('.shaker-img');
+      shakerImgs.forEach((shakerImg) => {
+        shakerImg.addEventListener('click', () => {
+          shakerImg.classList.add('burst');
+        });
+      });
     });
   </script>
 </body>
