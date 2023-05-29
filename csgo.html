@@ -192,11 +192,15 @@
   </div>
 
   <div class="carousel">
+    <button class="carousel-prev">Previous</button>
+    
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108933926052954134/image.png?width=1426&height=804" alt="Image 1">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108938398649040907/image.png" alt="Image 2">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1108955481352962109/image.png" alt="Image 3">
     <img src="https://media.discordapp.net/attachments/1103479109373411418/1112572649508442212/image.png" alt="Image 4">
-
+    
+    
+    <button class="carousel-next">Next</button>
   </div>
 
 
@@ -214,6 +218,8 @@
         autoplay: true,        // Enable autoplay
         autoplaySpeed: 7000,   // Set autoplay speed in milliseconds
         pauseOnHover: true     // Pause autoplay when hovering over the carousel
+        prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+        nextArrow: '<button type="button" class="slick-next">Next</button>'
       });
     });
   </script>
