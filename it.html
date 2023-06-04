@@ -1,48 +1,45 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Random CS:GO Stream</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
 <body>
+    <h1>Redirecting to a Random CS:GO Stream...</h1>
 
-<!-- Embed Twitch video player in your HTML page -->
-<div id="twitch-embed"></div>
+    <script>
+        const getStreams = async () => {
+            try {
+                const response = await axios.get('https://api.twitch.tv/helix/streams', {
+                    headers: {
+                        'Client-ID': 'your-client-id',
+                        'Authorization': 'Bearer ' + 'your-oauth-token'
+                    },
+                    params: {
+                        game_id: 'your-game-id-for-csgo',
+                        first: 100  // Twitch limits us to 100 streams per request
+                    }
+                });
 
-<script src="https://embed.twitch.tv/embed/v1.js"></script>
+                const streams = response.data.data;
+                const randomStream = streams[Math.floor(Math.random() * streams.length)];
 
-<script>
-// Fetch live streams data from Twitch API 
-fetch('https://api.twitch.tv/helix/streams?game_id=32399', {
-    headers: {
-        'Client-ID': 'y8wxyw19ctwnw51yuvr15vf136t3q3',
-        'Authorization': 'Bearer uhbn35bj6cn1dw8y7gynw3q28nxu2e'
-    }
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json();
-})
-.then(data => {
-    let streams = data.data;
-    
-    // Filter out streams with 10 or more viewers
-    let smallStreams = streams.filter(stream => stream.viewer_count < 10);
+                return randomStream;
+            } catch (error) {
+                console.error('Failed to get streams:', error);
+            }
+        }
 
-    if (smallStreams.length > 0) {
-        // Select a random stream 
-        let randomStream = smallStreams[Math.floor(Math.random() * smallStreams.length)];
+        const redirectToStream = async () => {
+            try {
+                const stream = await getStreams();
+                window.location.href = `https://twitch.tv/${stream.user_name}`;
+            } catch (error) {
+                console.error('Failed to redirect:', error);
+            }
+        }
 
-        // Create a new Twitch.Embed object that will render within the "twitch-embed" root element.
-        new Twitch.Embed("twitch-embed", {
-            width: 854,
-            height: 480,
-            channel: randomStream.user_name,
-            layout: "video",
-            autoplay: true,
-        });
-    }
-})
-.catch(error => console.error('Error:', error));
-</script>
-
+        redirectToStream();
+    </script>
 </body>
 </html>
