@@ -16,30 +16,20 @@
 
     <script>
         var audio = document.getElementById("moo-sound");
-        var isPlaying = false;
-
         document.body.addEventListener("mousemove", function() {
-            if (!isPlaying) {
-                playSoundMultipleTimes(100);
-            }
+            playSoundMultipleTimes(100);
         });
 
         function playSoundMultipleTimes(count) {
             var i = 0;
-            isPlaying = true;
-
             function playNext() {
                 if (i < count) {
                     audio.currentTime = 0;
                     audio.play();
                     i++;
-                } else {
-                    isPlaying = false;
-                    audio.removeEventListener('ended', playNext);
+                    audio.addEventListener('ended', playNext);
                 }
             }
-            
-            audio.addEventListener('ended', playNext);
             playNext();
         }
     </script>
