@@ -67,9 +67,10 @@
                 return cow;
             }
 
-            document.body.addEventListener('mousemove', function() {
+            document.body.addEventListener('mousemove', function(event) {
                 playSoundMultipleTimes(100);
             });
+
 
             function playSoundMultipleTimes(count) {
                 var i = 0;
