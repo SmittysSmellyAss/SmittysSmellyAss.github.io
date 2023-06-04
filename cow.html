@@ -33,11 +33,13 @@
                     audio.currentTime = 0;
                     audio.play();
                     i++;
-                    audio.addEventListener('ended', playNext);
                 } else {
                     isPlaying = false;
+                    audio.removeEventListener('ended', playNext);
                 }
             }
+            
+            audio.addEventListener('ended', playNext);
             playNext();
         }
     </script>
