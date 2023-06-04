@@ -83,11 +83,14 @@
                         var newCow = createBouncingCow();
                         cows.push(newCow);
 
+                        audio.removeEventListener('ended', playNext);
                         audio.addEventListener('ended', playNext);
                     }
                 }
 
-                playNext();
+                if (audio.paused) {
+                    playNext();
+                }
             }
 
             var image = createBouncingCow();
