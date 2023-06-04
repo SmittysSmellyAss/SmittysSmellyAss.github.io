@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blank Page with Moo Sounds</title>
+    <title>Blank Page with Bouncing Cows and Moo Sounds</title>
     <style>
         body {
-            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bouncing-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 9999;
         }
     </style>
 </head>
@@ -15,23 +26,69 @@
     </audio>
 
     <script>
-        var audio = document.getElementById("moo-sound");
-        document.body.addEventListener("mousemove", function() {
-            playSoundMultipleTimes(100);
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var container = document.documentElement;
 
-        function playSoundMultipleTimes(count) {
-            var i = 0;
-            function playNext() {
-                if (i < count) {
-                    audio.currentTime = 0;
-                    audio.play();
-                    i++;
-                    audio.addEventListener('ended', playNext);
+            var cows = []; // Array to store the cow elements
+
+            function createBouncingCow() {
+                var cow = document.createElement('img');
+                cow.src = 'cow-image.png'; // Replace with the actual path to the cow image
+
+                var posX = Math.random() * (container.clientWidth - cow.offsetWidth);
+                var posY = Math.random() * (container.clientHeight - cow.offsetHeight);
+                var directionX = 1;
+                var directionY = 1;
+                var speedX = 2;
+                var speedY = 2;
+
+                cow.className = 'bouncing-image';
+                cow.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+                container.appendChild(cow);
+
+                function animateCow() {
+                    posX += speedX * directionX;
+                    posY += speedY * directionY;
+
+                    if (posX <= 0 || posX >= container.clientWidth - cow.offsetWidth) {
+                        directionX *= -1;
+                    }
+                    if (posY <= 0 || posY >= container.clientHeight - cow.offsetHeight) {
+                        directionY *= -1;
+                    }
+
+                    cow.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+                    requestAnimationFrame(animateCow);
                 }
+
+                animateCow();
+
+                return cow;
             }
-            playNext();
-        }
+
+            var audio = document.getElementById('moo-sound');
+            document.body.addEventListener('mousemove', function() {
+                playSoundMultipleTimes(100);
+            });
+
+            function playSoundMultipleTimes(count) {
+                var i = 0;
+                function playNext() {
+                    if (i < count) {
+                        audio.currentTime = 0;
+                        audio.play();
+                        i++;
+
+                        // Add a new cow each time the sound is played
+                        var newCow = createBouncingCow();
+                        cows.push(newCow);
+
+                        audio.addEventListener('ended', playNext);
+                    }
+                }
+                playNext();
+            }
+        });
     </script>
 </body>
 </html>
