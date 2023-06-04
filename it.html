@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- Embed Twitch video player in your HTML page -->
+<div id="twitch-embed"></div>
+
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+<script>
+// Fetch live streams data from Twitch API 
+fetch('https://api.twitch.tv/helix/streams?game_id=32399', {
+    headers: {
+        'Client-ID': '<YOUR CLIENT ID>',
+        'Authorization': 'Bearer <YOUR AUTHORIZATION TOKEN>'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    let streams = data.data;
+    if (streams.length > 0) {
+        // Select a random stream 
+        let randomStream = streams[Math.floor(Math.random() * streams.length)];
+
+        // Create a new Twitch.Embed object that will render within the "twitch-embed" root element.
+        new Twitch.Embed("twitch-embed", {
+            width: 854,
+            height: 480,
+            channel: randomStream.user_name,
+            layout: "video",
+            autoplay: true,
+        });
+    }
+})
+.catch(error => console.error('Error:', error));
+</script>
+
+</body>
+</html>
