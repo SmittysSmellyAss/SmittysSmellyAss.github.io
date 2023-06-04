@@ -30,25 +30,25 @@
         Your browser does not support the audio element.
     </audio>
 
-    <script>
-        var audio = document.getElementById("moo-sound");
-        document.body.addEventListener("mousemove", function() {
-            playSoundMultipleTimes(100);
-        });
+<script>
+    var audio = document.getElementById("moo-sound");
+    playSoundMultipleTimes(100);
 
-        function playSoundMultipleTimes(count) {
-            var i = 0;
-            function playNext() {
-                if (i < count) {
-                    audio.currentTime = 0;
-                    audio.play();
-                    i++;
-                    audio.addEventListener('ended', playNext);
-                }
+    function playSoundMultipleTimes(count) {
+        var i = 0;
+
+        function playNext() {
+            if (i < count) {
+                audio.currentTime = 0;
+                audio.play();
+                i++;
+                audio.addEventListener('ended', playNext);
             }
-            playNext();
         }
-    </script>
+
+        playNext();
+    }
+</script>
     <div id="cow-container"></div>
 
   <script>
