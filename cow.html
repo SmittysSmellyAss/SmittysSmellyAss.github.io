@@ -31,33 +31,24 @@
     </audio>
 
 <script>
-    var audio = document.getElementById("moo-sound");
-    var isPlaying = false;
-
-    document.body.addEventListener("mousemove", function() {
-        if (!isPlaying) {
+        var audio = document.getElementById("moo-sound");
+        document.body.addEventListener("mousemove", function() {
             playSoundMultipleTimes(100);
-        }
-    });
+        });
 
-    function playSoundMultipleTimes(count) {
-        var i = 0;
-        isPlaying = true;
-
-        function playNext() {
-            if (i < count) {
-                audio.currentTime = 0;
-                audio.play();
-                i++;
-                audio.addEventListener('ended', playNext);
-            } else {
-                isPlaying = false;
+        function playSoundMultipleTimes(count) {
+            var i = 0;
+            function playNext() {
+                if (i < count) {
+                    audio.currentTime = 0;
+                    audio.play();
+                    i++;
+                    audio.addEventListener('ended', playNext);
+                }
             }
+            playNext();
         }
-
-        playNext();
-    }
-</script>
+    </script>
 
     <div id="cow-container"></div>
 
