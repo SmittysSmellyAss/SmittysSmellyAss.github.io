@@ -7,6 +7,22 @@
             height: 100vh;
         }
     </style>
+    <style>
+    body {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .bouncing-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  </style>
 </head>
 <body>
     <audio id="moo-sound">
@@ -33,5 +49,51 @@
             playNext();
         }
     </script>
+    <div id="cow-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var container = document.documentElement;
+      var cowContainer = document.getElementById('cow-container');
+
+      var createCow = function() {
+        var image = document.createElement('img');
+        image.src = '/path/to/cow-image.png'; // Replace with the actual path to your cow image
+        image.className = 'bouncing-image';
+
+        var posX = Math.random() * (container.clientWidth - image.offsetWidth);
+        var posY = Math.random() * (container.clientHeight - image.offsetHeight);
+        var directionX = 1;
+        var directionY = 1;
+        var speedX = 2;
+        var speedY = 2;
+
+        function animateImage() {
+          posX += speedX * directionX;
+          posY += speedY * directionY;
+
+          if (posX <= 0 || posX >= container.clientWidth - image.offsetWidth) {
+            directionX *= -1;
+          }
+          if (posY <= 0 || posY >= container.clientHeight - image.offsetHeight) {
+            directionY *= -1;
+          }
+
+          image.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+          requestAnimationFrame(animateImage);
+        }
+
+        image.addEventListener('click', function() {
+          window.location.href = '/cow';
+        });
+
+        animateImage();
+
+        cowContainer.appendChild(image);
+      };
+
+      setInterval(createCow, 2000); // Add a new cow every 2 seconds
+    });
+  </script>
 </body>
 </html>
