@@ -32,10 +32,17 @@
 
 <script>
     var audio = document.getElementById("moo-sound");
-    playSoundMultipleTimes(100);
+    var isPlaying = false;
+
+    document.body.addEventListener("mousemove", function() {
+        if (!isPlaying) {
+            playSoundMultipleTimes(100);
+        }
+    });
 
     function playSoundMultipleTimes(count) {
         var i = 0;
+        isPlaying = true;
 
         function playNext() {
             if (i < count) {
@@ -43,12 +50,15 @@
                 audio.play();
                 i++;
                 audio.addEventListener('ended', playNext);
+            } else {
+                isPlaying = false;
             }
         }
 
         playNext();
     }
 </script>
+
     <div id="cow-container"></div>
 
   <script>
