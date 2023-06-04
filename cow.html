@@ -1,21 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blank Page with Moo</title>
+    <title>Blank Page with Moo Sounds</title>
     <style>
         body {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bouncing-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100px;
-            height: 100px;
-            cursor: pointer;
-            z-index: 9999;
+            height: 100vh;
         }
     </style>
 </head>
@@ -26,78 +15,23 @@
     </audio>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var container = document.documentElement;
-            var audio = document.getElementById('moo-sound');
-            var cows = [];
-
-            function createBouncingCow() {
-                var cow = document.createElement('img');
-                cow.src = 'https://media.discordapp.net/attachments/1103479109373411418/1108926657508683836/pngegg.png?width=705&height=711'; // Replace with the actual path to the cow image
-                cow.className = 'bouncing-image';
-                cow.id = 'bouncing-image';
-                container.appendChild(cow);
-
-                var posX = Math.random() * (container.clientWidth - cow.offsetWidth);
-                var posY = Math.random() * (container.clientHeight - cow.offsetHeight);
-                var directionX = 1;
-                var directionY = 1;
-                var speedX = 2;
-                var speedY = 2;
-
-                cow.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
-
-                function animateCow() {
-                    posX += speedX * directionX;
-                    posY += speedY * directionY;
-
-                    if (posX <= 0 || posX >= container.clientWidth - cow.offsetWidth) {
-                        directionX *= -1;
-                    }
-                    if (posY <= 0 || posY >= container.clientHeight - cow.offsetHeight) {
-                        directionY *= -1;
-                    }
-
-                    cow.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
-                    requestAnimationFrame(animateCow);
-                }
-
-                animateCow();
-
-                return cow;
-            }
-
-            document.body.addEventListener('click', function() {
-                playSoundMultipleTimes(100);
-            });
-
-            function playSoundMultipleTimes(count) {
-                var i = 0;
-
-                function playNext() {
-                    if (i < count) {
-                        audio.currentTime = 0;
-                        audio.play();
-                        i++;
-
-                        var newCow = createBouncingCow();
-                        cows.push(newCow);
-
-                        audio.removeEventListener('ended', playNext);
-                        audio.addEventListener('ended', playNext);
-                    }
-                }
-
-                if (audio.paused) {
-                    playNext();
-                }
-            }
-
-            var image = createBouncingCow();
-            image.addEventListener('click', function() {
-                window.location.href = '/cow';
-            });
+        var audio = document.getElementById("moo-sound");
+        document.body.addEventListener("mousemove", function() {
+            playSoundMultipleTimes(100);
         });
+
+        function playSoundMultipleTimes(count) {
+            var i = 0;
+            function playNext() {
+                if (i < count) {
+                    audio.currentTime = 0;
+                    audio.play();
+                    i++;
+                    audio.addEventListener('ended', playNext);
+                }
+            }
+            playNext();
+        }
     </script>
 </body>
 </html>
