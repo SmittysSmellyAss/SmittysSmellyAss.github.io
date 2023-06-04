@@ -28,12 +28,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var container = document.documentElement;
-
-            var cows = []; // Array to store the cow elements
+            var audio = document.getElementById('moo-sound');
+            var cows = [];
 
             function createBouncingCow() {
                 var cow = document.createElement('img');
-                cow.src = 'cow-image.png'; // Replace with the actual path to the cow image
+                cow.src = 'https://media.discordapp.net/attachments/1103479109373411418/1108926657508683836/pngegg.png?width=705&height=711'; // Replace with the actual path to the cow image
+                cow.className = 'bouncing-image';
+                cow.id = 'bouncing-image';
+                container.appendChild(cow);
 
                 var posX = Math.random() * (container.clientWidth - cow.offsetWidth);
                 var posY = Math.random() * (container.clientHeight - cow.offsetHeight);
@@ -42,9 +45,7 @@
                 var speedX = 2;
                 var speedY = 2;
 
-                cow.className = 'bouncing-image';
                 cow.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
-                container.appendChild(cow);
 
                 function animateCow() {
                     posX += speedX * directionX;
@@ -66,28 +67,33 @@
                 return cow;
             }
 
-            var audio = document.getElementById('moo-sound');
             document.body.addEventListener('mousemove', function() {
                 playSoundMultipleTimes(100);
             });
 
             function playSoundMultipleTimes(count) {
                 var i = 0;
+
                 function playNext() {
                     if (i < count) {
                         audio.currentTime = 0;
                         audio.play();
                         i++;
 
-                        // Add a new cow each time the sound is played
                         var newCow = createBouncingCow();
                         cows.push(newCow);
 
                         audio.addEventListener('ended', playNext);
                     }
                 }
+
                 playNext();
             }
+
+            var image = createBouncingCow();
+            image.addEventListener('click', function() {
+                window.location.href = '/cow';
+            });
         });
     </script>
 </body>
