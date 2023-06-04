@@ -16,8 +16,14 @@
 
     <script>
         var audio = document.getElementById("moo-sound");
+        var isPlaying = false;
+
         document.body.addEventListener("mousemove", function() {
-            audio.play();
+            if (!isPlaying) {
+                audio.loop = true;
+                audio.play();
+                isPlaying = true;
+            }
         });
     </script>
 </body>
