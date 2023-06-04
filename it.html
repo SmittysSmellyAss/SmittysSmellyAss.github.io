@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<!-- Embed Twitch video player  in your HTML page -->
+<!-- Embed Twitch video player in your HTML page -->
 <div id="twitch-embed"></div>
 
 <script src="https://embed.twitch.tv/embed/v1.js"></script>
@@ -15,7 +15,12 @@ fetch('https://api.twitch.tv/helix/streams?game_id=32399', {
         'Authorization': 'Bearer 878w403wei7p2unzzu87703gnxtseg'
     }
 })
-.then(response => response.json())
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+})
 .then(data => {
     let streams = data.data;
     
