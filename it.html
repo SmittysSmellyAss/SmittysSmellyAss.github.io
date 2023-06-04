@@ -1,45 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Random CS:GO Stream</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-<body>
-    <h1>Redirecting to a Random CS:GO Stream...</h1>
+    <head>
+        <title>Random Redirect</title>
+        <script type="text/javascript">
+            var urls = [
+                "https://www.twitch.tv/voytashz",
+                "https://www.twitch.tv/tikka",
+                "https://www.twitch.tv/nicopr0d",
+                // Add more URLs here
+            ];
 
-    <script>
-        const getStreams = async () => {
-            try {
-                const response = await axios.get('https://api.twitch.tv/helix/streams', {
-                    headers: {
-                        'Client-ID': 'y8wxyw19ctwnw51yuvr15vf136t3q3',
-                        'Authorization': 'Bearer ' + 'uhbn35bj6cn1dw8y7gynw3q28nxu2e'
-                    },
-                    params: {
-                        game_id: '33214',
-                        first: 100  // Twitch limits us to 100 streams per request
-                    }
-                });
-
-                const streams = response.data.data;
-                const randomStream = streams[Math.floor(Math.random() * streams.length)];
-
-                return randomStream;
-            } catch (error) {
-                console.error('Failed to get streams:', error);
+            function randomRedirect() {
+                window.location = urls[Math.floor(Math.random() * urls.length)];
             }
-        }
-
-        const redirectToStream = async () => {
-            try {
-                const stream = await getStreams();
-                window.location.href = `https://twitch.tv/${stream.user_name}`;
-            } catch (error) {
-                console.error('Failed to redirect:', error);
-            }
-        }
-
-        redirectToStream();
-    </script>
-</body>
+            
+            window.onload = randomRedirect;
+        </script>
+    </head>
+    <body>
+    </body>
 </html>
