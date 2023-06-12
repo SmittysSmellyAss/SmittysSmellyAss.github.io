@@ -1,34 +1,39 @@
 // Connect to WebSocket server
 const socket = new WebSocket('ws://72.217.75.166:8080');
 
-// Get chat form, input and message display elements
-const chatForm = document.getElementById('message-form');
-const chatInput = document.getElementById('message-input');
-const chatMessages = document.getElementById('chat-messages');
-
-// Listen for a message from server
-socket.onmessage = function(event) {
-    displayMessage(event.data);
+socket.onopen = function() {
+    console.log('WebSocket connection opened');
 };
 
-// Display a message in chat
-function displayMessage(message) {
-    const messageElement = document.createElement('p');
-    messageElement.textContent = message;
-    chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight; // Auto scroll to bottom
-}
+socket.onerror = function(error) {
+    console.error('WebSocket error:', error);
+};
 
-// Send a message to server
-function sendMessage(message) {
-    socket.send(message);
-}
+socket.onmessage = function(event) {
+    console.log('Received message from server:', event.data);
+    
+    const chatLog = document.querySelector('#chat-log');
+    const newMessage = document.createElement('li');
+    newMessage.textContent = event.data;
+    chatLog.appendChild(newMessage);
+};
 
-// Handle form submission
-chatForm.onsubmit = function(event) {
+// Add event listener for chat form submission
+document.querySelector('#chat-form').addEventListener('submit', event => {
+    // Prevent the form from refreshing the page
     event.preventDefault();
 
-    // Send message and clear input
-    sendMessage(chatInput.value);
-    chatInput.value = '';
-}
+    // Get the message from the text input
+    const input = document.querySelector('#chat-input');
+    const message = input.value;
+    input.value = '';
+
+    // Send the message to the server
+    socket.send(message);
+
+    // Append the message to the chat log
+    const chatLog = document.querySelector('#chat-log');
+    const newMessage = document.createElement('li');
+    newMessage.textContent = `You: ${message}`;
+    chatLog.appendChild(newMessage);
+});
