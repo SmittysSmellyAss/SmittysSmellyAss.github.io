@@ -130,8 +130,74 @@
         opacity: 0;
         transform: scale(2);
       }
+    
+  .bouncing-image {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    z-index: 9999;
+  }
+ }     
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var images = document.querySelectorAll('.bouncing-image');
+    var container = document.documentElement;
+
+    var bouncingImages = [];
+
+    images.forEach(function(image) {
+      var posX = Math.random() * (container.offsetWidth - image.offsetWidth);
+      var posY = Math.random() * (container.offsetHeight - image.offsetHeight);
+      var directionX = 1;
+      var directionY = 1;
+      var speedX = 2;
+      var speedY = 2;
+
+      bouncingImages.push({
+        image: image,
+        posX: posX,
+        posY: posY,
+        directionX: directionX,
+        directionY: directionY,
+        speedX: speedX,
+        speedY: speedY
+      });
+    });
+
+    function animateImages() {
+      bouncingImages.forEach(function(bouncingImage) {
+        bouncingImage.posX += bouncingImage.speedX * bouncingImage.directionX;
+        bouncingImage.posY += bouncingImage.speedY * bouncingImage.directionY;
+
+        if (bouncingImage.posX <= 0 || bouncingImage.posX >= container.offsetWidth - bouncingImage.image.offsetWidth) {
+          bouncingImage.directionX *= -1;
+        }
+        if (bouncingImage.posY <= 0 || bouncingImage.posY >= container.offsetHeight - bouncingImage.image.offsetHeight) {
+          bouncingImage.directionY *= -1;
+        }
+
+        bouncingImage.image.style.transform = 'translate(' + bouncingImage.posX + 'px, ' + bouncingImage.posY + 'px)';
+      });
+
+      requestAnimationFrame(animateImages);
     }
-  </style>
+
+    images.forEach(function(image) {
+      image.addEventListener('click', function() {
+        window.location.href = '/cow';
+      });
+    });
+
+    animateImages();
+  });
+</script>
+</head>
+<body>
+  <img class="bouncing-image" src="https://media.discordapp.net/attachments/1103479109373411418/1116530970368151572/image2.png" alt="Bouncing Image 1">
+  <!-- Add more <img> tags with the "bouncing-image" class for additional images -->
+</body>
 
 </head>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
