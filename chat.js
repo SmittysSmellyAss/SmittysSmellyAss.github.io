@@ -12,19 +12,19 @@ socket.onerror = function(error) {
 socket.onmessage = function(event) {
     console.log('Received message from server:', event.data);
     
-    const chatLog = document.querySelector('#chat-log');
-    const newMessage = document.createElement('li');
+    const chatLog = document.querySelector('#chat-messages');
+    const newMessage = document.createElement('div');
     newMessage.textContent = event.data;
     chatLog.appendChild(newMessage);
 };
 
 // Add event listener for chat form submission
-document.querySelector('#chat-form').addEventListener('submit', event => {
+document.querySelector('#message-form').addEventListener('submit', event => {
     // Prevent the form from refreshing the page
     event.preventDefault();
 
     // Get the message from the text input
-    const input = document.querySelector('#chat-input');
+    const input = document.querySelector('#message-input');
     const message = input.value;
     input.value = '';
 
@@ -34,9 +34,9 @@ document.querySelector('#chat-form').addEventListener('submit', event => {
         socket.send(message);
 
         // Append the message to the chat log
-        const chatLog = document.querySelector('#chat-log');
-        const newMessage = document.createElement('li');
-        newMessage.textContent = `You: ${message}`;
+        const chatLog = document.querySelector('#chat-messages');
+        const newMessage = document.createElement('div');
+        const newMessage.textContent = `You: ${message}`;
         chatLog.appendChild(newMessage);
     } else {
         console.error('Cannot send message, WebSocket is not open');
