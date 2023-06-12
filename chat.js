@@ -28,12 +28,17 @@ document.querySelector('#chat-form').addEventListener('submit', event => {
     const message = input.value;
     input.value = '';
 
-    // Send the message to the server
-    socket.send(message);
+    // Check if WebSocket is connected before sending message
+    if (socket.readyState === WebSocket.OPEN) {
+        // Send the message to the server
+        socket.send(message);
 
-    // Append the message to the chat log
-    const chatLog = document.querySelector('#chat-log');
-    const newMessage = document.createElement('li');
-    newMessage.textContent = `You: ${message}`;
-    chatLog.appendChild(newMessage);
+        // Append the message to the chat log
+        const chatLog = document.querySelector('#chat-log');
+        const newMessage = document.createElement('li');
+        newMessage.textContent = `You: ${message}`;
+        chatLog.appendChild(newMessage);
+    } else {
+        console.error('Cannot send message, WebSocket is not open');
+    }
 });
