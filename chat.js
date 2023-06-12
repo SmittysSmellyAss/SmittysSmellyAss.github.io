@@ -1,5 +1,5 @@
 // Connect to WebSocket server
-const socket = new WebSocket('ws://72.217.75.166');
+const socket = new WebSocket('ws://72.217.75.166:8080');
 
 // Get chat form, input and message display elements
 const chatForm = document.getElementById('message-form');
