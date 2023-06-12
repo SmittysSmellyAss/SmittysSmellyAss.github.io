@@ -12,4 +12,46 @@
         </form>
         <script src="chat.js"></script>
     </body>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <script>
+        document.getElementById("message-input").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            var message = document.getElementById("message").value;
+            var location = "USERS LOCATION BASED ON IP"; // Replace with actual IP location retrieval code
+            
+            var webhookData = {
+                content: "User from " + location + " says: " + message
+            };
+
+            var webhookUrl = "https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld"; // Replace with your actual Discord webhook URL
+            
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(webhookData)
+            })
+            .then(function(response) {
+                console.log("Webhook sent successfully!");
+                // You can add any additional logic or UI updates here if needed
+            })
+            .catch(function(error) {
+                console.error("Error sending webhook:", error);
+            });
+        });
+    </script>
 </html>
