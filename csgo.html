@@ -8,6 +8,15 @@
       overflow: hidden;
     }
     
+    #bouncing-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      z-index: 9999;
+    }
   body {
     margin: 0;
     padding: 0;
@@ -130,79 +139,47 @@
         opacity: 0;
         transform: scale(2);
       }
-    
-  .bouncing-image {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-    z-index: 9999;
-  }
-      
-</style>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var images = document.querySelectorAll('.bouncing-image');
-    var container = document.documentElement;
+    }
+  </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var image = document.getElementById('bouncing-image');
+      var container = document.documentElement;
 
-    var bouncingImages = [];
-
-    images.forEach(function(image) {
-      var posX = Math.random() * (container.offsetWidth - image.offsetWidth);
-      var posY = Math.random() * (container.offsetHeight - image.offsetHeight);
+      var posX = Math.random() * (container.clientWidth - image.offsetWidth);
+      var posY = Math.random() * (container.clientHeight - image.offsetHeight);
       var directionX = 1;
       var directionY = 1;
       var speedX = 2;
       var speedY = 2;
 
-      bouncingImages.push({
-        image: image,
-        posX: posX,
-        posY: posY,
-        directionX: directionX,
-        directionY: directionY,
-        speedX: speedX,
-        speedY: speedY
-      });
-    });
+      function animateImage() {
+        posX += speedX * directionX;
+        posY += speedY * directionY;
 
-    function animateImages() {
-      bouncingImages.forEach(function(bouncingImage) {
-        bouncingImage.posX += bouncingImage.speedX * bouncingImage.directionX;
-        bouncingImage.posY += bouncingImage.speedY * bouncingImage.directionY;
-
-        if (bouncingImage.posX <= 0 || bouncingImage.posX >= container.offsetWidth - bouncingImage.image.offsetWidth) {
-          bouncingImage.directionX *= -1;
+        if (posX <= 0 || posX >= container.clientWidth - image.offsetWidth) {
+          directionX *= -1;
         }
-        if (bouncingImage.posY <= 0 || bouncingImage.posY >= container.offsetHeight - bouncingImage.image.offsetHeight) {
-          bouncingImage.directionY *= -1;
+        if (posY <= 0 || posY >= container.clientHeight - image.offsetHeight) {
+          directionY *= -1;
         }
 
-        bouncingImage.image.style.transform = 'translate(' + bouncingImage.posX + 'px, ' + bouncingImage.posY + 'px)';
-      });
+        image.style.transform = 'translate(' + posX + 'px, ' + posY + 'px)';
+        requestAnimationFrame(animateImage);
+      }
 
-      requestAnimationFrame(animateImages);
-    }
-
-    images.forEach(function(image) {
       image.addEventListener('click', function() {
         window.location.href = '/cow';
       });
+
+      animateImage();
     });
-
-    animateImages();
-  });
-</script>
-</head>
-<body>
-  <img class="bouncing-image" src="https://media.discordapp.net/attachments/1103479109373411418/1116530970368151572/image2.png" alt="Bouncing Image 1">
-  <!-- Add more <img> tags with the "bouncing-image" class for additional images -->
-</body>
-
-</head>
+  </script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
 </head>
-
+  <body>
+  <img id="bouncing-image" src="https://cdn.discordapp.com/attachments/1103479109373411418/1108926657508683836/pngegg.png" alt="Bouncing Image">
+</body>
 <body>
   <div class="shaker">
     <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
