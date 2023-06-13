@@ -1,21 +1,21 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Connect to WebSocket server
-    const socket = new WebSocket('wss://72.217.75.166:8080');
+    const socket = new WebSocket('wss://' + window.location.host);
 
-    socket.onopen = function() {
+    socket.onopen = function () {
         console.log('WebSocket connection opened');
     };
 
-    socket.onerror = function(error) {
+    socket.onerror = function (error) {
         console.error('WebSocket error:', error);
     };
 
-    socket.onmessage = function(event) {
+    socket.onmessage = function (event) {
         console.log('Received message from server:', event.data);
-        
+
         const chatLog = document.querySelector('#chat-messages');
-        console.log('Chat log:', chatLog);  // debug line
-        
+        console.log('Chat log:', chatLog); // debug line
+
         if (chatLog) {
             const newMessage = document.createElement('div');
             newMessage.textContent = event.data;
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Add event listener for chat form submission
     const form = document.querySelector('#message-form');
-    console.log('Form:', form);  // debug line
+    console.log('Form:', form); // debug line
 
     if (form) {
         form.addEventListener('submit', event => {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Append the message to the chat log
                 const chatLog = document.querySelector('#chat-messages');
-                
+
                 if (chatLog) {
                     const newMessage = document.createElement('div');
                     newMessage.textContent = `You: ${message}`;
@@ -56,3 +56,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 });
+
