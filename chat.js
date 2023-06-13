@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Connect to WebSocket server
-    const socket = new WebSocket('ws://72.217.75.166:8080');
+    const socket = new WebSocket('ws://rune-thirsty-zipper.glitch.me');
 
     socket.onopen = function () {
         console.log('WebSocket connection opened');
