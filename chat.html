@@ -60,50 +60,7 @@
         <button type="submit">Send</button>
     </form>
 
-    <script>
-        document.getElementById("message-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            var message = document.getElementById("message-input").value;
-
-            // Retrieve IP location using IP geolocation service
-            fetch('https://ipapi.co/json/')
-                .then(function(response) {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        throw new Error('Failed to fetch IP location');
-                    }
-                })
-                .then(function(data) {
-                    var location = data.city + ', ' + data.region + ', ' + data.country_name;
-                    
-                    var webhookData = {
-                        content: "User from " + location + " says: " + message
-                    };
-
-                    var webhookUrl = "https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld"; // Replace with your actual Discord webhook URL
-
-                    fetch(webhookUrl, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(webhookData)
-                    })
-                    .then(function(response) {
-                        console.log("Webhook sent successfully!");
-                        // You can add any additional logic or UI updates here if needed
-                    })
-                    .catch(function(error) {
-                        console.error("Error sending webhook:", error);
-                    });
-                })
-                .catch(function(error) {
-                    console.error("Error fetching IP location:", error);
-                });
-        });
-    </script>
+   
 
     <script src="chat.js"></script>
 </body>
