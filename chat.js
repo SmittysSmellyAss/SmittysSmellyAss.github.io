@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Connect to WebSocket server
-    const socket = new WebSocket('wss://72.217.75.166:8080/chat');
+    const socket = new WebSocket('wss://72.217.75.166:8080');
 
     socket.onopen = function () {
         console.log('WebSocket connection opened');
