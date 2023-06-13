@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Connect to WebSocket server
-    const socket = new WebSocket('wss://' + window.location.host);
+    const socket = new WebSocket('wss://72.217.75.166:443' + window.location.host);
 
     socket.onopen = function () {
         console.log('WebSocket connection opened');
