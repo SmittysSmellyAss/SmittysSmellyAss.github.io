@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   socket.onmessage = function (event) {
     const chatLog = document.querySelector('#chat-messages');
-
     if (chatLog) {
       const message = JSON.parse(event.data);
       const newMessage = document.createElement('div');
       newMessage.textContent = message.content;
+      newMessage.className = 'message-bubble-anon'; // <-- add this line
       chatLog.appendChild(newMessage);
       chatLog.scrollTop = chatLog.scrollHeight;
     }
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (chatLog) {
           const newMessage = document.createElement('div');
           newMessage.textContent = formattedMessage;
+          newMessage.className = 'message-bubble'; // <-- add this line
           chatLog.appendChild(newMessage);
           chatLog.scrollTop = chatLog.scrollHeight;
         }
