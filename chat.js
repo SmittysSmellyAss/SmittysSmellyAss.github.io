@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   // Connect to WebSocket server
-  const socket = new WebSocket('wss://rune-thirsty-zipper.glitch.me'); // replace with your WebSocket server URL
+  const socket = new WebSocket('wss://yrune-thirsty-zipper.glitch.me'); // replace with your WebSocket server URL
 
   socket.onopen = function () {
     console.log('WebSocket connection opened');
@@ -16,12 +16,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const chatLog = document.querySelector('#chat-messages');
 
     if (chatLog) {
-      const messages = JSON.parse(event.data);
-      messages.forEach((message) => {
-        const newMessage = document.createElement('div');
-        newMessage.textContent = message.content;
-        chatLog.appendChild(newMessage);
-      });
+      const message = JSON.parse(event.data);
+      const newMessage = document.createElement('div');
+      newMessage.textContent = message.content;
+      chatLog.appendChild(newMessage);
     }
   };
 
@@ -41,14 +39,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
       // Check if WebSocket is connected before sending the message
       if (socket.readyState === WebSocket.OPEN) {
         // Send the message to the server
-        socket.send(`Posch: ${message}`);
+        socket.send(message);
       } else {
         console.error('Cannot send message, WebSocket is not open');
       }
 
       // Send the message to the Discord channel using the webhook
+      const timestamp = new Date().toLocaleString();
+      const formattedMessage = `(${timestamp}) Posch: ${message}`;
+
       const webhookData = {
-        content: `Posch: ${message}`,
+        content: formattedMessage,
       };
 
       const webhookUrl = 'https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld'; // Replace with your actual Discord webhook URL
