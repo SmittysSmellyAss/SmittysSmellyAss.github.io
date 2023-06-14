@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   // Connect to WebSocket server
-  const socket = new WebSocket('wss://yrune-thirsty-zipper.glitch.me'); // replace with your WebSocket server URL
+  const socket = new WebSocket('wss://rune-thirsty-zipper.glitch.me'); // replace with your WebSocket server URL
 
   socket.onopen = function () {
     console.log('WebSocket connection opened');
@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       const newMessage = document.createElement('div');
       newMessage.textContent = message.content;
       chatLog.appendChild(newMessage);
+
+      // Scroll to the bottom of the chat log
+      chatLog.scrollTop = chatLog.scrollHeight;
     }
   };
 
@@ -46,7 +49,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       // Send the message to the Discord channel using the webhook
       const timestamp = new Date().toLocaleString();
-      const formattedMessage = `(${timestamp}) Posch: ${message}`;
+      const formattedMessage = `(Timestamp here) Posch: ${message}`;
 
       const webhookData = {
         content: formattedMessage,
@@ -67,7 +70,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .catch(function (error) {
           console.error('Error sending webhook:', error);
         });
+
+      // Clear the input field
+      input.value = '';
+
+      // Scroll to the bottom of the chat log
+      const chatLog = document.querySelector('#chat-messages');
+      chatLog.scrollTop = chatLog.scrollHeight;
     });
   }
 });
-
