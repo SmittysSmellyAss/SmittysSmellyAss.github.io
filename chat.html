@@ -4,53 +4,67 @@
     <title>Chat App</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #f3f3f3;
-            font-family: 'Roboto', sans-serif;
-        }
-        #chat-messages {
-            width: 80%;
-            height: 500px;
-            margin: 0 auto;
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            padding: 20px;
-            overflow-y: auto;
-            background: white;
-            box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
-            transition: box-shadow 1s ease;
-        }
-        #chat-messages:hover {
-            box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+    body {
+        background-color: #f3f3f3;
+        font-family: 'Roboto', sans-serif;
+    }
+    #chat-messages {
+        width: 80%;
+        height: 500px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        padding: 20px;
+        overflow-y: auto;
+        background: white;
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+        transition: box-shadow 1s ease;
+    }
+    #chat-messages:hover {
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+    }
+    #message-form {
+        width: 80%;
+        margin: 20px auto;
+        display: flex;
+        justify-content: space-between;
+    }
+    #message-input {
+        flex-grow: 1;
+        margin-right: 10px;
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid #ddd;
+        font-family: 'Source Code Pro', monospace;
+    }
+    #message-form button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 15px;
+        background: #3498db;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.5s ease;
+    }
+    #message-form button:hover {
+        background: #2980b9;
+    }
+
+    /* Added Media Queries for responsiveness on mobile devices */
+    @media (max-width: 600px) {
+        #chat-messages, #message-form {
+            width: 100%;
         }
         #message-form {
-            width: 80%;
-            margin: 20px auto;
-            display: flex;
-            justify-content: space-between;
+            flex-direction: column;
         }
         #message-input {
-            flex-grow: 1;
-            margin-right: 10px;
-            padding: 10px;
-            border-radius: 15px;
-            border: 1px solid #ddd;
-            font-family: 'Source Code Pro', monospace;
+            margin: 10px 0;
         }
-        #message-form button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 15px;
-            background: #3498db;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.5s ease;
-        }
-        #message-form button:hover {
-            background: #2980b9;
-        }
-    </style>
+    }
+</style>
+
 </head>
 
 <body>
