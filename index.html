@@ -103,6 +103,12 @@
     cursor: pointer;
     z-index: 9999;
   }
+	   #bottom-right-image {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      z-index: 9999;
+    }
 </style>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -159,6 +165,11 @@
 </script>
 </head>
 <body>
+	<a href="/chat" id="bottom-right-image">
+	    <img src="https://media.discordapp.net/attachments/1103479109373411418/1118377027523854488/pngwing.com.png" alt="Chat" />
+	  </a>	
+	
+	
   <img class="bouncing-image" src="https://media.discordapp.net/attachments/1103479109373411418/1116530970368151572/image2.png" alt="Bouncing Image 1">
   <!-- Add more <img> tags with the "bouncing-image" class for additional images -->
 </body>
