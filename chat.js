@@ -16,9 +16,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const chatLog = document.querySelector('#chat-messages');
 
     if (chatLog) {
-      const newMessage = document.createElement('div');
-      newMessage.textContent = event.data;
-      chatLog.appendChild(newMessage);
+      const messages = JSON.parse(event.data);
+      messages.forEach((message) => {
+        const newMessage = document.createElement('div');
+        newMessage.textContent = message.content;
+        chatLog.appendChild(newMessage);
+      });
     }
   };
 
@@ -66,3 +69,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   }
 });
+
