@@ -41,8 +41,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
         messageInput.value = '';
 
         const webhookUrl = DISCORD_WEBHOOK_URL;
-        const webhook = new Discord.WebhookClient({ url: webhookUrl });
-        webhook.send(`${alias}: ${message}`).catch(console.error);
+
+        const webhookData = {
+          content: `${alias}: ${message}`,
+        };
+
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(webhookData),
+        })
+        .then(function (response) {
+          console.log('Webhook sent successfully!');
+        })
+        .catch(function (error) {
+          console.error('Error sending webhook:', error);
+        });
 
         const chatLog = document.querySelector('#chat-messages');
         if (chatLog) {
