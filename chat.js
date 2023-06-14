@@ -42,6 +42,43 @@ document.addEventListener('DOMContentLoaded', (event) => {
       } else {
         console.error('Cannot send message, WebSocket is not open');
       }
+
+      // Retrieve IP location using IP geolocation service
+      fetch('https://ipapi.co/json/')
+        .then(function (response) {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Failed to fetch IP location');
+          }
+        })
+        .then(function (data) {
+          const timestamp = new Date().toLocaleString();
+          const location = data.city + ', ' + data.region + ', ' + data.country_name;
+
+          const webhookData = {
+            content: `(${timestamp}) User from ${location} says: ${message}`,
+          };
+
+          const webhookUrl = 'https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld'; // Replace with your actual Discord webhook URL
+
+          fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(webhookData),
+          })
+            .then(function (response) {
+              console.log('Webhook sent successfully!');
+            })
+            .catch(function (error) {
+              console.error('Error sending webhook:', error);
+            });
+        })
+        .catch(function (error) {
+          console.error('Error fetching IP location:', error);
+        });
     });
   }
 });
