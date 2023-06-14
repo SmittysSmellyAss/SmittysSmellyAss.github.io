@@ -12,6 +12,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
         }
         #chat-messages {
@@ -74,6 +75,7 @@
             padding: 20px;
             border-radius: 25px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            margin: auto;
         }
         #message-input, #alias-input {
             flex-grow: 1;
@@ -89,14 +91,14 @@
             border-color: #3498db;
         }
         #message-form button {
+            padding: 10px 20px;
             border: none;
             border-radius: 25px;
             background: #3498db;
             color: white;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.5s ease;
-            padding: 10px 20px;
+            transition: background 0.5s ease;
         }
         #message-form button:hover {
             background: #2980b9;
