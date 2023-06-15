@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Fetch and display existing logs
-    $.get('https://discord.com/api/channels/1118945873532035174/messages', function(data) {
+    $.get('https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld', function(data) {
         data.forEach(function(message) {
             var alias = message.author.username;
             var content = message.content;
