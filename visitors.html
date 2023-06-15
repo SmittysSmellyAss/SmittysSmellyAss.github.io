@@ -101,7 +101,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>See what others are saying</h1>
+        <h1>Here is what others are saying about PoschPlus.com</h1>
         <div class="logbook" id="logbook"></div>
         <h2>Submission Form:</h2>
         <form id="submissionForm" action="https://seemly-coral-expansion.glitch.me/webhook" method="POST">
@@ -130,7 +130,41 @@
                 .catch(error => console.error('Error fetching logbook:', error));
         }
 
-        fetchLogbook();
+        function submitMessage(alias, message) {
+            fetch('https://seemly-coral-expansion.glitch.me/webhook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: alias, content: message })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('alias').value = '';
+                        document.getElementById('message').value = '';
+                        fetchLogbook();
+                        location.reload(); // Refresh the page
+                    } else {
+                        console.error('Error sending message:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error sending message:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLogbook();
+
+            const form = document.getElementById('submissionForm');
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+
+                const alias = document.getElementById('alias').value;
+                const message = document.getElementById('message').value;
+
+                submitMessage(alias, message);
+            });
+        });
     </script>
 </body>
 </html>
