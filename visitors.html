@@ -88,7 +88,7 @@
     </style>
 </head>
 <body>
-    <h1>See what others are saying about Posch Plus</h1>
+    <h1>What others are saying:</h1>
     <div class="logbook" id="logbook"></div>
     <h2>Submission Form:</h2>
     <form class="submission-form" id="submissionForm" action="https://seemly-coral-expansion.glitch.me/webhook" method="POST">
@@ -128,7 +128,11 @@
                 .catch(error => console.error('Error fetching logbook:', error));
         }
 
-        fetchLogbook();
+        // Fetch logbook on page load and refresh
+        document.addEventListener('DOMContentLoaded', fetchLogbook);
+
+        // Fetch logbook when the page gains focus (e.g., new user visit)
+        window.addEventListener('focus', fetchLogbook);
     </script>
 </body>
 </html>
