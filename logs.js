@@ -1,24 +1,13 @@
 $(document).ready(function() {
-    var authToken = 'YMTA5Njg5NjYyOTgyODc2MzY1OA.G5yLbf.EVo-o7FdAlp1xV-ukSgD_BNjsCt01xO4tTJFZ0';
-    var channelId = '1118945873532035174';
+    var webhookUrl = 'https://discord.com/api/webhooks/1118954545784045710/t2Xm1b8BSZ1fqmYxhm8TDO7fYbSE9AQYVW-y9FTr0PhI6ZpGigWONeciviN-tjztJnXQ';
 
     // Fetch and display existing logs
-    $.ajax({
-        url: `https://discord.com/api/channels/${channelId}/messages`,
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${authToken}`
-        },
-        success: function(data) {
-            data.forEach(function(message) {
-                var alias = message.author.username;
-                var content = message.content;
-                appendLogEntry(alias, content);
-            });
-        },
-        error: function(error) {
-            console.error('Error fetching logs:', error);
-        }
+    $.get(webhookUrl + '/messages', function(data) {
+        data.forEach(function(message) {
+            var alias = message.author.username;
+            var content = message.content;
+            appendLogEntry(alias, content);
+        });
     });
 
     // Handle form submission
@@ -29,20 +18,10 @@ $(document).ready(function() {
         var message = $('#message').val();
 
         // Send message to Discord channel
-        $.ajax({
-            url: `https://discord.com/api/channels/${channelId}/messages`,
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${authToken}`
-            },
-            data: JSON.stringify({ content: message }),
-            contentType: 'application/json',
-            success: function(data) {
-                appendLogEntry(alias, message);
-            },
-            error: function(error) {
-                console.error('Error submitting log:', error);
-            }
+        $.post(webhookUrl, {
+            content: message
+        }, function(data) {
+            appendLogEntry(alias, message);
         });
 
         // Clear form fields
