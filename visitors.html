@@ -13,7 +13,7 @@
     <h1>Logbook - Site Visitor Submissions</h1>
     <div class="logbook" id="logbook"></div>
     <h2>Submission Form:</h2>
-    <form id="submissionForm" action="https://discord.com/api/webhooks/1118956540125265980/_dzSq604-oB09tl9IaWukcZn328fE86vZUOm6bcBA6i4YqeuCM4i-NjrlVPSNLKwAvoc" method="POST">
+    <form id="submissionForm" action="https://seemly-coral-expansion.glitch.me/webhook" method="POST">
         <label for="alias">Alias:</label>
         <input type="text" id="alias" name="username" required>
         <label for="message">Message:</label>
@@ -21,6 +21,24 @@
         <button type="submit">Submit</button>
     </form>
 
-    <script src="script.js"></script>
+    <script>
+        function fetchLogbook() {
+            fetch('https://seemly-coral-expansion.glitch.me/log')
+                .then(response => response.json())
+                .then(data => {
+                    const logbookDiv = document.getElementById('logbook');
+                    logbookDiv.innerHTML = '';
+
+                    data.forEach(log => {
+                        const entry = document.createElement('p');
+                        entry.innerText = `${log.alias}: ${log.message}`;
+                        logbookDiv.appendChild(entry);
+                    });
+                })
+                .catch(error => console.error('Error fetching logbook:', error));
+        }
+
+        fetchLogbook();
+    </script>
 </body>
 </html>
