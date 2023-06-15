@@ -15,15 +15,23 @@
         }
 
         .logbook {
-            max-height: 400px;
-            overflow-y: scroll;
             background-color: #333;
             padding: 10px;
             margin-bottom: 20px;
         }
 
-        .logbook p {
-            margin: 5px 0;
+        .testimonial {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #555;
+        }
+
+        .testimonial .alias {
+            font-weight: bold;
+        }
+
+        .testimonial .message {
+            margin-top: 5px;
         }
 
         .submission-form {
@@ -80,7 +88,7 @@
     </style>
 </head>
 <body>
-    <h1>Logbook - Site Visitor Submissions</h1>
+    <h1>See what others are saying about Posch Plus</h1>
     <div class="logbook" id="logbook"></div>
     <h2>Submission Form:</h2>
     <form class="submission-form" id="submissionForm" action="https://seemly-coral-expansion.glitch.me/webhook" method="POST">
@@ -100,9 +108,21 @@
                     logbookDiv.innerHTML = '';
 
                     data.forEach(log => {
-                        const entry = document.createElement('p');
-                        entry.innerText = `${log.alias}: ${log.message}`;
-                        logbookDiv.appendChild(entry);
+                        const testimonial = document.createElement('div');
+                        testimonial.className = 'testimonial';
+
+                        const alias = document.createElement('p');
+                        alias.className = 'alias';
+                        alias.innerText = log.alias;
+
+                        const message = document.createElement('p');
+                        message.className = 'message';
+                        message.innerText = log.message;
+
+                        testimonial.appendChild(alias);
+                        testimonial.appendChild(message);
+
+                        logbookDiv.appendChild(testimonial);
                     });
                 })
                 .catch(error => console.error('Error fetching logbook:', error));
