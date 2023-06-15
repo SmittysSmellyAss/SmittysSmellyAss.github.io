@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logbook - Site Visitor logs</title>
+    <style>
+        .logbook {
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <h1>Logbook - Site Visitor logs</h1>
+    <div class="logbook" id="logbook"></div>
+    <h2>Submission Form:</h2>
+    <form id="submissionForm">
+        <label for="alias">Alias:</label>
+        <input type="text" id="alias" required>
+        <label for="message">Message:</label>
+        <input type="text" id="message" maxlength="200" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="logs.js"></script>
+</body>
+</html>
