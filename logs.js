@@ -16,7 +16,7 @@ $(document).ready(function() {
         var message = $('#message').val();
 
         // Send message to Discord channel
-        $.post('https://discord.com/api/channels/1118945873532035174/messages', {
+        $.post('https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld', {
             content: message
         }, function(data) {
             appendLogEntry(alias, message);
