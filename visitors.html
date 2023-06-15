@@ -13,15 +13,14 @@
     <h1>Logbook - Site Visitor Submissions</h1>
     <div class="logbook" id="logbook"></div>
     <h2>Submission Form:</h2>
-    <form id="submissionForm">
+    <form id="submissionForm" action="https://discord.com/api/webhooks/1118956540125265980/_dzSq604-oB09tl9IaWukcZn328fE86vZUOm6bcBA6i4YqeuCM4i-NjrlVPSNLKwAvoc" method="POST">
         <label for="alias">Alias:</label>
-        <input type="text" id="alias" required>
+        <input type="text" id="alias" name="username" required>
         <label for="message">Message:</label>
-        <input type="text" id="message" maxlength="200" required>
+        <input type="text" id="message" name="content" maxlength="200" required>
         <button type="submit">Submit</button>
     </form>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="logs.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
