@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var webhookUrl = 'https://discord.com/api/webhooks/1118954545784045710/t2Xm1b8BSZ1fqmYxhm8TDO7fYbSE9AQYVW-y9FTr0PhI6ZpGigWONeciviN-tjztJnXQ';
+    var webhookUrl = 'https://discord.com/api/webhooks/1118956540125265980/_dzSq604-oB09tl9IaWukcZn328fE86vZUOm6bcBA6i4YqeuCM4i-NjrlVPSNLKwAvoc';
 
     // Fetch and display existing logs
     $.get(webhookUrl + '/messages', function(data) {
