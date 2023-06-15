@@ -100,22 +100,20 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Here is what others are saying about PoschPlus.com</h1>
-        <div class="logbook" id="logbook"></div>
-        <h2>Submission Form:</h2>
-        <form id="submissionForm" action="https://seemly-coral-expansion.glitch.me/webhook" method="POST">
-            <label for="alias">Alias:</label>
-            <input type="text" id="alias" name="username" required>
-            <label for="message">Message:</label>
-            <input type="text" id="message" name="content" maxlength="200" required>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+    <h1>Logbook - Site Visitor Submissions</h1>
+    <div class="logbook" id="logbook"></div>
+    <h2>Submission Form:</h2>
+    <form id="submissionForm">
+        <label for="alias">Alias:</label>
+        <input type="text" id="alias" name="alias" required>
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" maxlength="200" required>
+        <button type="submit">Submit</button>
+    </form>
 
     <script>
         function fetchLogbook() {
-            fetch('https://seemly-coral-expansion.glitch.me/log')
+            fetch('/log')
                 .then(response => response.json())
                 .then(data => {
                     const logbookDiv = document.getElementById('logbook');
@@ -131,19 +129,18 @@
         }
 
         function submitMessage(alias, message) {
-            fetch('https://seemly-coral-expansion.glitch.me/webhook', {
+            fetch('/webhook', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username: alias, content: message })
+                body: JSON.stringify({ alias: alias, message: message })
             })
                 .then(response => {
                     if (response.ok) {
                         document.getElementById('alias').value = '';
                         document.getElementById('message').value = '';
-                        fetchLogbook();
-                        location.reload(); // Refresh the page
+                        fetchLogbook(); // Fetch logbook after successful submission
                     } else {
                         console.error('Error sending message:', response.statusText);
                     }
