@@ -60,6 +60,7 @@
 
 
 
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -85,7 +86,19 @@
     </style>
 </head>
 <body>
-    <iframe src="https://www.youtube.com/embed/WckVsX5-uyE?autoplay=1&loop=1&playlist=WckVsX5-uyE" frameborder="0" allowfullscreen></iframe>
+    <iframe id="youtube-iframe" src="https://www.youtube.com/embed/WckVsX5-uyE?loop=1&playlist=WckVsX5-uyE" frameborder="0" allowfullscreen></iframe>
+
+    <script>
+        // Function to play the video when the page loads
+        function playVideo() {
+            var iframe = document.getElementById('youtube-iframe');
+            iframe.src += '&autoplay=1'; // Add autoplay=1 to the URL
+        }
+
+        // Call the playVideo function when the page is fully loaded
+        window.addEventListener('load', playVideo);
+    </script>
 </body>
 </html>
+
 
