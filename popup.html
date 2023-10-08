@@ -66,9 +66,24 @@
     <title>Congratulations, You Won!</title>
 </head>
 <body>
-    <video loop>
+    <video id="myVideo" loop>
         <source src="Congratulations, You Won!.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+
+    <script>
+        // Get a reference to the video element
+        var video = document.getElementById("myVideo");
+
+        // Function to play the video after a delay (1 second = 1000 milliseconds)
+        function playVideoWithDelay() {
+            setTimeout(function () {
+                video.play();
+            }, 500); 
+        }
+
+        // Call the playVideoWithDelay function when the page loads
+        window.onload = playVideoWithDelay;
+    </script>
 </body>
 </html>
