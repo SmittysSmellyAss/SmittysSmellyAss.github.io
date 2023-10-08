@@ -89,14 +89,18 @@
     <iframe id="youtube-iframe" src="https://www.youtube.com/embed/WckVsX5-uyE?loop=1&playlist=WckVsX5-uyE" frameborder="0" allowfullscreen></iframe>
 
     <script>
-        // Function to play the video when the page loads
-        function playVideo() {
-            var iframe = document.getElementById('youtube-iframe');
-            iframe.src += '&autoplay=1'; // Add autoplay=1 to the URL
-        }
-
-        // Call the playVideo function when the page is fully loaded
-        window.addEventListener('load', playVideo);
+        // Function to toggle video play/pause on spacebar press
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode === 32) { // 32 is the keycode for the spacebar
+                var iframe = document.getElementById('youtube-iframe');
+                if (iframe) {
+                    var player = iframe.contentWindow;
+                    if (player && player.postMessage) {
+                        player.postMessage('{"event":"command","func":"togglePlayPause","args":""}', '*');
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
