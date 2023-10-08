@@ -86,21 +86,23 @@
     </style>
 </head>
 <body>
-    <iframe id="youtube-iframe" src="https://www.youtube.com/embed/WckVsX5-uyE?loop=1&playlist=WckVsX5-uyE" frameborder="0" allowfullscreen></iframe>
+    <iframe id="youtube-iframe" src="https://www.youtube.com/embed/WckVsX5-uyE?autoplay=1&loop=1&playlist=WckVsX5-uyE" frameborder="0" allowfullscreen></iframe>
 
     <script>
-        // Function to toggle video play/pause on spacebar press
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode === 32) { // 32 is the keycode for the spacebar
-                var iframe = document.getElementById('youtube-iframe');
-                if (iframe) {
-                    var player = iframe.contentWindow;
-                    if (player && player.postMessage) {
-                        player.postMessage('{"event":"command","func":"togglePlayPause","args":""}', '*');
-                    }
+        // Function to simulate a spacebar press after a delay
+        function simulateSpacebarPress() {
+            var iframe = document.getElementById('youtube-iframe');
+            if (iframe) {
+                var player = iframe.contentWindow;
+                if (player && player.postMessage) {
+                    // Send a postMessage to simulate a spacebar press
+                    player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
                 }
             }
-        });
+        }
+
+        // Delay the spacebar press simulation
+        setTimeout(simulateSpacebarPress, 1000);
     </script>
 </body>
 </html>
