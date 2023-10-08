@@ -114,7 +114,7 @@
 </style>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var images = document.querySelectorAll('.ing-image');
+    var images = document.querySelectorAll('.bouncing-image');
     var container = document.documentElement;
 
     var bouncingImages = [];
@@ -127,8 +127,6 @@
       var speedX = 2;
       var speedY = 2;
 
-
-	      
       bouncingImages.push({
         image: image,
         posX: posX,
@@ -177,11 +175,9 @@
 	<div style="position: absolute; left: -9999px;">posch plus poschplus poschplus poschplus.com</div>
 	<div style="position: absolute; left: -9999px;">posch plus poschplus poschplus poschplus.com</div>
 	<div style="position: absolute; left: -9999px;">posch plus poschplus poschplus poschplus.com</div>
-
-	
   <img class="bouncing-image" src="https://media.discordapp.net/attachments/1103479109373411418/1116530970368151572/image2.png" alt="Bouncing Image 1">
   <img class="bouncing-image" src="https://media.discordapp.net/attachments/1103479109373411418/1159974793727189106/unnamed.png" alt="Bouncing Image 1">	<!-- Add more <img> tags with the "bouncing-image" class for additional images -->
-
+	
 </body>
 	
 	
@@ -629,40 +625,6 @@ flexibility(document.documentElement);
 </div>
 	</footer><!-- #colophon -->
 	</div><!-- #page -->
-
-
-
-
-<!--- fullscreen function  --->
-	
-<script>
-function toggleFullScreen(elem) {
-    // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
-    if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
-        if (elem.requestFullScreen) {
-            elem.requestFullScreen();
-        } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullScreen) {
-            elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
-        }
-    } else {
-        if (document.cancelFullScreen) {
-            document.cancelFullScreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitCancelFullScreen) {
-            document.webkitCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    }
-}
-
-</script>
-	
 <script id="astra-theme-js-js-extra">
 var astra = {"break_point":"921","isRtl":"","is_scroll_to_id":"","is_scroll_to_top":"","is_header_footer_builder_active":"1"};
 </script>
