@@ -61,49 +61,22 @@
 
 
 
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embedded YouTube Video</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <title>Open YouTube Video in Full-Screen</title>
 </head>
 <body>
-    <iframe id="youtube-iframe" src="https://www.youtube.com/embed/WckVsX5-uyE?autoplay=1&loop=1&playlist=WckVsX5-uyE" frameborder="0" allowfullscreen></iframe>
 
-    <script>
-        // Function to simulate a spacebar press after a delay
-        function simulateSpacebarPress() {
-            var iframe = document.getElementById('youtube-iframe');
-            if (iframe) {
-                var player = iframe.contentWindow;
-                if (player && player.postMessage) {
-                    // Send a postMessage to simulate a spacebar press
-                    player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                }
-            }
-        }
+<script>
+    function openFullScreenVideo() {
+        const videoUrl = "https://www.youtube.com/watch?v=WckVsX5-uyE";
+        const options = "fullscreen=yes,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no";
+        window.open(videoUrl, "_blank", options);
+    }
 
-        // Delay the spacebar press simulation
-        setTimeout(simulateSpacebarPress, 1000);
-    </script>
+    window.onload = openFullScreenVideo;
+</script>
+
 </body>
 </html>
 
