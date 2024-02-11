@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const WEB_SOCKET_URL = 'wss://rune-thirsty-zipper.glitch.me';
-    const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1117953159072055418/uDR4uH3mtx-ONQih1mVjkxEMKYsF4IBGhpqKsU3lUE64GyD_RdSyFe5TUpk9IaTDhtld';
+
     const socket = new WebSocket(WEB_SOCKET_URL);
   
     socket.onopen = function () {
