@@ -97,7 +97,7 @@ body {
     }
 #message-form button:hover {
     background: #2980b9;
-    }
+}
 @media screen and (max-width: 768px) {
     #chat-messages, #message-form {
         width: 95%;
