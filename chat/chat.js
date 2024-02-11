@@ -40,12 +40,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   
           messageInput.value = '';
   
-          const webhookUrl = DISCORD_WEBHOOK_URL;
-  
-          const webhookData = {
-            content: `${alias}: ${message}`,
-          };
-  
           const chatLog = document.querySelector('#chat-messages');
           if (chatLog) {
             const newMessage = document.createElement('div');
