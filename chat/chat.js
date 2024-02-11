@@ -46,20 +46,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             content: `${alias}: ${message}`,
           };
   
-          fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(webhookData),
-          })
-          .then(function (response) {
-            console.log('Webhook sent successfully!');
-          })
-          .catch(function (error) {
-            console.error('Error sending webhook:', error);
-          });
-  
           const chatLog = document.querySelector('#chat-messages');
           if (chatLog) {
             const newMessage = document.createElement('div');
