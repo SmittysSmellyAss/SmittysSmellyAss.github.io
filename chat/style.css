@@ -1,110 +1,79 @@
 body {
-    background-color: #e8eaf6 !important;
-    font-family: 'Roboto', sans-serif !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    flex-direction: column !important;
-    height: 100vh !important;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
-#chat-messages {
-    width: 80% !important;
-    height: 500px !important;
-    margin-bottom: 20px !important;
-    border-radius: 25px !important;
-    padding: 20px !important;
-    overflow-y: auto !important;
-    background: #fff !important;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
+
+#chatContainer {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    margin-top: 50px;
 }
-.message-bubble {
-    background-color: #3498db !important;
-    border-radius: 20px !important;
-    color: white !important;
-    padding: 10px !important;
-    margin-bottom: 10px !important;
-    max-width: 70% !important;
-    position: relative !important;
+
+#messages {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
 }
-.message-bubble::after {
-    content: '' !important;
-    position: absolute !important;
-    width: 0 !important;
-    height: 0 !important;
-    top: 0 !important;
-    left: 0 !important;
-    border: 15px solid !important;
-    border-color: #3498db transparent transparent transparent !important;
+
+.message {
+    margin-bottom: 5px;
 }
-.message-bubble-anon {
-    background-color: #95a5a6 !important;
-    border-radius: 20px !important;
-    color: white !important;
-    padding: 10px !important;
-    margin-bottom: 10px !important;
-    max-width: 70% !important;
-    position: relative !important;
-    align-self: flex-start !important;
+
+#aliasInput,
+#messageInput {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
-.message-bubble-anon::after {
-    content: '' !important;
-    position: absolute !important;
-    width: 0 !important;
-    height: 0 !important;
-    top: 0 !important;
-    right: 0 !important;
-    border: 15px solid !important;
-    border-color: #95a5a6 transparent transparent transparent !important;
+
+#setAliasButton,
+#sendButton {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #fa4903;
+    color: #fff;
+    
+    cursor: pointer;
 }
-#message-form {
-    width: 80% !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    background: #fff !important;
-    padding: 20px !important;
-    border-radius: 25px !important;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23) !important;
-    margin: auto !important;
+
+#setAliasButton:hover,
+#sendButton:hover {
+    background-color: #0056b3;
 }
-#message-input, #alias-input {
-    flex-grow: 1 !important;
-    margin-right: 20px !important;
-    padding: 10px !important;
-    border-radius: 25px !important;
-    border: 1px solid #ddd !important;
-    font-family: 'Source Code Pro', monospace !important;
-    transition: all 0.5s ease !important;
+
+#connectedUsers {
+    font-size: x-large;
+    margin-left: 10px;
+    text-align: left;
+    margin-top: 20px;
 }
-#message-input:focus, #alias-input:focus {
-    outline: none !important;
-    border-color: #3498db !important;
+
+#userList {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 10px;
+    border: #fa4903;
+    font-size:large;
+
+    border-radius: 8px;
+    border-style:outset;
+    border-color: #fa4903;
 }
-#message-form button {
-    padding: 10px 20px !important;
-    border: none !important;
-    border-radius: 25px !important;
-    background: #3498db !important;
-    color: white !important;
-    font-weight: 700 !important;
-    cursor: pointer !important;
-    transition: background 0.5s ease !important;
+
+#userList div {
+    margin-bottom: 5px;
 }
-#message-form button:hover {
-    background: #2980b9 !important;
-}
-@media screen and (max-width: 768px) {
-    #chat-messages, #message-form {
-        width: 95% !important;
-    }
-    #chat-messages {
-        height: 70vh !important;
-    }
-    #message-input, #alias-input {
-        font-size: 14px !important;
-    }
+
+#userList {
+    margin-left: 40px;
+    text-align: left;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: #fa4903;
 }
