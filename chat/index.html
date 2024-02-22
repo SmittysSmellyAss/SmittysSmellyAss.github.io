@@ -1,26 +1,28 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Chat with me now</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveChat with Posch and Pals</title>
+    <link rel="stylesheet" href="chat.css">
 </head>
-
 <body>
-    <div id="chat-messages"></div>
-    <form id="message-form">
-        <input type="text" id="alias-input" placeholder="Enter your alias">
-        <input type="text" id="message-input" placeholder="Type a message" required>
-        <button type="submit">Send</button>
-    </form>
-
+    <div id="chatContainer">
+        <div id="messages"></div>
+        <input type="text" id="aliasInput" placeholder="Set your alias (optional)">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="setAliasButton">Set Username</button>
+        <button id="sendButton">Send</button>
+    </div>
+    
+<article>
+    <div  class="container" style="border-style: outset; border-radius: 10%;" >
+        <p id="connectedUsers">Connected Users: <span id="userCount">0</span></p>
+            <p style="border:8px" id="userList"></p>
+    </div>
+</article>
     <script src="chat.js"></script>
-    
-
-      <a href="https://dev.poschplus.com">
-  <img class="bottom-image" src="https://media.discordapp.net/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Bottom Image 1">
-</a>
-    
-    
 </body>
 </html>
+
