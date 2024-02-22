@@ -1,54 +1,27 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    const WEB_SOCKET_URL = 'wss://rune-thirsty-zipper.glitch.me';
-
-    const socket = new WebSocket(WEB_SOCKET_URL);
-  
-    socket.onopen = function () {
-      console.log('WebSocket connection opened');
-    };
-  
-    socket.onerror = function (error) {
-      console.error('WebSocket error:', error);
-    };
-  
-    socket.onmessage = function (event) {
-      const chatLog = document.querySelector('#chat-messages');
-      if (chatLog) {
-        const message = JSON.parse(event.data);
-        const newMessage = document.createElement('div');
-        newMessage.textContent = message.content;
-        newMessage.className = 'message-bubble-anon'; // 
-        chatLog.appendChild(newMessage);
-        chatLog.scrollTop = chatLog.scrollHeight;
-      }
-    };
-  
-    const form = document.querySelector('#message-form');
-  
-    if (form) {
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const aliasInput = document.querySelector('#alias-input');
-        const messageInput = document.querySelector('#message-input');
-        const alias = aliasInput.value ? aliasInput.value : 'anon';
-        const message = messageInput.value;
-  
-        if (message) {
-          const timestamp = new Date().toLocaleString();
-          const formattedMessage = `(${timestamp}) ${alias}: ${message}`;
-          socket.send(JSON.stringify({ author: alias, content: message }));
-  
-          messageInput.value = '';
-  
-          const chatLog = document.querySelector('#chat-messages');
-          if (chatLog) {
-            const newMessage = document.createElement('div');
-            newMessage.textContent = formattedMessage;
-            newMessage.className = 'message-bubble'; // <-- add this line
-            chatLog.appendChild(newMessage);
-            chatLog.scrollTop = chatLog.scrollHeight;
-          }
-        }
-      });
-    }
-  });
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveChat with Posch and Pals</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div id="chatContainer">
+        <div id="messages"></div>
+        <input type="text" id="aliasInput" placeholder="Set your alias (optional)">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="setAliasButton">Set Username</button>
+        <button id="sendButton">Send</button>
+    </div>
+    
+<article>
+    <div  class="container" style="border-style: outset; border-radius: 10%;" >
+        <p id="connectedUsers">Connected Users: <span id="userCount">0</span></p>
+            <p style="border:8px" id="userList"></p>
+    </div>
+</article>
+    <script src="chat.js"></script>
+</body>
+</html>
