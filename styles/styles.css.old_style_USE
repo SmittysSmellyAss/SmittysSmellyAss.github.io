@@ -1,0 +1,143 @@
+
+
+html, body {
+    height: 100%;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#content {
+    overflow: auto;
+    height: 100%;
+    
+}
+
+#image.logo {
+    max-width: 10%;
+    max-height: 10%;
+
+    object-fit: contain;
+}
+
+
+.column1, .column2, .column3 {
+    background-color: blueviolet;
+    width: 300px;
+    float: right;
+    margin: 10px;
+
+}
+
+li {
+    display: inline;
+    padding: 5px;
+}
+
+a:link {
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(124, 0, 0) !important;
+    text-decoration: none !important;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: rgb(105, 26, 99) !important;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: rgb(3, 139, 87) !important;
+  }
+  
+  /* selected link */
+  a:active {
+    color: blue !important;
+  }
+  #containerdiv >div {
+  
+    background-color: burlywood;
+    border-style: outset;
+    border-radius: 7px 26px;
+  }
+  
+  #containerdiv >img {
+
+  }
+  .container {
+    
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+
+  }
+
+#nav {
+    overflow: auto;
+    border-radius: 7px 26px;
+    background: #73AD21;
+    border: 2px outset #d4d4d4;
+    background-color: rgba(37, 37, 37, 0.829) !important;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0;
+    padding: 1px;
+    height: fit-content !important;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    border-color: blueviolet;
+    display: inline-block;
+  
+}
+
+.nav a{
+
+    width: 80px;
+    height: 20px;
+    display: block;
+    float: center;
+    
+
+    display: inline-block;
+}
+
+#navlinks li {
+    border-radius: 7px 26px;
+    text-justify:auto;
+    color: black !important;
+    background: #73AD21;
+    padding: 8px;
+    width: fit-content !important;
+    display: inline-block;
+    list-style: none;
+    text-align: center !important;
+    border: 1px outset rgb(255, 255, 255);
+    background-color: rgb(110, 110, 110);
+    
+
+}
+
+.navlinks a {
+    color: black;
+    width: 100px;
+    height: 50px;
+    display: block;
+    float: left;
+}
+
+.img{
+    border-style: outset;
+
+}
+
+footer {
+
+    color: #73AD21;
+    border-radius: 7px 26px;
+    background: #73AD21;
+    border-color: #d4d4d4;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    border-color: blueviolet;
+}
+
+* {
+    margin: 0;
+}
+
+
+

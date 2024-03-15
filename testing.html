@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Twitch Stream Scraper</title>
+</head>
+<body>
+  <script>
+    // Function to redirect to a random stream
+    function redirectToStream(streams) {
+      if (streams.length > 0) {
+        var randomIndex = Math.floor(Math.random() * streams.length);
+        var randomStream = streams[randomIndex];
+        var url = 'https://www.twitch.tv/' + randomStream.user_login;
+        window.location.href = url;
+      } else {
+        console.log('No streams found with less than 20 viewers.');
+      }
+    }
+
+    // Function to scrape Twitch for CS:GO streams
+    function scrapeTwitch() {
+      var streams = [];
+      var requestCounter = 0;
+      
+      // Helper function to fetch the streams
+      function fetchStreams(cursor) {
+        var url = 'https://www.twitch.tv/directory/game/Counter-Strike%3A%20Global%20Offensive?sort=viewer_count&order=asc&first=100';
+        if (cursor) {
+          url += '&after=' + cursor;
+        }
+
+        fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            var doc = new DOMParser().parseFromString(data, 'text/html');
+            var streamElements = doc.querySelectorAll('.ScThumbnailBrowse-imageContainer');
+
+            for (var i = 0; i < streamElements.length; i++) {
+              var streamElement = streamElements[i];
+              var viewerCountElement = streamElement.querySelector('.ScThumbnailBrowse-viewerCount');
+              var viewerCount = parseInt(viewerCountElement.textContent.replace(/[^\d]/g, ''));
+
+              if (viewerCount < 20) {
+                var stream = {
+                  user_login: streamElement.getAttribute('href').substring(1),
+                  viewer_count: viewerCount
+                };
+                streams.push(stream);
+              }
+            }
+
+            var nextCursorElement = doc.querySelector('.ScRelativeReactTooltipScroller-link--opaque');
+            var nextCursor = nextCursorElement ? nextCursorElement.getAttribute('data-a-target') : null;
+            requestCounter++;
+
+            if (nextCursor && requestCounter < 5) {
+              fetchStreams(nextCursor);
+            } else {
+              redirectToStream(streams);
+            }
+          })
+          .catch(error => {
+            console.log('Error occurred while scraping Twitch streams:', error);
+          });
+      }
+
+      // Start scraping Twitch
+      fetchStreams(null);
+    }
+
+    // Call the scrapeTwitch function on page load
+    scrapeTwitch();
+  </script>
+</body>
+</html>

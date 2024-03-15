@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+
+  }
+
+#livechat-button {
+  position: sticky;
+  bottom: 2%;
+  right: 0%;
+
+}
+footer {
+  position: absolute;
+  margin-left: 0% !important;
+  bottom: -1px;
+  color: #73AD21;
+  overflow: auto;
+  border-radius: 7px 26px;
+  background: #73AD21;
+  border: 2px;
+  border-style: outset;
+  background-color: rgb(27, 9, 9) !important;
+  text-align: center;
+  padding: 0px;
+  height: fit-content !important;
+  width: 100%;
+  font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+  border-color: blueviolet;
+  display: inline-block;
+}
+
+#titleplacer >div {
+  margin: auto;
+  border-radius: 7px 26px;
+  padding: 1%;
+  align-content: center;
+  position:  relative;
+  font-size: x-large;
+  font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: oblique;
+  border-style: double;
+  border: 3px;
+  border-color: rgb(255, 255, 255);
+  text-align: center;
+  background-color: rgba(193, 202, 112, 0.678);
+  width: fit-content;
+  height: fit-content;
+  margin-bottom: 2vh;
+  margin-top: 3vh;
+}
+
+#containerdiv >div {
+  padding: 1em;
+  max-width: 70%;
+}
+
+#containerdiv >img {
+  max-width: 400px;
+  max-height: 600px;
+  border: solid 3px;
+}
+.container {
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+#nav {
+  overflow: auto;
+  border-radius: 7px 26px;
+  border: 2px outset;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0;
+  padding: 10px;
+  height: fit-content !important;
+  font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+  display: inline-block;
+
+}
+
+.nav a{
+
+  width: 80px;
+  height: 20px;
+  display: block;
+  float: center;
+  
+
+  display: inline-block;
+}
+
+#navlinks li {
+  border-radius: 7px 26px;
+  text-justify:auto;
+  padding: 8px;
+  width: fit-content !important;
+  display: inline-block;
+  list-style: none;
+  text-align: center !important;
+  border: 1px outset;
+ 
+  
+
+}
+
+.navlinks a {
+  width: 100px;
+  height: 50px;
+  display: block;
+  float: left;
+}
+
+.column1, .column2, .column3 {
+
+  width: 300px;
+  float: right;
+  margin: 10px;
+
+}
+
+li {
+  display: inline;
+  padding: 5px;
+}

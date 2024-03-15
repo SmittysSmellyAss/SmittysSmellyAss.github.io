@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveChat with Posch and Pals</title>
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/rollingtheme.css">
+    <link rel="stylesheet" href="../styles/basic_layout.css">
+
+
+</head>
+<body> 
+    <header>
+        
+            <script id="replace_with_navbar" src="../js/navbar.js" ></script>
+
+
+    </header>
+    
+    <div>            
+        <div class="connectedUserInfoBox" style="border-style: outset; border-radius: 10%;" >
+            <div class="container"  >
+                <p id="connectedUsers">Connected Users: <span id="userCount">0</span></p>
+                <p style="border-style: outset; border-radius: 10%;" id="userList"></p>
+            </div>
+        </div>
+        <div id="chatContainer">
+
+            <div id="messages"></div>
+            <input type="text" id="aliasInput" placeholder="Set your alias (optional)">
+            <input type="text" id="messageInput" placeholder="Type your message...">
+
+            <button id="setAliasButton">Set Username</button>
+            <button id="sendButton">Send</button>
+
+        </div>
+
+    </div>
+
+    
+    
+    <script src="chat.js" async></script>
+
+
+
+    <div class="footer">
+        <script id="replace_with_footer" src="/js/footer.js"></script> 
+    </div>
+</body>
+</html>

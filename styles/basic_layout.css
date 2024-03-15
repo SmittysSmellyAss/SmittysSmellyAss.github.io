@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+body {
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+main {
+
+  flex-grow: 1;
+
+}
+/* Site Header */
+
+header {
+
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 3vmax;
+    display: flex !important;
+    background-color: brown !important;
+    background-image: url("/images/rainbow.jpg");
+    color: brown !important;
+    height: 7vmax !important;
+    width: 100%;
+    
+}
+
+
+
+
+  /* Navbar links */
+
+  #nav {
+    z-index: 99;
+    
+    overflow: auto;
+    border-radius: 7px 26px;
+    border: 2px outset;
+    position: absolute !important;
+    top: 0 !important;
+    right: 0;
+    padding: 10px;
+    width: 30vw;
+    height: fit-content !important;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    display: inline-block;
+  
+  }
+  .nav img{
+    top: .1vmax;
+    overflow: hidden;
+    position: absolute;
+    width: 2.8vmax;
+    height: auto;
+    right: 28vmax;
+    
+  }
+
+  .nav h1{
+    color: blue;
+    top: .1vmax;
+    overflow: hidden;
+    margin-left: .3vmax;
+    display: inline;
+    font-size: 1.8vmax;
+    width: fit-content;
+
+
+  }
+  .nav h2{
+    top: 0%;
+    margin-left: .5vmax;
+    overflow: hidden;
+    display: inline;
+    font-size: .8vmax;
+    width: fit-content;
+
+  }
+  
+  .nav a{
+  
+    width: auto;
+    height: auto;
+    display: block;
+    float: center;
+    display: inline-block;
+  }
+  
+  #navlinks li {
+    border-radius: 7px 26px;
+    text-justify:auto;
+    padding: 8px;
+    width: fit-content !important;
+    display: inline-block;
+    list-style: none;
+    text-align: center !important;
+    border: 1px outset;
+   
+    
+  
+  }
+  
+  .navlinks a {
+    width: 100px;
+    height: 50px;
+    display: block;
+    float: left;
+  }
+  
+  .column1, .column2, .column3 {
+  
+    width: 300px;
+    float: right;
+    margin: 10px;
+  
+  }
+  
+  li {
+    display: inline;
+    padding: 5px;
+  }
+
+/* Footer Styling */
+
+.footer >*{
+    
+    left: 0;
+    bottom: 0 !important;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+    border-radius: 7px 26px;
+    margin-top: 2vh;
+    position:fixed;
+    
+    
+    
+}
+
+.footer >div {
+    
+
+  
+  
+}
+
+.footer {
+    
+}
+
+article {
+
+    flex-grow: 1;
+  }
+
+
+
+/* Site items */
+
+  #livechat-button {
+    position: relative;
+    bottom: 2%;
+    right: 0%;
+  
+}
+
+
+#titleplacer >div {
+    margin: auto;
+    border-radius: 7px 26px;
+    padding: 1%;
+    align-content: center;
+    position:  relative;
+    font-size: auto;
+    font-style: oblique;
+    border-style: double;
+    border: 3px;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 2vh;
+    margin-top: 3vh;
+  }
+
+#containerdiv >div {
+    padding: 1em;
+    max-width: 70%;
+    font-size: 100%;
+}
+
+#containerdiv >img {
+    max-width: 15vmax;
+    max-height: auto;
+    border: solid 3px;
+}
+  .container {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+}
+

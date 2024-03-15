@@ -1,0 +1,105 @@
+header {
+
+    background-color: #817d7d;
+}
+
+.connectedUserInfoBox {
+    overflow: auto;
+    resize: both;
+    background-color: #817d7d;
+    position: absolute;
+    top: 75px
+    left: 0%;
+    width:fit-content;
+
+
+
+
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+#chatContainer {
+    margin-left: 11% !important;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    margin-top: 75px;
+
+}
+
+#messages {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-bottom: 5px;
+}
+
+#aliasInput,
+#messageInput {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#setAliasButton,
+#sendButton {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #fa4903;
+    color: #fff;
+    
+    cursor: pointer;
+}
+
+#setAliasButton:hover,
+#sendButton:hover {
+    background-color: #0056b3;
+}
+
+#connectedUsers {
+    font-size: x-large;
+    margin-left: 1%;
+    text-align: left;
+    margin-top: 20px;
+}
+
+#userList {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-left: 5%;
+    border: #3803fa;
+    font-size:large;
+
+    border-radius: 8px;
+    border-style:outset;
+    border-color: #3803fa;
+    background-color: #adadad;
+    width:fit-content;
+}
+
+#userList div {
+    margin-bottom: 5px;
+    background-color: #adadad;
+    width:fit-content;
+}
+
+#userList {
+    
+    text-align: left;
+    padding: 1%;
+    border-radius: 8px;
+    border: #3803fa;
+}

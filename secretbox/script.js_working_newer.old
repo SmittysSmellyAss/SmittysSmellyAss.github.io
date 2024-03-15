@@ -1,0 +1,72 @@
+document.addEventListener("DOMContentLoaded", function() {
+    const videoPlayer = document.getElementById("video-player");
+    const playBtn = document.getElementById("play-btn");
+    const replaceBtn = document.getElementById("replace-btn");
+
+    // Array of video file names in your directory
+    const videos = [
+        "fan_videos/video1.mp4",
+        "fan_videos/video2.mp4",
+        "fan_videos/video3.mp4",
+        "fan_videos/video4.mp4",
+        "fan_videos/video5.mp4",
+        "fan_videos/video6.mp4",
+        "fan_videos/video7.mp4",
+        "fan_videos/video8.mp4",
+        "fan_videos/video9.mp4",
+        "fan_videos/video10.mp4",
+        "fan_videos/video11.mp4",
+        "fan_videos/video13.mp4",
+        "fan_videos/video14.mp4",
+        "fan_videos/video15.mp4",
+        "fan_videos/video16.mp4",
+        "fan_videos/video17.mp4",
+        "fan_videos/video18.mp4",
+        "fan_videos/video19.mp4",
+        "fan_videos/video20.mp4",
+        "fan_videos/video21.mp4",
+        "fan_videos/video22.mp4",
+        "fan_videos/video23.mp4",
+        "fan_videos/video24.mp4",
+        "fan_videos/video25.mp4"
+        
+    ];
+
+    let lastThreeVideos = []; // Array to store the last three videos shown
+
+    function loadRandomVideo() {
+        // Filter out the last three videos from the list of available videos
+        const availableVideos = videos.filter(video => !lastThreeVideos.includes(video));
+
+        // If there are fewer than two unique videos available, reset the array
+        if (availableVideos.length < 2) {
+            lastThreeVideos = [];
+        }
+
+        // Randomly select a video from the available videos
+        const randomIndex = Math.floor(Math.random() * availableVideos.length);
+        const randomVideo = availableVideos[randomIndex];
+
+        // Add the selected video to the lastThreeVideos array
+        lastThreeVideos.push(randomVideo);
+
+        // If the lastThreeVideos array exceeds three elements, remove the oldest element
+        if (lastThreeVideos.length > 3) {
+            lastThreeVideos.shift();
+        }
+
+        // Set the video player source to the selected video
+        videoPlayer.src = randomVideo;
+    }
+
+    playBtn.addEventListener("click", function() {
+        videoPlayer.play();
+    });
+
+    replaceBtn.addEventListener("click", function() {
+        loadRandomVideo();
+    });
+
+    // Load a random video when the page loads
+    loadRandomVideo();
+});

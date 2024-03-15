@@ -1,0 +1,44 @@
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    text-align: center; /* Center align images */
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease;
+    margin: 0 auto; /* Center the slide */
+}
+
+.carousel-slide img {
+    max-width: 30vmax;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    margin: auto; /* Center the image */
+}
+
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(126, 236, 0, 0.87);
+    border: none;
+    cursor: pointer;
+    padding: 50px;
+    z-index: 1; /* Ensure buttons are above the carousel */
+}
+
+.prev {
+    left: 10px; /* Adjust as needed */
+}
+
+.next {
+    right: 10px; /* Adjust as needed */
+}

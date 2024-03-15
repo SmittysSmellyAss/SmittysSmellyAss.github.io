@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with me now</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="chat-messages"></div>
+    <form id="message-form">
+        <input type="text" id="alias-input" placeholder="Enter your alias">
+        <input type="text" id="message-input" placeholder="Type a message" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <script src="chat.js"></script>
+    
+
+      <a href="https://dev.poschplus.com">
+  <img class="bottom-image" src="https://media.discordapp.net/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Bottom Image 1">
+</a>
+    
+    
+</body>
+</html>

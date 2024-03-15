@@ -1,0 +1,29 @@
+header {
+    display: flex !important;
+    background-color: brown !important;
+    color: brown !important;
+    height: auto !important;
+    width: 100%;
+    
+}
+
+header >nav {
+
+}
+
+.csgo {
+    position: relative;
+    width: 40vmax !important;
+    height: auto;
+
+    color: blue !important;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15vmax;
+}
+
+.csgo >img {
+    position: relative;
+    
+
+}

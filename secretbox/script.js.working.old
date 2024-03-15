@@ -1,0 +1,37 @@
+document.addEventListener("DOMContentLoaded", function() {
+    const videoPlayer = document.getElementById("video-player");
+    const playBtn = document.getElementById("play-btn");
+    const replaceBtn = document.getElementById("replace-btn");
+
+    // Array of video file names in your directory
+    const videos = [
+        "fan_videos/video1.mp4",
+        "fan_videos/video2.mp4",
+        "fan_videos/video3.mp4",
+        "fan_videos/video4.mp4",
+        "fan_videos/video5.mp4",
+        "fan_videos/video6.mp4",
+        "fan_videos/video7.mp4",
+        "fan_videos/video8.mp4",
+        "fan_videos/video9.mp4",
+        "fan_videos/video10.mp4",
+        "fan_videos/video11.mp4"
+    ];
+
+    function loadRandomVideo() {
+        const randomIndex = Math.floor(Math.random() * videos.length);
+        const randomVideo = videos[randomIndex];
+        videoPlayer.src = randomVideo;
+    }
+
+    playBtn.addEventListener("click", function() {
+        videoPlayer.play();
+    });
+
+    replaceBtn.addEventListener("click", function() {
+        loadRandomVideo();
+    });
+
+    // Load a random video when the page loads
+    loadRandomVideo();
+});

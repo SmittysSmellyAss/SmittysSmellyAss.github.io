@@ -1,0 +1,21 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatroom</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="chatContainer">
+        <div id="messages"></div>
+        <input type="text" id="aliasInput" placeholder="Set your alias (optional)">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button id="sendButton">Send</button>
+    </div>
+    <p id="connectedUsers">Connected Users: <span id="userCount">0</span></p>
+
+    <script src="chat.js"></script>
+</body>
+</html>

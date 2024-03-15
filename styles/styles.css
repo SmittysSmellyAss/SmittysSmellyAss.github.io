@@ -1,0 +1,189 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* The header container */
+.header {
+    background-color: #F1F1F1;
+    text-align: center;
+    padding: 20px;
+  }
+
+#image.logo {
+
+}
+  
+  #nav {
+    background: #73AD21;
+    background-color: rgba(37, 37, 37, 0.829) !important;
+    height: fit-content !important;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    border-color: blueviolet;
+    display: inline-block;
+
+}
+
+.nav a{
+
+    width: 80px;
+    height: 20px;
+    display: block;
+    float: center;
+    
+
+    display: inline-block;
+}
+  /* Navbar links */
+
+  #navlinks li {
+    border-radius: 7px 26px;
+    text-justify:auto;
+    color: black !important;
+    background: #73AD21;
+    padding: 8px;
+    width: fit-content !important;
+    display: inline-block;
+    list-style: none;
+    text-align: center !important;
+    border: 1px outset rgb(255, 255, 255);
+    background-color: rgb(110, 110, 110);
+    
+
+}
+  /* Links - change color on hover */
+
+.navlinks a {
+    color: black;
+    width: 100px;
+    height: 50px;
+    display: block;
+    float: left;
+}
+
+  /* Footer Style */
+
+  .footer >*{
+    color: #73AD21;
+    background: #73AD21;
+    border: 5px;
+    background-color: rgb(27, 9, 9) !important;
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    border-color: blueviolet;
+    
+}
+
+
+
+
+/* Image Styling */
+.img{
+    border-style: outset;
+
+}
+
+/* Site Items */
+
+  #livechat-button {
+
+  
+}
+
+#titleplacer >div {
+
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    border-color: rgb(255, 255, 255);
+    background-color: rgba(193, 202, 112, 0.678);
+  }
+
+
+
+
+
+
+
+#content {
+    overflow: auto;
+    height: 100%;
+    
+}
+
+
+
+
+.column1, .column2, .column3 {
+    background-color: blueviolet;
+    width: 300px;
+    float: right;
+    margin: 10px;
+
+}
+
+li {
+    display: inline;
+    padding: 5px;
+}
+
+a:link {
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(124, 0, 0) !important;
+    text-decoration: none !important;
+}
+  
+  /* visited link */
+  a:visited {
+    color: rgb(105, 26, 99) !important;
+}
+  
+  /* mouse over link */
+  a:hover {
+    color: rgb(3, 139, 87) !important;
+}
+  
+  /* selected link */
+  a:active {
+    color: blue !important;
+}
+  #containerdiv >div {
+  
+    background-color: burlywood;
+    border-style: outset;
+    border-radius: 7px 26px;
+}
+  
+  #containerdiv >img {
+
+}
+  .container {
+    
+    font-family: 'red serifs', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+#bottom-right-image {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.bouncing-image {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+
+
+
