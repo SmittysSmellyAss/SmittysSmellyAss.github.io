@@ -29,7 +29,13 @@ document.addEventListener("DOMContentLoaded", function() {
         "fan_videos/video22.mp4",
         "fan_videos/video23.mp4",
         "fan_videos/video24.mp4",
-        "fan_videos/video25.mp4"
+        "fan_videos/video25.mp4",
+        "fan_videos/video26.mp4",
+        "fan_videos/video27.mp4",
+        "fan_videos/video25.mp4",
+        "fan_videos/video28.mp4",
+        "fan_videos/video29.mp4",
+        "fan_videos/video30.mp4"
         
     ];
 
