@@ -2,6 +2,18 @@
 <html>
 <head>
   <title>CSGO</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
+  <link rel="stylesheet" href="/styles/basic_layout.css">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="sheetcust.css">
+</head>
+<body>
+
+  <header>
+  <!--  NAV Bar-->
+  <script id="replace_with_navbar" src="/js/navbar.js"></script>
+  </header>
+
   <style>
     body {
       position: relative;
@@ -30,37 +42,7 @@
     background-position: center;
   }
 
-  .carousel {
-    position: relative;
-    width: 80%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio (adjust as needed) */
-    margin: 0 auto;
-    overflow: hidden;
-  }
 
-.carousel img {
-  display: block;
-  margin: 0 auto;
-  width: auto;
-  height: auto;
-  max-width: 60vmax;
-  max-height: auto;
-  object-fit: contain;
-}
-
-    /* Additional styles to center the carousel */
-    .slick-list {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .slick-slide {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
     /* Rest of the styles */
 
@@ -143,9 +125,21 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="/styles/basic_layout.css">
-  <link rel="stylesheet" href="/styles/styles.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
+
+  <div id="titleplacer">
+    <div>Look at Ballen play</div>
+</div>
+<div id="containerdiv" class="container"></div>
+<div class="carousel-container">
+    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+    <div class="carousel-wrapper">
+        <div class="carousel-slide" id="carouselSlide">
+            <script src="stuff.js"></script>
+        </div>
+    </div>
+    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+</div>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var images = document.querySelectorAll('.bouncing-image');
@@ -199,10 +193,6 @@
       animateImages();
     });
   </script>
-</head>
-<body>
-  <!--  NAV Bar-->
-  <script id="replace_with_navbar" src="/js/navbar.js"></script>
 
   <!-- STEAM AVATARS GO HERE! -->
   <img class="bouncing-image" src="https://avatars.cloudflare.steamstatic.com/7284a72f2cbb07973a510f5970293dddf4a10d26_full.jpg" alt="Bouncing Image">
@@ -216,8 +206,8 @@
   
   <!-- STEAM AVATARS GO HERE! -->
   <!-- Add more <img> tags with the "bouncing-image" class for additional images -->
-</body>
-<body>
+
+
   <div class="shaker">
     <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
     <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
@@ -228,12 +218,7 @@
     <img class="top-image" src="https://media.discordapp.net/attachments/1103479109373411418/1109264718666940497/56a5dd0a53584e8afa92b84a8ae9878bcbd33f87da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
   </div>
 
- <div class="carousel">
-    <img src="/csgo/pix/1.png" alt="Image 1">
-    <img src="/csgo/pix/2.png" alt="Image 1">
 
-
-  </div>
 
 
   <a href="https://dev.poschplus.com">
@@ -244,16 +229,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('.carousel').slick({
-        autoplay: true,        // Enable autoplay
-        autoplaySpeed: 7000,   // Set autoplay speed in milliseconds
-        pauseOnHover: true     // Pause autoplay when hovering over the carousel
 
-      });
-    });
-  </script>
 
 <div class="footer">
     <script id="replace_with_footer" src="/js/footer.js"></script> 
