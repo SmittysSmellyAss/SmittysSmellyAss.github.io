@@ -35,7 +35,15 @@ document.addEventListener("DOMContentLoaded", function() {
         "fan_videos/video25.mp4",
         "fan_videos/video28.mp4",
         "fan_videos/video29.mp4",
-        "fan_videos/video30.mp4"
+        "fan_videos/video31.mp4",
+        "fan_videos/video32.mp4",
+        "fan_videos/video33.mp4",
+        "fan_videos/video34.mp4",
+        "fan_videos/video35.mp4",
+        "fan_videos/video36.mp4",
+        "fan_videos/video37.mp4",
+        "fan_videos/video38.mp4"
+        
         
     ];
 
