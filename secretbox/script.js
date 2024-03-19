@@ -69,7 +69,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Get the next video path
-        const nextVideo = shuffledVideos[currentIndex];
+        const nextVideo = shuffledVideos[currentIndex        "fan_videos/video40.mp4",
+];
 
         // Set the video player source to the next video
         videoPlayer.src = nextVideo;
