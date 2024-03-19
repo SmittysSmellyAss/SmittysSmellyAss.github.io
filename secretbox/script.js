@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", function() {
         "fan_videos/video39.mp4"
         
         
-    ];
+            "fan_videos/video40.mp4",
+];
 
     let shuffledVideos = shuffle(videos.slice()); // Make a copy of the videos array and shuffle it
     let currentIndex = 0; // Index to keep track of the current video
