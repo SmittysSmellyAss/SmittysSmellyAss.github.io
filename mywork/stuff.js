@@ -3,6 +3,7 @@ const images = [
     "pix/2.jpg",
     "pix/3.png",
     // Add more image URLs as needed
+    "pix/4.png"
 ];
 
 const carouselSlide = document.getElementById('carouselSlide');
