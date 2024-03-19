@@ -1,7 +1,7 @@
 const images = [
     "pix/1.png",
     "pix/2.png",
-    "pix/3.png"
+    "pix/3.png",
     "pix/4.png",
     // Add more image URLs as needed
 ];
