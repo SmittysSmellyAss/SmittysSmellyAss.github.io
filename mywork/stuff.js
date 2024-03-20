@@ -21,7 +21,8 @@ const images = [
     "pix/19.png",
     "pix/20.png",
     "pix/21.png",
-    "pix/22.png"
+    "pix/22.png",
+    "pix/23.png"
 ];
 
 const carouselSlide = document.getElementById('carouselSlide');
