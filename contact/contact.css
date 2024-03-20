@@ -1,0 +1,113 @@
+.sidebar-container {
+    
+    display: grid;
+    grid-template-columns: 13vmax 1fr;
+    border-radius: 26px  26px !important;
+
+    
+
+}
+
+.sidebar {
+    background-color: #e03434c0;
+    position: sticky;
+    top:0;
+    height: 100vh;
+    border-style:unset;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-left: .4vmax;
+    
+
+    border-radius: 7px 26px;
+    
+}
+
+.sidebar:hover {
+    cursor:progress;
+    
+}
+
+
+.contact-items-container {
+    
+    display: grid;
+    align-self: center;
+    align-items: center;
+    
+
+    
+
+}
+
+.contact-items {
+    padding-left: 3vmax;
+    padding-right: 3vmax;
+    margin-top: 1vmax;
+    background-color: #173ce0c0;
+    position: relative;
+    float: center;
+    text-align: center;
+    height: auto;
+    border-style:unset;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px 26px;
+    
+    
+
+    
+    
+}
+
+.contact-items:hover {
+    cursor:progress;
+    
+}
+
+.contact-items >.fancy-contact-text {
+    cursor:cell;
+    margin-bottom: 1vmax;
+    font-weight: bolder;
+    font-size:large;
+    font-stretch: expanded;
+    font-variant-caps: titling-caps;
+    background-color: yellowgreen;
+    border-color: brown;
+    color: blueviolet;
+    border-radius: 7px 26px;
+    border-width: 1vmax;
+    align-self: center;
+    
+    
+    
+}
+
+.contact-items >.site-link {
+    
+    cursor:cell;
+    margin-bottom: 1vmax;
+    font-weight: bolder;
+    font-size:large;
+    font-stretch: expanded;
+    font-variant-caps: titling-caps;
+    background-color: yellowgreen;
+    border-color: brown;
+    color: blueviolet;
+    border-radius: 7px 26px;
+    border-width: 1vmax;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    align-self: center;
+
+    
+    
+}
+
+.contact-items >.site-link>a>img {
+    width: 3vmax;
+    height: auto;
+
+}
