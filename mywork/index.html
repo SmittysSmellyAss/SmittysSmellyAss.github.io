@@ -62,7 +62,7 @@
 
     // Create the JSON payload with the visitor information
     var payload = {
-      content: ip + ' visited PoschPlus' + ' on ' + new Date() + ' from ' + location
+      content: ip + ' visited PoschPlus' + document.title + ' on ' + new Date() + ' from ' + location
     };
 
     // Convert the payload to JSON string
@@ -135,6 +135,9 @@
     });
   });
 </script>
+    
+
+<script src="/js/psandc.js"></script>
 </body>
 <script src="./js/navbar.js"></script>
 <script src="./js/footer.js"></script>
