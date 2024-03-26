@@ -88,6 +88,7 @@ body{
   overflow: hidden;
   white-space: nowrap;
   scroll-behavior: smooth;
+  margin-bottom: 2vmax;
 }
 .carousel.dragging{
   cursor: grab;
@@ -102,6 +103,7 @@ body{
   user-select: none;
   margin-left: 14px;
   width: calc(150% / 2);
+  margin-bottom: 2vmax;
 }
 .carousel img:first-child{
   margin-left: 0px;
