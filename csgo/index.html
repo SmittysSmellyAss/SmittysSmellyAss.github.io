@@ -3,232 +3,51 @@
 <head>
   <title>CSGO</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"/>
-  <link rel="stylesheet" href="/styles/basic_layout.css">
-  <link rel="stylesheet" href="/styles/styles.css">
-  <link rel="stylesheet" href="sheetcust.css">
+  <link rel="stylesheet" href="../styles/basic_layout.css">
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="stylesheet" href="./sheetcust.css">
+  <script src="/csgo/stuff.js" defer></script>
 </head>
 <body>
 
+
   <header>
-  <!--  NAV Bar-->
-  <script id="replace_with_navbar" src="/js/navbar.js"></script>
-  </header>
+    <!--  NAV Bar-->
+    <script id="replace_with_navbar" src="../js/navbar.js"></script>
+    </header>
+    <p></p> 
+    <p></p>
 
-  <style>
-    body {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .bouncing-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100px;
-      height: 100px;
-      cursor: pointer;
-      z-index: 9999;
-    }
-  body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-image: url('https://wallpapers.com/images/featured-full/cs-go-background-vb6tq1iva1c5g1ae.jpg');
-    background-size: cover;
-    background-position: center;
-  }
+    <br />
+    <br />
+  <p></p>
 
-
-
-    /* Rest of the styles */
-
-    .top-image-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .top-image {
-      width: 80%;
-      max-width: 500px;
-    }
-
-    .bottom-image-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .bottom-image {
-      width: 70%;
-      max-width: 500px;
-    }
-
-    .shaker {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50px;
-    }
-
-    .shaker img {
-      width: 50px;
-      height: 50px;
-      animation: shake 3s infinite;
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
-
-    .shaker img:hover {
-      animation-duration: 0.5s !important;
-      transform: scale(1.2);
-    }
-
-    .shaker img.burst {
-      animation: burst 0.5s;
-    }
-
-    @keyframes shake {
-      0% {
-        transform: rotate(0);
-      }
-      25% {
-        transform: rotate(5deg);
-      }
-      50% {
-        transform: rotate(-5deg);
-      }
-      75% {
-        transform: rotate(3deg);
-      }
-      100% {
-        transform: rotate(0);
-      }
-    }
-
-    @keyframes burst {
-      0% {
-        opacity: 1;
-        transform: scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(2);
-      }
-    }
-  </style>
-
-  <div id="titleplacer">
-    <div>Look at Ballen play</div>
-</div>
-<div id="containerdiv" class="container"></div>
-<div class="carousel-container">
-    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-    <div class="carousel-wrapper">
-        <div class="carousel-slide" id="carouselSlide">
-            <script src="stuff.js"></script>
-        </div>
+    <div id="titleplacer">
+      <div>Look at Ballen play</div>
     </div>
-    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+<!--  CSGO IMG Carousel-->
+<div class="wrapper">
+  <i class="fa-solid fa-angle-left">e</i>
+  <div class="carousel">
+    <!--  Add images with <img src="pix/1.png" alt="img"> -->
+    <img src="pix/1.png" alt="img">
+    <img src="pix/2.png" alt="img">
+    <img src="pix/3.png" alt="img">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/King_Arthur_Carrousel.jpg/250px-King_Arthur_Carrousel.jpg" alt="img">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/King_Arthur_Carrousel.jpg/250px-King_Arthur_Carrousel.jpg" alt="img">
+
+
+  </div>
+  <i class="fa-solid fa-angle-right">e</i>
 </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var images = document.querySelectorAll('.bouncing-image');
-      var container = document.documentElement;
-
-      var bouncingImages = [];
-
-      images.forEach(function(image) {
-        var posX = Math.random() * (container.clientWidth - image.offsetWidth);
-        var posY = Math.random() * (container.clientHeight - image.offsetHeight);
-        var directionX = 1;
-        var directionY = 1;
-        var speedX = 2;
-        var speedY = 2;
-
-        bouncingImages.push({
-          image: image,
-          posX: posX,
-          posY: posY,
-          directionX: directionX,
-          directionY: directionY,
-          speedX: speedX,
-          speedY: speedY
-        });
-      });
-
-      function animateImages() {
-        bouncingImages.forEach(function(bouncingImage) {
-          bouncingImage.posX += bouncingImage.speedX * bouncingImage.directionX;
-          bouncingImage.posY += bouncingImage.speedY * bouncingImage.directionY;
-
-          if (bouncingImage.posX <= 0 || bouncingImage.posX >= container.clientWidth - bouncingImage.image.offsetWidth) {
-            bouncingImage.directionX *= -1;
-          }
-          if (bouncingImage.posY <= 0 || bouncingImage.posY >= container.clientHeight - bouncingImage.image.offsetHeight) {
-            bouncingImage.directionY *= -1;
-          }
-
-          bouncingImage.image.style.transform = 'translate(' + bouncingImage.posX + 'px, ' + bouncingImage.posY + 'px)';
-        });
-
-        requestAnimationFrame(animateImages);
-      }
-
-      images.forEach(function(image) {
-        image.addEventListener('click', function() {
-          window.location.href = '/cow';
-        });
-      });
-
-      animateImages();
-    });
-  </script>
-
-  <!-- STEAM AVATARS GO HERE! -->
-  <img class="bouncing-image" src="https://avatars.cloudflare.steamstatic.com/7284a72f2cbb07973a510f5970293dddf4a10d26_full.jpg" alt="Bouncing Image">
-
-  <img class="bouncing-image" src="https://avatars.cloudflare.steamstatic.com/41a00ad711665e3f8e10e147bc1e343727751cfe_full.jpg" alt="Bouncing Image">
-  
-  <img class="bouncing-image" src="https://avatars.cloudflare.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg" alt="Bouncing Image">
-  
-  <img class="bouncing-image" src="https://avatars.cloudflare.steamstatic.com/18b4727626ab0e62c0e9c29b2831988efd3a4022_full.jpg" alt="Bouncing Image">
   
   
-  <!-- STEAM AVATARS GO HERE! -->
-  <!-- Add more <img> tags with the "bouncing-image" class for additional images -->
-
-
-  <div class="shaker">
-    <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
-    <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
-    <img class="shaker-img burst" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
-  </div>
-
-  <div class="top-image-container">
-    <img class="top-image" src="https://media.discordapp.net/attachments/1103479109373411418/1109264718666940497/56a5dd0a53584e8afa92b84a8ae9878bcbd33f87da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd807096a3f5f342b64e097db9b925de34bb0b9.png" alt="Top Image">
-  </div>
-
-
-
-
-  <a href="https://dev.poschplus.com">
-  <img class="bottom-image" src="https://media.discordapp.net/attachments/1103479109373411418/1108914647484092526/coollogo_com-202845068.png" alt="Bottom Image 1">
-</a>
-
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+<div class="shaker">
+  <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+  <img class="shaker-img" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+  <img class="shaker-img burst" src="https://cdn2.steamgriddb.com/file/sgdb-cdn/icon_thumb/767a40871fcc018629b26f3a9ff39e19.png" alt="Shaker Image">
+</div> 
 
 
 <div class="footer">
