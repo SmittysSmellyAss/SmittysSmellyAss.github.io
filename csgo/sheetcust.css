@@ -1,61 +1,113 @@
-.carousel-container {
-    position: relative;
-    width: 100%;
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  background-image: url('https://wallpapers.com/images/featured-full/cs-go-background-vb6tq1iva1c5g1ae.jpg');
+  display: flex;
+  padding: 0 35px;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #343F4F;
+}
+
+.nav img{
+    top: .1vmax;
     overflow: hidden;
-    text-align: center; /* Center align images */
-}
-
-.carousel-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.carousel-slide {
-    width: 39vmax;
-    
-    display: flex;
-    transition: transform 0.5s ease;
-    margin: 0 auto; /* Center the slide */
-}
-
-.carousel-slide img {
-    max-width: 39vmax;
-    max-height: 100%;
-    height: auto;
-    width: auto;
-    margin: auto; /* Center the image */
-}
-
-.prev,
-.next {
     position: absolute;
-    top: 50%;
-    background-color: rgba(126, 236, 0, 0.87);
-    border: none;
-    cursor: pointer;
-    padding: 50px;
-    z-index: 1; /* Ensure buttons are above the carousel */
-}
-
-.prev {
-    left: 10px; /* Adjust as needed */
-}
-
-.next {
-    right: 10px; /* Adjust as needed */
-}
-
-.prev:hover, .next:hover {
-    border: outset;
-    border-color: blue;
-    background-image: url("/images/00020-1939878338.png");
-    background-size: cover;
-    background-position: center;
-    
+    width: 2.8vmax;
+    height: auto;
+    right: 25.9vmax;
     
 }
+.nav h1{
+    color: blue;
+    top: .1vmax;
+    padding-right: 90px;
+    overflow: hidden;
+    margin-left: .3vmax;
+    display: inline;
+    font-size: 2vmax;
+    width: fit-content;
 
- header {
+
+}
+  .nav h2{
+    top: 5vmax;
+    margin-left: .9vmax;
+    overflow: hidden;
+    display: inline;
+    font-size: .9vmax;
+    width: fit-content;
+}
+
+.wrapper{
+  margin-top: 3vmax;  
+  display: flex;
+  max-width: 1200px;
+  position: relative;
+}
+.wrapper i{
+  
+  top: 50%;
+  height: 44px;
+  width: 44px;
+  color: #343F4F;
+  cursor: pointer;
+  font-size: 1.15rem;
+  position: absolute;
+  text-align: center;
+  line-height: 44px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.1s linear;
+}
+.wrapper i:active{
+  transform: translateY(-50%) scale(0.9);
+}
+.wrapper i:hover{
+  background: #f2f2f2;
+}
+.wrapper i:first-child{
+  left: -22px;
+  display: none;
+}
+.wrapper i:last-child{
+  right: -22px;
+}
+.wrapper .carousel{
+  
+  font-size: 0px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+}
+.carousel.dragging{
+  cursor: grab;
+  scroll-behavior: auto;
+}
+.carousel.dragging img{
+  pointer-events: none;
+}
+.carousel img{
+  height: auto;
+  object-fit: cover;
+  user-select: none;
+  margin-left: 14px;
+  width: calc(150% / 2);
+}
+.carousel img:first-child{
+  margin-left: 0px;
+}
+
+header {
     background-image: url("/images/00020-1939878338.png") !important;
     background-repeat: repeat;
     background-size: .6%;
@@ -63,4 +115,121 @@
     top: 0% !important;
     display: block;
     position: absolute !important;
+}
+
+@media screen and (max-width: 900px) {
+  .carousel img{
+    width: calc(100% / 2);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .carousel img{
+    width: 100%;
+  }
+}
+
+.bouncing-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    z-index: 9999;
+  }
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('https://wallpapers.com/images/featured-full/cs-go-background-vb6tq1iva1c5g1ae.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+
+
+  .top-image-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+  .top-image {
+    width: 80%;
+    max-width: 500px;
+}
+
+  .bottom-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+  .bottom-image {
+    width: 70%;
+    max-width: 500px;
+}
+
+  .shaker {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+}
+
+  .shaker img {
+    width: 50px;
+    height: 50px;
+    animation: shake 3s infinite;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+  .shaker img:hover {
+    animation-duration: 0.5s !important;
+    transform: scale(1.2);
+}
+
+  .shaker img.burst {
+    animation: burst 0.5s;
+}
+
+  @keyframes shake {
+    0% {
+      transform: rotate(0);
+    }
+    25% {
+      transform: rotate(5deg);
+    }
+    50% {
+      transform: rotate(-5deg);
+    }
+    75% {
+      transform: rotate(3deg);
+    }
+    100% {
+      transform: rotate(0);
+    }
+}
+
+  @keyframes burst {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(2);
+    }
 }
