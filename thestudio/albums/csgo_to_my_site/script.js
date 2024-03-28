@@ -13,7 +13,7 @@ let songs = [
     {songName: "PoschPlus - Dust II Grind ", filePath: "songs/1.mp3", coverPath: "covers/1.png"},
     {songName: "PoschPlus - Zeus Master", filePath: "songs/2.mp3", coverPath: "covers/1.png"},
     {songName: "PoschPlus - Home of Ballen", filePath: "songs/3.mp3", coverPath: "covers/1.png"},
-    {songName: "PoschPlus - Poschplus.com 'mhmmmmhhhhmmmm mmm mmmhmmm'", filePath: "songs/4.mp3", coverPath: "covers/1.png"},
+    {songName: "PoschPlus - Poschplus.com (mhmmmmhhhhmmmm mmm mmmhmmm)", filePath: "songs/4.mp3", coverPath: "covers/1.png"},
     {songName: "PoschPlus - CS Master", filePath: "songs/5.mp3", coverPath: "covers/1.png"},
     {songName: "PoschPlus - GRUNT GRUNT", filePath: "songs/6.mp3", coverPath: "covers/1.png"},
     {songName: "PoschPlus - More than a Mirage", filePath: "songs/7.mp3", coverPath: "covers/1.png"},
