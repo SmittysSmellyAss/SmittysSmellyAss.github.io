@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>Poschplus| Music - CSGO TO MY SITE</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="top">
+            <i class="fas fa-bars menu-btn"></i>
+            <i class="fas fa-search"></i>
+
+            
+        </div>
+            <div class="cover-image"> </div>
+            <div class="player-body"> </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

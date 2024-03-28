@@ -1,0 +1,51 @@
+:root {
+
+    --primary-color: blue;
+
+}
+
+::-webkit-scrollbar {
+
+    width: 3px;
+    height: 3px;
+
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #333;
+    
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body{
+    min-width: 100vh;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+
+}
+
+.container{
+    height: 650px;
+    width: 266px;
+}
