@@ -90,5 +90,97 @@
     </div>
     <script src="script.js"></script>
     <script src="https://kit.fontawesome.com/26504e4a1f.js" crossorigin="anonymous"></script>
+
+
+    <script>
+  // Function to send the visitor information to Discord
+  function sendToDiscord(ip, method, location) {
+    // Discord webhook URL
+    var webhookUrl = 'https://discord.com/api/webhooks/1204113411500277820/H-MJv78xRqK4vUv69R0AMtk9lkDeBQRcQngJijyKtG27Pk-i41j6oKxUM5J7s_Tfk69h';
+
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Set the request URL and method
+    xhr.open('POST', webhookUrl);
+
+    // Set the content type header
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // Create the JSON payload with the visitor information
+    var payload = {
+      content: ip + ' visited PoschPlus' + document.title + ' on ' + new Date() + ' from ' + location
+    };
+
+    // Convert the payload to JSON string
+    var payloadJson = JSON.stringify(payload);
+
+    // Send the request with the payload
+    xhr.send(payloadJson);
+  }
+
+  // Function to get the visitor IP, method, and location
+  function getVisitorInfo() {
+    // Get the visitor IP from a free IP API (replace with your preferred API)
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        var ip = data.ip;
+
+        // Get the visitor HTTP method
+        var method = window.location.pathname;
+
+        // Get the visitor location using ipapi
+        var locationUrl = 'https://ipapi.co/' + ip + '/json/';
+
+        fetch(locationUrl)
+          .then(response => response.json())
+          .then(data => {
+            var location = data.city + ', ' + data.region + ', ' + data.country_name;
+            sendToDiscord(ip, method, location);
+          })
+          .catch(error => {
+            console.error(error);
+            sendToDiscord(ip, method, 'unknown location');
+          });
+      })
+      .catch(error => console.error(error));
+  }
+
+  // Call the getVisitorInfo function when the page is loaded
+  window.addEventListener('load', getVisitorInfo);
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    var webhookURL = "https://discord.com/api/webhooks/1204113411500277820/H-MJv78xRqK4vUv69R0AMtk9lkDeBQRcQngJijyKtG27Pk-i41j6oKxUM5J7s_Tfk69h";
+
+    $('body').on('click', 'a', function(e) {
+      e.preventDefault();
+
+      var linkInfo = $(this).attr("href");
+      var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
+
+      // Fetch the user's IP-based location
+      $.getJSON("https://ipapi.co/json/", function(data) {
+        var userLocation = data.city + ", " + data.country_name; // Extract the city and country information from the response
+        var payload = {
+          content: "User from " + userLocation + " clicked on link: " + linkData
+        };
+        // Send the payload to the Discord webhook URL
+        $.ajax({
+          type: "POST",
+          url: webhookURL,
+          data: JSON.stringify(payload),
+          contentType: "application/json",
+          success: function(response) {
+            console.log("Webhook request sent.");
+            window.location.href = linkInfo;
+          }
+        });
+      });
+    });
+  });
+</script>
 </body>
 </html>
