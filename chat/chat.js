@@ -1,5 +1,5 @@
 // Chat v4 - The renewed project - This one works but is super basic and is serving as a checkpoint in case I mess it up beyond fixing.
-const socket = new WebSocket('ws://torpid-wandering-runner.glitch.me');
+const socket = new WebSocket('ws://poschplus-chat-app-backend.glitch.me');
 let userAlias = '';
 
 socket.onopen = () => {
