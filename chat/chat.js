@@ -90,5 +90,5 @@ document.getElementById('setAliasButton').addEventListener('click', setAlias);
 
 // Listener that waitds for changes in the alias input field
 document.getElementById('aliasInput').addEventListener('input', (event) => {
-    userAlias = event.target.value.trim(); // This updates the clients username liek shit and piss and also cum.
+    userAlias = event.target.value.trim(); // Updates username
 });
