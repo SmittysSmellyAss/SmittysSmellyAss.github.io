@@ -22,7 +22,7 @@
         directionX: directionX,
         directionY: directionY,
         speedX: speedX,
-        speedY: speedY
+        speedY: speedY,
         rotation: rotation,
         rotationSpeed: rotationSpeed
         
