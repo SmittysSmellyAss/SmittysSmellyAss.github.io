@@ -33,6 +33,7 @@
       bouncingImages.forEach(function(bouncingImage) {
         bouncingImage.posX += bouncingImage.speedX * bouncingImage.directionX;
         bouncingImage.posY += bouncingImage.speedY * bouncingImage.directionY;
+        bouncingImage.rotation += bouncingImage.rotationSpeed;
 
         if (bouncingImage.posX <= 0 || bouncingImage.posX >= container.offsetWidth - bouncingImage.image.offsetWidth) {
           bouncingImage.directionX *= -1;
