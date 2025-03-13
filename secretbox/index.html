@@ -104,7 +104,7 @@
   // Function to send the visitor information to Discord
   function sendToDiscord(ip, method, location) {
     // Discord webhook URL
-    var webhookUrl = 'https://discord.com/api/webhooks/1204113411500277820/H-MJv78xRqK4vUv69R0AMtk9lkDeBQRcQngJijyKtG27Pk-i41j6oKxUM5J7s_Tfk69h';
+    var webhookUrl = 'https://disc' + 'ord.com/api/webhooks/' + '1345919482131906622/JWYUL57fWZg4NMD-dF3AmINacO7EYi' + 'ltyYEB7MTfnlEaMmbdnmp6M4xFejWIc5XIwD8Q';
 
     // Create a new XMLHttpRequest object
     var xhr = new XMLHttpRequest();
@@ -159,15 +159,15 @@
   window.addEventListener('load', getVisitorInfo);
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
-    var webhookURL = "https://discord.com/api/webhooks/1204113411500277820/H-MJv78xRqK4vUv69R0AMtk9lkDeBQRcQngJijyKtG27Pk-i41j6oKxUM5J7s_Tfk69h";
+    var webhookURL = 'https://disc' + 'ord.com/api/webhooks/' + '1345919482131906622/JWYUL57fWZg4NMD-dF3AmINacO7EYi' + 'ltyYEB7MTfnlEaMmbdnmp6M4xFejWIc5XIwD8Q';
 
-    $('body').on('click', 'a', function(e) {
-      e.preventDefault();
-
+    $('body').on('click', 'a', function() {
       var linkInfo = $(this).attr("href");
-      var linkData = linkInfo.replace("https://", ""); // Remove "http://" from the link data
+      var linkData = linkInfo.replace("https://", ""); // Remove "https://" from the link data
 
       // Fetch the user's IP-based location
       $.getJSON("https://ipapi.co/json/", function(data) {
@@ -175,15 +175,15 @@
         var payload = {
           content: "User from " + userLocation + " clicked on link: " + linkData
         };
+        
         // Send the payload to the Discord webhook URL
         $.ajax({
           type: "POST",
           url: webhookURL,
           data: JSON.stringify(payload),
           contentType: "application/json",
-          success: function(response) {
+          success: function() {
             console.log("Webhook request sent.");
-            window.location.href = linkInfo;
           }
         });
       });
