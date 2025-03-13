@@ -1,7 +1,7 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var images = document.querySelectorAll('.bouncing-image');
-    var container = document.documentElement;
+    var container = document.body;
 
     var bouncingImages = [];
 
@@ -12,6 +12,8 @@
       var directionY = 1;
       var speedX = 2;
       var speedY = 2;
+      var rotation = 0;
+      var rotationSpeed = Math.random() * 5 +1;
 
       bouncingImages.push({
         image: image,
@@ -21,6 +23,9 @@
         directionY: directionY,
         speedX: speedX,
         speedY: speedY
+        rotation: rotation,
+        rotationSpeed: rotationSpeed
+        
       });
     });
 
@@ -36,7 +41,7 @@
           bouncingImage.directionY *= -1;
         }
 
-        bouncingImage.image.style.transform = 'translate(' + bouncingImage.posX + 'px, ' + bouncingImage.posY + 'px)';
+        bouncingImage.image.style.transform = 'translate(' + bouncingImage.posX + 'px, ' + bouncingImage.posY + 'px) rotate(${bouncingImage.rotation})deg)';
       });
 
       requestAnimationFrame(animateImages);
