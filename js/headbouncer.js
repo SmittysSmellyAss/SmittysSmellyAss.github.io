@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Make images draggable
     image.addEventListener("pointerdown", function (event) {
+      event.preventDefault();
       isDragging = true;
       draggedImage = bouncingImages.find((b) => b.image === event.target);
       lastpointerX = event.clientX;
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.addEventListener("pointermove", function (event) {
+    event.preventDefault();
     if (isDragging && draggedImage) {
       let currentTime = performance.now();
       let deltaTime = currentTime - lastMoveTime;
