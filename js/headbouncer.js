@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var bouncingImages = [];
   var isDragging = false;
   var draggedImage = null;
-  var lastMouseX = 0, lastMouseY = 0;
+  var lastpointerX = 0, lastpointerY = 0;
   var velocityX = 0, velocityY = 0;
   var lastMoveTime = 0;
   var shakeThreshold = 10;
@@ -38,24 +38,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Make images draggable
-    image.addEventListener("mousedown", function (event) {
+    image.addEventListener("pointerdown", function (event) {
       isDragging = true;
       draggedImage = bouncingImages.find((b) => b.image === event.target);
-      lastMouseX = event.clientX;
-      lastMouseY = event.clientY;
+      lastpointerX = event.clientX;
+      lastpointerY = event.clientY;
       velocityX = 0;
       velocityY = 0;
       shakeCount = 0;
     });
   });
 
-  document.addEventListener("mousemove", function (event) {
+  document.addEventListener("pointermove", function (event) {
     if (isDragging && draggedImage) {
       let currentTime = performance.now();
       let deltaTime = currentTime - lastMoveTime;
 
-      let dx = event.clientX - lastMouseX;
-      let dy = event.clientY - lastMouseY;
+      let dx = event.clientX - lastpointerX;
+      let dy = event.clientY - lastpointerY;
 
       draggedImage.posX += dx;
       draggedImage.posY += dy;
@@ -74,15 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      lastMouseX = event.clientX;
-      lastMouseY = event.clientY;
+      lastpointerX = event.clientX;
+      lastpointerY = event.clientY;
       lastMoveTime = currentTime;
 
       draggedImage.image.style.transform = `translate(${draggedImage.posX}px, ${draggedImage.posY}px)`;
     }
   });
 
-  document.addEventListener("mouseup", function () {
+  document.addEventListener("pointerup", function () {
     if (isDragging && draggedImage) {
       draggedImage.speedX = velocityX * 50; 
       draggedImage.speedY = velocityY * 50;
