@@ -1,55 +1,53 @@
+document.addEventListener("DOMContentLoaded", function () {
+  var images = document.querySelectorAll(".bouncing-image");
+  var container = document.body;
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var images = document.querySelectorAll('.bouncing-image');
-    var container = document.body;
-    
+  var bouncingImages = [];
+  var isDragging = false;
+  var draggedImage = null;
+  var lastMouseX = 0, lastMouseY = 0;
+  var velocityX = 0, velocityY = 0;
+  var lastMoveTime = 0;
+  var shakeThreshold = 10; // Adjust for shake sensitivity
+  var shakeCount = 0;
+  var shakeSound = new Audio("based.mp3"); 
 
-    var bouncingImages = [];
-    var isDragging = false;
-    var draggedImage = null;
-    var lastMouseX = 0, lastMouseY = 0;
-    var velocityX = 0, velocityY = 0;
-    var lastMoveTime = 0;
-    var shakeThreshold = 10;
-    var shakeCount = 0;
-    var shakeSound = new Audio("based.mp3");
+  images.forEach(function (image) {
+    var posX = Math.random() * (container.offsetWidth - image.offsetWidth);
+    var posY = Math.random() * (container.offsetHeight - image.offsetHeight);
+    var directionX = 1;
+    var directionY = 1;
+    var speedX = 2;
+    var speedY = 2;
+    var rotation = 0;
+    var rotationSpeed = Math.random() * 3 + 1;
 
-    images.forEach(function(image) {
-      var posX = Math.random() * (container.offsetWidth - image.offsetWidth);
-      var posY = Math.random() * (container.offsetHeight - image.offsetHeight);
-      var directionX = 1;
-      var directionY = 1;
-      var speedX = 2;
-      var speedY = 2;
-      var rotation = 0;
-      var rotationSpeed = Math.random() * 3 +1;
-
-      bouncingImages.push({
-        image: image,
-        posX: posX,
-        posY: posY,
-        directionX: directionX,
-        directionY: directionY,
-        speedX: speedX,
-        speedY: speedY,
-        rotation: rotation,
-        rotationSpeed: rotationSpeed,
-        velocityX: 0,
-        velocityY: 0,
-        grabbed: false,
-        
-      });
-      image.addEventListener("mousedown", function (event) {
-        isDragging = true;
-        draggedImage = bouncingImages.find((b => b.image === event.target);
-        lastMouseX = event.clickX;
-        lastMouseY = event.clickY;
-        velocityX = 0;
-        velocityY = 0;
-        shakeCount = 0;
-      });
+    bouncingImages.push({
+      image: image,
+      posX: posX,
+      posY: posY,
+      directionX: directionX,
+      directionY: directionY,
+      speedX: speedX,
+      speedY: speedY,
+      rotation: rotation,
+      rotationSpeed: rotationSpeed,
+      velocityX: 0,
+      velocityY: 0,
+      grabbed: false,
     });
 
+    // Make images draggable
+    image.addEventListener("mousedown", function (event) {
+      isDragging = true;
+      draggedImage = bouncingImages.find((b) => b.image === event.target);
+      lastMouseX = event.clientX;
+      lastMouseY = event.clientY;
+      velocityX = 0;
+      velocityY = 0;
+      shakeCount = 0;
+    });
+  });
 
   document.addEventListener("mousemove", function (event) {
     if (isDragging && draggedImage) {
@@ -72,7 +70,7 @@
         shakeCount++;
         if (shakeCount > 5 && draggedImage.image.src.includes("shake")) {
           shakeSound.play();
-          shakeCount = 0; // Reset shake count after playing sound
+          shakeCount = 0; 
         }
       }
 
@@ -86,7 +84,7 @@
 
   document.addEventListener("mouseup", function () {
     if (isDragging && draggedImage) {
-      draggedImage.speedX = velocityX * 50; // Multiply to give a stronger fling effect
+      draggedImage.speedX = velocityX * 50; 
       draggedImage.speedY = velocityY * 50;
       isDragging = false;
       draggedImage = null;
