@@ -42,7 +42,7 @@
           bouncingImage.directionY *= -1;
         }
 
-        bouncingImage.image.style.transform = 'translate(' + bouncingImage.posX + 'px, ' + bouncingImage.posY + 'px) rotate(${bouncingImage.rotation})deg)';
+        bouncingImage.image.style.transform = 'translate(' + bouncingImage.posX + 'px, ' + bouncingImage.posY + 'px) rotate(${bouncingImage.rotation}deg)';
       });
 
       requestAnimationFrame(animateImages);
