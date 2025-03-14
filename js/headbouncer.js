@@ -13,7 +13,7 @@
       var speedX = 2;
       var speedY = 2;
       var rotation = 0;
-      var rotationSpeed = Math.random() * 5 +1;
+      var rotationSpeed = Math.random() * 3 +1;
 
       bouncingImages.push({
         image: image,
