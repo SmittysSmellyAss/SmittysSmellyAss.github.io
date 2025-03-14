@@ -7,7 +7,7 @@
     var bouncingImages = [];
     var isDragging = false;
     var draggedImage = null;
-    var lastMouseX = 0, var lastMouseY = 0;
+    var lastMouseX = 0, lastMouseY = 0;
     var velocityX = 0, velocityY = 0;
     var lastMoveTime = 0;
     var shakeThreshold = 10;
