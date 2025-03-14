@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var lastMouseX = 0, lastMouseY = 0;
   var velocityX = 0, velocityY = 0;
   var lastMoveTime = 0;
-  var shakeThreshold = 10; // Adjust for shake sensitivity
+  var shakeThreshold = 10;
   var shakeCount = 0;
   var shakeSound = new Audio("based.mp3"); 
 
