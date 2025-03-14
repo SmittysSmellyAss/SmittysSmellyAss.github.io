@@ -1,7 +1,7 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var images = document.querySelectorAll('.bouncing-image');
-    var container = document.documentElement;
+    var container = document.body;
 
     var bouncingImages = [];
 
