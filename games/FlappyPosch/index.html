@@ -15,7 +15,7 @@ body {
 }
 canvas {
     border: 1px solid black;
-    background-image: url('gamebg.png'); 
+    background-image: url('gamebg.png');
     background-size: cover;
     display: block;
 }
@@ -32,7 +32,7 @@ canvas {
     // Game Variables
     let birdY = canvas.height / 2;
     let birdX = 50;
-    const birdRadius = 25;
+    const birdRadius = 25;  // Still used for drawing, but collision is now pixel-perfect
     let birdVelocity = 0;
     const gravity = 0.5;
     const jumpStrength = -8;
@@ -57,7 +57,7 @@ canvas {
     let touchFlapTriggered = false;
 
     // Audio
-    const bgMusic = new Audio('gameplay.mp3');  
+    const bgMusic = new Audio('gameplay.mp3');
     bgMusic.loop = true;
     bgMusic.volume = 0.3;
 
@@ -75,21 +75,56 @@ canvas {
     const pointSound = new Audio('point.mp3');
     pointSound.volume = 0.7;
 
-    // Image
+    // --- Image Loading and Collision Map ---
     const birdImg = new Image();
-    birdImg.src = 'ballen.png'; 
+    birdImg.src = 'ballen.png';
     let birdReady = false;
-    birdImg.onload = () => { birdReady = true; };
+    let birdCollisionMap = []; // 2D array for collision data
+
+    birdImg.onload = () => {
+        birdReady = true;
+        createBirdCollisionMap(); // Create the collision map once the image loads
+        bgMusic.play(); // Start music only after the bird image is fully loaded
+        gameLoop();    // Start the game loop *after* the image and map are ready.
+    };
+
 
     const pipeTopImg = new Image();
-    pipeTopImg.src = 'pipe_top.png'; 
+    pipeTopImg.src = 'pipe_top.png';
     let pipeTopReady = false;
     pipeTopImg.onload = () => { pipeTopReady = true; };
 
     const pipeBottomImg = new Image();
-    pipeBottomImg.src = 'pipe_bottom.png'; 
+    pipeBottomImg.src = 'pipe_bottom.png';
     let pipeBottomReady = false;
     pipeBottomImg.onload = () => { pipeBottomReady = true; };
+
+    // --- Offscreen Canvas for Bird ---
+    const offscreenCanvas = document.createElement('canvas');
+    const offscreenCtx = offscreenCanvas.getContext('2d');
+    offscreenCanvas.width = birdRadius * 2;
+    offscreenCanvas.height = birdRadius * 2;
+
+    function createBirdCollisionMap() {
+        // Draw the bird onto the offscreen canvas
+        offscreenCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+        offscreenCtx.drawImage(birdImg, 0, 0, offscreenCanvas.width, offscreenCanvas.height);
+
+        // Get pixel data
+        const imageData = offscreenCtx.getImageData(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+        const data = imageData.data; // This is a 1D array: [R, G, B, A, R, G, B, A, ...]
+
+        // Create the 2D collision map
+        for (let y = 0; y < offscreenCanvas.height; y++) {
+            birdCollisionMap[y] = [];
+            for (let x = 0; x < offscreenCanvas.width; x++) {
+                const index = (y * offscreenCanvas.width + x) * 4; // Calculate index in the 1D array
+                const alpha = data[index + 3]; // Get the alpha value (transparency)
+                birdCollisionMap[y][x] = alpha > 128; // Consider it collidable if alpha is greater than a threshold (e.g., 128)
+            }
+        }
+    }
+
 
     function drawBird() {
         if (birdReady) {
@@ -147,38 +182,61 @@ canvas {
 
     function drawLoadingWheel(progress) {
         const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2 + 80; 
+        const centerY = canvas.height / 2 + 80;
         const radius = 25;
 
- 
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
         ctx.strokeStyle = 'gray';
         ctx.lineWidth = 5;
         ctx.stroke();
 
-
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, -0.5 * Math.PI, -0.5 * Math.PI + (progress * 2 * Math.PI));
-        ctx.strokeStyle = 'lime'; 
+        ctx.strokeStyle = 'lime';
         ctx.lineWidth = 5;
         ctx.stroke();
     }
 
-    // --- Game Logic ---
+
+    // --- Pixel-Perfect Collision Check ---
     function checkCollision() {
         if (birdY - birdRadius < 0 || birdY + birdRadius > canvas.height) {
-            return true;
+            return true; // Check screen boundaries (using radius is fine here)
         }
+
         for (const pipe of pipes) {
-            if (birdX + birdRadius > pipe.x && birdX - birdRadius < pipe.x + pipeWidth) {
-                if (birdY - birdRadius < pipe.topHeight || birdY + birdRadius > pipe.topHeight + pipeGap) {
-                    return true;
+            // --- Optimized Bounding Box Check ---
+            // First, do a coarse check to see if the bird is even close to the pipe
+            if (birdX + birdRadius < pipe.x || birdX - birdRadius > pipe.x + pipeWidth) {
+                continue; // Bird is not near this pipe, skip to the next one
+            }
+            if(birdY + birdRadius < 0 || birdY - birdRadius > pipe.topHeight + pipeGap){
+                continue;
+            }
+            // --- Pixel-Perfect Check ---
+            // Iterate over the bird's collision map
+            for (let y = 0; y < birdCollisionMap.length; y++) {
+                for (let x = 0; x < birdCollisionMap[y].length; x++) {
+                    if (birdCollisionMap[y][x]) { // If this pixel is collidable
+                        const birdPixelX = Math.floor(birdX - birdRadius + x);
+                        const birdPixelY = Math.floor(birdY - birdRadius + y);
+
+                        // Check if this pixel is inside the top pipe
+                        if (birdPixelX >= pipe.x && birdPixelX < pipe.x + pipeWidth && birdPixelY < pipe.topHeight) {
+                            return true;
+                        }
+                        // Check if this pixel is inside the bottom pipe
+                        if (birdPixelX >= pipe.x && birdPixelX < pipe.x + pipeWidth && birdPixelY >= pipe.topHeight + pipeGap) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
         return false;
     }
+
 
     function updatePipes() {
         for (let i = pipes.length - 1; i >= 0; i--) {
@@ -291,12 +349,11 @@ canvas {
             }
         }
     }
-
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            event.preventDefault(); 
+            event.preventDefault();
             if (!gameOver) {
-                handleInput('space'); 
+                handleInput('space');
             } else if (!holdingSpace) {
                 holdingSpace = true;
                 holdStartTime = Date.now();
@@ -310,39 +367,37 @@ canvas {
             spaceFlapTriggered = false;
         }
     });
-    document.addEventListener('mousedown', (event) => {
-  
-
-      event.preventDefault();
-        handleInput('touch'); 
-    });
+     document.addEventListener('mousedown', (event) => {
 
 
-   document.addEventListener('pointerdown', (event) => {
+         event.preventDefault();
+         handleInput('touch');
+     });
+
+
+    document.addEventListener('pointerdown', (event) => {
       if(event.pointerType === 'touch'){
-          if (!gameOver) {
-            handleInput('touch'); 
-          } else if (!holdingTouch) {
-            holdingTouch = true;
-            touchHoldStartTime = Date.now();
-          }
+            if (!gameOver) {
+                handleInput('touch');
+            } else if (!holdingTouch) {
+                holdingTouch = true;
+                touchHoldStartTime = Date.now();
+            }
         }
-  });
+});
 
 
     document.addEventListener('pointerup', (event) => {
         if (event.pointerType === 'touch') {
             holdingTouch = false;
             touchFlapTriggered = false;
-              if(Date.now() - touchHoldStartTime < holdDuration){ 
+            if(Date.now() - touchHoldStartTime < holdDuration){
                 event.preventDefault();
-              }
+            }
         }
     });
 
 
-    bgMusic.play();
-    gameLoop();
 
 </script>
 </body>
