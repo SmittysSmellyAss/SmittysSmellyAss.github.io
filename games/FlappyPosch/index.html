@@ -321,4 +321,20 @@ canvas {
         event.preventDefault(); // Prevent scrolling AND zooming
         if (!gameOver) {
             handleInput('touch');  // Pass 'touch' as the source
-        } else if
+        } else if (!holdingTouch) {
+            holdingTouch = true;
+            touchHoldStartTime = Date.now();
+        }
+    });
+
+    document.addEventListener('touchend', (event) => {
+        holdingTouch = false;
+        touchFlapTriggered = false; // Reset the flap trigger
+    });
+    // --- Start Game ---
+    bgMusic.play();
+    gameLoop();
+
+</script>
+</body>
+</html>
