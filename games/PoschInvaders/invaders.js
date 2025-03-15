@@ -113,7 +113,7 @@ function submitScore(playerName, score) {
         return;
     }
 
-    fetch("https://fish-dandelion-cheese.glitch.me/leaderboard:3000", {
+    fetch("https://fish-dandelion-cheese.glitch.me:3000/leaderboard", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
