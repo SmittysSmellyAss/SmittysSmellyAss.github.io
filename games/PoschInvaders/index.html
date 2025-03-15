@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posch Invaders</title>
+    <style>
+
+        body {
+            text-align: center;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            background: #111;
+            display: block;
+            margin: 20px auto;
+        }
+        .gameInfo {
+            display: inline-flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        .gameInfo h1 {
+            margin: 0;
+            padding: 30px;
+
+        }
+        .gameInfo .scoreLabel {
+            margin: 0;
+            padding-left: 30px;
+        }
+        .gameInfo h1,h2 {
+            margin: 0;
+            padding: 0;
+        }
+        .container_row{
+            display: grid;
+            padding-left: 50px;
+          }
+          
+          .scoreLabel{
+            grid-column: 1;
+            grid-row: 1;
+          }
+          
+          .layer1 span{
+            color: #fff;
+            background: #000cf6;
+          }
+          
+    </style>
+</head>
+<body>
+<div class="AppLevelContainer">
+<!--     Leaderboard      -->
+
+
+
+
+<!--      Game    -->
+    <div class="gameInfo">
+        <h1>Posch Invaders</h1>
+        <div class="container_row">
+            <div class="scoreLabel">
+                <h2>Score</h2>
+            </div>
+            <div class="currentScore">
+                
+            </div>
+        </div>
+
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+</div>
+
+
+
+    <script src="invaders.js"></script>  
+
+</body>
+</html>
