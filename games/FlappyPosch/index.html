@@ -44,13 +44,28 @@ canvas {
     let gameOver = false;
     let highScore = localStorage.getItem('highScore') || 0;
 
-    // Audio
+    // Audio - Adjust volumes here
     const bgMusic = new Audio('gameplay.mp3');
     bgMusic.loop = true;
+    bgMusic.volume = 0.3;  // Reduce background music volume (30%)
+
     const gameOverMusic = new Audio('over.mp3');
+    gameOverMusic.volume = 0.5; // Adjust game over music (50%)
+
     const flapSound = new Audio('grunt.mp3');
-    flapSound.volume = 1.0; // Set volume to maximum (1.0)
+    // Try *creating multiple instances* for a louder, overlapping effect:
+    const flapSounds = [];
+    for (let i = 0; i < 3; i++) { // Create 3 instances
+      const sound = new Audio('grunt.mp3');
+      sound.volume = 1.0; // Max volume for each instance
+      flapSounds.push(sound);
+    }
+    let currentFlapSound = 0; // Index to track which sound to play
+
+
     const pointSound = new Audio('point.mp3');
+    pointSound.volume = 0.7; // Adjust point sound (70%)
+
 
     // Image loading (with onload handlers)
     const birdImg = new Image();
@@ -118,8 +133,7 @@ canvas {
         }
         return false;
     }
-
-    function updatePipes() {
+     function updatePipes() {
       for (let i = pipes.length - 1; i >= 0; i--) {
         const pipe = pipes[i];
         pipe.x -= pipeSpeed;
@@ -153,8 +167,8 @@ canvas {
         gameOver = false;
         bgMusic.currentTime = 0;
         bgMusic.play();
-        gameOverMusic.pause(); // Stop the game over music
-        gameOverMusic.currentTime = 0; // Rewind game over music
+        gameOverMusic.pause();
+        gameOverMusic.currentTime = 0;
     }
 
     function updateGame() {
@@ -194,12 +208,14 @@ canvas {
     }
 
     // --- Event Listeners ---
-
     function handleInput() {
         if (!gameOver) {
             birdVelocity = jumpStrength;
-            flapSound.currentTime = 0;
-            flapSound.play();
+            // Play one of the flap sounds, cycling through them:
+            flapSounds[currentFlapSound].currentTime = 0; // Reset
+            flapSounds[currentFlapSound].play();
+            currentFlapSound = (currentFlapSound + 1) % flapSounds.length; // Cycle to the next sound
+
         } else {
             resetGame();
         }
