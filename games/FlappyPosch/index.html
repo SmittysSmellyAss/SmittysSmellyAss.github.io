@@ -22,7 +22,7 @@ canvas {
 </head>
 <body>
 
-<canvas id="gameCanvas" width="1000" height="1000"></canvas>
+<canvas id="gameCanvas" width="1000" height="=1000"></canvas>
 
 <script>
     const canvas = document.getElementById('gameCanvas');
@@ -236,21 +236,22 @@ canvas {
             drawGame();
         } else {
             drawGameOver();
+            // --- Hold-to-Restart Logic ---
             if (holdingSpace) {
-              const elapsedTime = Date.now() - holdStartTime;
-              const progress = Math.min(elapsedTime / holdDuration, 1); // Clamp to 1
-              drawLoadingWheel(progress);
-               if (elapsedTime >= holdDuration) {
-                    resetGame(); // Restart after hold duration
+                const elapsedTime = Date.now() - holdStartTime;
+                const progress = Math.min(elapsedTime / holdDuration, 1);
+                drawLoadingWheel(progress);
+
+                if (elapsedTime >= holdDuration) {
+                    resetGame();
                 }
             }
-
         }
-        requestAnimationFrame(gameLoop);
+        requestAnimationFrame(gameLoop); // Keep this outside the if/else
     }
 
 
-    // --- Event Listeners ---
+ // --- Event Listeners ---
     function handleInput() {
       if (!gameOver) {
           birdVelocity = jumpStrength;
@@ -260,22 +261,23 @@ canvas {
       }
     }
 
-     document.addEventListener('keydown', (event) => {
+    document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
             if (!gameOver) {
                 handleInput();
-            } else {
+            } else if (!holdingSpace) {  // Only start holding if not already holding
                 holdingSpace = true;
-                holdStartTime = Date.now(); // Record the time when space is pressed
+                holdStartTime = Date.now();
             }
         }
     });
 
     document.addEventListener('keyup', (event) => {
-        if (event.code === 'Space' && gameOver) {
-            holdingSpace = false; // Stop holding
-        }
-    });
+    if (event.code === 'Space') {
+        holdingSpace = false; // Reset holdingSpace on keyup
+        // Do NOT reset holdStartTime here.
+    }
+});
 
     document.addEventListener('mousedown', handleInput);
 
