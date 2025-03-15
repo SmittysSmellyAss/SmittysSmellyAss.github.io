@@ -47,6 +47,8 @@ canvas {
     // Hold to Restart Variables
     let holdingSpace = false;
     let holdStartTime = 0;
+    let holdingTouch = false; // Add this
+    let touchHoldStartTime = 0; // Add this for separate touch timing
     const holdDuration = 3000; // 3 seconds in milliseconds
 
     // Audio
@@ -206,7 +208,9 @@ canvas {
         gameOverMusic.pause();
         gameOverMusic.currentTime = 0;
         holdingSpace = false; // Reset hold state
-        holdStartTime = 0;    // Reset hold start time
+        holdStartTime = 0;
+        holdingTouch = false; // Reset touch hold state
+        touchHoldStartTime = 0; // Reset touch hold start time
     }
 
     function updateGame() {
@@ -241,9 +245,18 @@ canvas {
         } else {
             drawGameOver();
             // --- Hold-to-Restart Logic ---
-            if (holdingSpace) {
-                const elapsedTime = Date.now() - holdStartTime;
-                const progress = Math.min(elapsedTime / holdDuration, 1);
+            if (holdingSpace || holdingTouch) { // Check BOTH conditions
+                let elapsedTime;
+                let progress;
+
+                if (holdingSpace) {
+                  elapsedTime = Date.now() - holdStartTime;
+                  progress = Math.min(elapsedTime / holdDuration, 1);
+                } else { //must be holdingTouch
+                  elapsedTime = Date.now() - touchHoldStartTime;
+                  progress = Math.min(elapsedTime / holdDuration, 1);
+                }
+
                 drawLoadingWheel(progress);
 
                 if (elapsedTime >= holdDuration) {
@@ -251,7 +264,7 @@ canvas {
                 }
             }
         }
-        requestAnimationFrame(gameLoop); // Keep this outside the if/else
+        requestAnimationFrame(gameLoop);
     }
 
     // --- Event Listeners ---
@@ -284,9 +297,19 @@ canvas {
     });
 
     document.addEventListener('mousedown', handleInput);
-    document.addEventListener('touchstart', (event) => {  // For mobile
+
+    document.addEventListener('touchstart', (event) => {
         event.preventDefault(); // Prevent scrolling on mobile
-        handleInput();
+        if (!gameOver) {
+            handleInput(); // Handle jump during gameplay
+        } else if (!holdingTouch) { // Start hold if not already holding
+             holdingTouch = true;
+             touchHoldStartTime = Date.now();
+        }
+    });
+
+    document.addEventListener('touchend', (event) => {
+        holdingTouch = false; // Reset holdingTouch on touch end
     });
     // --- Start Game ---
     bgMusic.play();
