@@ -10,13 +10,13 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #70c5ce; /* Optional sky blue */
+    background-color: #70c5ce;
 }
 canvas {
     border: 1px solid black;
     background-image: url('gamebg.png');
     background-size: cover;
-    display: block; /* Important for consistent rendering */
+    display: block;
 }
 </style>
 </head>
@@ -49,6 +49,7 @@ canvas {
     bgMusic.loop = true;
     const gameOverMusic = new Audio('over.mp3');
     const flapSound = new Audio('grunt.mp3');
+    flapSound.volume = 1.0; // Set volume to maximum (1.0)
     const pointSound = new Audio('point.mp3');
 
     // Image loading (with onload handlers)
@@ -67,16 +68,15 @@ canvas {
     let pipeBottomReady = false;
     pipeBottomImg.onload = () => { pipeBottomReady = true; };
 
-
     // --- Drawing Functions ---
     function drawBird() {
-        if (birdReady) { // Only draw if the image is loaded
+        if (birdReady) {
             ctx.drawImage(birdImg, birdX - birdRadius, birdY - birdRadius, birdRadius * 2, birdRadius * 2);
         }
     }
 
     function drawPipe(pipe) {
-        if (pipeTopReady && pipeBottomReady) { // Only draw if images are loaded
+        if (pipeTopReady && pipeBottomReady) {
             ctx.drawImage(pipeTopImg, pipe.x, 0, pipeWidth, pipe.topHeight);
             ctx.drawImage(pipeBottomImg, pipe.x, pipe.topHeight + pipeGap, pipeWidth, canvas.height - (pipe.topHeight + pipeGap));
         }
@@ -120,21 +120,30 @@ canvas {
     }
 
     function updatePipes() {
-        for (let i = pipes.length - 1; i >= 0; i--) {
-            pipes[i].x -= pipeSpeed;
-            if (pipes[i].x + pipeWidth < 0) {
-                pipes.splice(i, 1);
-                score++;
-                pointSound.currentTime = 0;
-                pointSound.play();
-            }
+      for (let i = pipes.length - 1; i >= 0; i--) {
+        const pipe = pipes[i];
+        pipe.x -= pipeSpeed;
+
+        // Check for scoring *before* removing the pipe
+        if (!pipe.scored && birdX > pipe.x + pipeWidth / 2) {
+            score++;
+            pointSound.currentTime = 0;
+            pointSound.play();
+            pipe.scored = true; // Mark the pipe as scored
         }
 
-        if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 300) {
-            const topHeight = Math.floor(Math.random() * (canvas.height - pipeGap - 150)) + 75;
-            pipes.push({ x: canvas.width, topHeight });
+
+        if (pipe.x + pipeWidth < 0) {
+            pipes.splice(i, 1);
         }
     }
+
+    if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 300) {
+        const topHeight = Math.floor(Math.random() * (canvas.height - pipeGap - 150)) + 75;
+        // Add a 'scored' property to each pipe
+        pipes.push({ x: canvas.width, topHeight, scored: false });
+    }
+}
 
     function resetGame() {
         birdY = canvas.height / 2;
@@ -144,6 +153,8 @@ canvas {
         gameOver = false;
         bgMusic.currentTime = 0;
         bgMusic.play();
+        gameOverMusic.pause(); // Stop the game over music
+        gameOverMusic.currentTime = 0; // Rewind game over music
     }
 
     function updateGame() {
@@ -162,6 +173,7 @@ canvas {
             }
         }
     }
+
 
     function drawGame() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -202,8 +214,8 @@ canvas {
     document.addEventListener('mousedown', handleInput);
 
     // --- Start Game ---
-    bgMusic.play(); // Start the music
-    gameLoop(); // Start the game loop
+    bgMusic.play();
+    gameLoop();
 
 </script>
 </body>
