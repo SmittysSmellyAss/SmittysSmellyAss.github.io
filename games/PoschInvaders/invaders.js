@@ -113,7 +113,7 @@ function submitScore(playerName, score) {
         return;
     }
 
-    fetch("http://spotty-silken-turnover.glitch.me:3000/leaderboard", {
+    fetch("https://spotty-silken-turnover.glitch.me:3000/leaderboard", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
