@@ -106,6 +106,42 @@ class Invader {
 const invaders = [];
 const invaderTypes = Object.keys(invaderImages);
 
+function submitScore(playerName, score) {
+    // Ensure name is limited to 15 characters
+    if (playerName.length > 15) {
+        alert("Name cannot exceed 15 characters.");
+        return;
+    }
+
+    fetch("http://spotty-silken-turnover.glitch.me:3000/leaderboard", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ player: playerName, score: score })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Score submitted:", data);
+        displayLeaderboard(data.leaderboard);  // Display updated leaderboard
+    })
+    .catch(error => {
+        console.error("Error submitting score:", error);
+    });
+}
+
+
+function displayLeaderboard(leaderboard) {
+    const leaderboardElement = document.querySelector('.leaderboard');
+    leaderboardElement.innerHTML = "";  // Clear current leaderboard
+
+    leaderboard.forEach((entry, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${index + 1}. ${entry.player} - ${entry.score}`;
+        leaderboardElement.appendChild(listItem);
+    });
+}
+
 function stopAudio(audio) {
     audio.pause();
     audio.currentTime = 0;
@@ -192,6 +228,10 @@ function update() {
                 restartAudio(poschGameOver);
                 gameOver = true; // End the game
                 gameRunning = false; // End the game
+
+
+                const playerName = prompt("Enter your name (15 character limit):");
+                submitScore(playerName, currentScore);  
 
                 
             } else {
