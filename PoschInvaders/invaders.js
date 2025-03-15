@@ -13,12 +13,14 @@ poschMusic.loop = true;
 poschMusic.volume = 0.1;
 let poschGrunt = new Audio('grunt.mp3');
 poschGrunt.volume = 1;
+let poschGameOver = new Audio('gameOver.mp3');
+poschGameOver.volume = .1;
 
-// Load player image
+
 const playerImage = new Image();
 playerImage.src = "ballen.png";
 
-// Player setup
+
 const player = {
     x: canvas.width / 2 - 25,
     y: canvas.height - 60,
@@ -104,6 +106,17 @@ class Invader {
 const invaders = [];
 const invaderTypes = Object.keys(invaderImages);
 
+function stopAudio(audio) {
+    audio.pause();
+    audio.currentTime = 0;
+}
+
+function restartAudio(audio) {
+    audio.currentTime = 0;
+    audio.play();
+
+}
+
 function newInvaderWave() {
     for (let i = 0; i < 5; i++) {
         const randomType = invaderTypes[Math.floor(Math.random() * invaderTypes.length)];
@@ -111,7 +124,7 @@ function newInvaderWave() {
     }
 }
 
-// Key listeners
+// Key listeners IMPORTANT
 window.addEventListener("keydown", (e) => keys[e.code] = true);
 window.addEventListener("keyup", (e) => keys[e.code] = false);
 
@@ -143,7 +156,7 @@ function update() {
     invaders.forEach((invader, invIndex) => {
         invader.move();
 
-        if (Math.random() < 0.005) { // Adjust probability as needed
+        if (Math.random() < 0.005) { // Adjust for bomb drop rate INVADERS
             bombs.push(new Bomb(invader.x + invader.width / 2, invader.y + invader.height));
         }
 
@@ -159,12 +172,12 @@ function update() {
     bombs.forEach((bomb, bIndex) => {
         bomb.move();
     
-        // Remove bomb if it reaches the bottom
+        // Remove bomb if bottom
         if (bomb.y > canvas.height) {
             bombs.splice(bIndex, 1);
         }
     
-        // Check for collision with the player
+        // Check for collision with player
         if (
             bomb.x < player.x + player.width &&
             bomb.x + bomb.width > player.x &&
@@ -174,11 +187,15 @@ function update() {
             playerLives--; // Reduce lives on collision
             bombs.splice(bIndex, 1); // Remove the bomb
             if (playerLives <= 0) {
-                poschMusic.pause();
+
+                stopAudio(poschMusic);
+                restartAudio(poschGameOver);
                 gameOver = true; // End the game
                 gameRunning = false; // End the game
+
+                
             } else {
-                // Reset the player position (or add respawn behavior)
+                // Reset the player position if still alive
                 player.x = canvas.width / 2 - 25;
                 player.y = canvas.height - 60;
             }
@@ -189,6 +206,9 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     if (!gameRunning && gameOver) {
+
+
+
 
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -253,8 +273,9 @@ window.addEventListener("keydown", (e) => {
 // Start game and restart game
 window.addEventListener("keydown", (e) => {
     if (e.code === "Enter" && !gameRunning) {
-
-        poschMusic.play();
+        stopAudio(poschGameOver);
+        
+        restartAudio(poschMusic);
 
         // Reset lives and score
         playerLives = 3;
@@ -275,8 +296,10 @@ window.addEventListener("keydown", (e) => {
     } else
 
     if (e.code === "Enter" && gameOver && !gameRunning) {
-
-        poschMusic.play();
+        stopAudio(poschGameOver);
+        gameOver = false;
+        restartAudio(poschMusic);
+        
 
         // Reset lives and score
         playerLives = 3;
