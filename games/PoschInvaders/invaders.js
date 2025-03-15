@@ -113,7 +113,7 @@ function submitScore(playerName, score) {
         return;
     }
 
-    fetch("https://pastoral-psychedelic-tsunami.glitch.me:3000/leaderboard", {
+    fetch("https://titanium-glittery-impala.glitch.me:3000/leaderboard", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
