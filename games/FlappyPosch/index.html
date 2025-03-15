@@ -4,19 +4,19 @@
 <title>Flappy Bird Clone</title>
 <style>
 body {
-  margin: 0; /* Remove default body margin */
-  overflow: hidden; /* Hide scrollbars */
-  display: flex;
-  justify-content: center; /* Center canvas horizontally */
-  align-items: center;     /* Center canvas vertically */
-  height: 100vh;         /* Full viewport height */
-  background-color: #70c5ce; /* Sky blue background (optional) */
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #70c5ce; /* Optional sky blue */
 }
-
 canvas {
     border: 1px solid black;
     background-image: url('gamebg.png');
     background-size: cover;
+    display: block; /* Important for consistent rendering */
 }
 </style>
 </head>
@@ -42,33 +42,44 @@ canvas {
     let pipeSpeed = 2;
     let score = 0;
     let gameOver = false;
-    let highScore = localStorage.getItem('highScore') || 0; // Load high score
+    let highScore = localStorage.getItem('highScore') || 0;
 
-    // Audio (inline as much as possible)
+    // Audio
     const bgMusic = new Audio('gameplay.mp3');
     bgMusic.loop = true;
     const gameOverMusic = new Audio('over.mp3');
     const flapSound = new Audio('grunt.mp3');
     const pointSound = new Audio('point.mp3');
 
-
-    // Image loading
+    // Image loading (with onload handlers)
     const birdImg = new Image();
     birdImg.src = 'ballen.png';
+    let birdReady = false;
+    birdImg.onload = () => { birdReady = true; };
+
     const pipeTopImg = new Image();
-    pipeTopImg.src = 'pipe_top.png'; //  replace with your pipe top image
+    pipeTopImg.src = 'pipe_top.png';
+    let pipeTopReady = false;
+    pipeTopImg.onload = () => { pipeTopReady = true; };
+
     const pipeBottomImg = new Image();
-    pipeBottomImg.src = 'pipe_bottom.png'; //  replace with your pipe bottom image
+    pipeBottomImg.src = 'pipe_bottom.png';
+    let pipeBottomReady = false;
+    pipeBottomImg.onload = () => { pipeBottomReady = true; };
 
 
     // --- Drawing Functions ---
     function drawBird() {
-        ctx.drawImage(birdImg, birdX - birdRadius, birdY - birdRadius, birdRadius * 2, birdRadius * 2);
+        if (birdReady) { // Only draw if the image is loaded
+            ctx.drawImage(birdImg, birdX - birdRadius, birdY - birdRadius, birdRadius * 2, birdRadius * 2);
+        }
     }
 
     function drawPipe(pipe) {
-        ctx.drawImage(pipeTopImg, pipe.x, 0, pipeWidth, pipe.topHeight);
-        ctx.drawImage(pipeBottomImg, pipe.x, pipe.topHeight + pipeGap, pipeWidth, canvas.height - (pipe.topHeight + pipeGap));
+        if (pipeTopReady && pipeBottomReady) { // Only draw if images are loaded
+            ctx.drawImage(pipeTopImg, pipe.x, 0, pipeWidth, pipe.topHeight);
+            ctx.drawImage(pipeBottomImg, pipe.x, pipe.topHeight + pipeGap, pipeWidth, canvas.height - (pipe.topHeight + pipeGap));
+        }
     }
 
     function drawPipes() {
@@ -81,7 +92,7 @@ canvas {
         ctx.font = "20px Arial";
         ctx.fillStyle = "white";
         ctx.fillText("Score: " + score, 10, 30);
-        ctx.fillText("High Score: " + highScore, 10, 60); //Display Highscore
+        ctx.fillText("High Score: " + highScore, 10, 60);
     }
 
     function drawGameOver() {
@@ -134,8 +145,8 @@ canvas {
         bgMusic.currentTime = 0;
         bgMusic.play();
     }
-    function updateGame()
-    {
+
+    function updateGame() {
         birdVelocity += gravity;
         birdY += birdVelocity;
 
@@ -145,14 +156,14 @@ canvas {
             gameOver = true;
             bgMusic.pause();
             gameOverMusic.play();
-             if (score > highScore) {
+            if (score > highScore) {
                 highScore = score;
-                localStorage.setItem('highScore', highScore);  //Save
+                localStorage.setItem('highScore', highScore);
             }
         }
     }
 
-    function drawGame(){
+    function drawGame() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBird();
         drawPipes();
@@ -161,14 +172,12 @@ canvas {
 
     // --- Game Loop ---
     function gameLoop() {
-
-        if(!gameOver){
-           updateGame();
-           drawGame();
+        if (!gameOver) {
+            updateGame();
+            drawGame();
         } else {
             drawGameOver();
         }
-
         requestAnimationFrame(gameLoop);
     }
 
@@ -190,12 +199,11 @@ canvas {
         }
     });
 
-    document.addEventListener('mousedown', handleInput); // Mouse click
-
+    document.addEventListener('mousedown', handleInput);
 
     // --- Start Game ---
-    bgMusic.play();
-    gameLoop();
+    bgMusic.play(); // Start the music
+    gameLoop(); // Start the game loop
 
 </script>
 </body>
