@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Flappy Bird Clone</title>
+<title>Flappy Posch</title>
 <style>
 body {
     margin: 0;
@@ -22,7 +22,7 @@ canvas {
 </head>
 <body>
 
-<canvas id="gameCanvas" width="800" height="800"></canvas>
+<canvas id="gameCanvas" width="400" height="600"></canvas>
 
 <script>
     const canvas = document.getElementById('gameCanvas');
@@ -44,7 +44,12 @@ canvas {
     let gameOver = false;
     let highScore = localStorage.getItem('highScore') || 0;
 
-    // Audio - Adjust volumes here
+    // Hold to Restart Variables
+    let holdingSpace = false;
+    let holdStartTime = 0;
+    const holdDuration = 3000; // 3 seconds in milliseconds
+
+    // Audio
     const bgMusic = new Audio('gameplay.mp3');
     bgMusic.loop = true;
     bgMusic.volume = 0.3;
@@ -101,28 +106,52 @@ canvas {
         }
     }
 
-    function drawScore() {
-      ctx.font = "bold 20px Arial"; // Make the font bold
-      ctx.strokeStyle = 'black';   // Set outline color
-      ctx.lineWidth = 2;         // Set outline width
-
-      // Draw the outline first
-      ctx.strokeText("Score: " + score, 10, 30);
-      ctx.strokeText("High Score: " + highScore, 10, 60);
-
-      // Then draw the filled text on top
-      ctx.fillStyle = "white";
-      ctx.fillText("Score: " + score, 10, 30);
-      ctx.fillText("High Score: " + highScore, 10, 60);
+        function drawScore() {
+        ctx.font = "bold 20px Arial";
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.strokeText("Score: " + score, 10, 30);
+        ctx.strokeText("High Score: " + highScore, 10, 60);
+        ctx.fillStyle = "white";
+        ctx.fillText("Score: " + score, 10, 30);
+        ctx.fillText("High Score: " + highScore, 10, 60);
     }
 
     function drawGameOver() {
-        ctx.font = "30px Arial";
-        ctx.fillStyle = "red";
-        ctx.fillText("Game Over! You Suck!", canvas.width / 2 - 80, canvas.height / 2);
-        ctx.font = "20px Arial";
-        ctx.fillText("Press SPACE to restart", canvas.width / 2 - 110, canvas.height / 2 + 40);
+      ctx.font = "bold 30px Arial";
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 4; // Thicker outline for game over
+      ctx.strokeText("Game Over!", canvas.width / 2 - 80, canvas.height / 2);
+      ctx.fillStyle = "red";
+      ctx.fillText("Game Over!", canvas.width / 2 - 80, canvas.height / 2);
+
+      ctx.font = "bold 20px Arial";
+      ctx.lineWidth = 3;
+      ctx.strokeText("Hold SPACE to restart", canvas.width / 2 - 110, canvas.height / 2 + 40);
+      ctx.fillStyle = "white";
+      ctx.fillText("Hold SPACE to restart", canvas.width / 2 - 110, canvas.height / 2 + 40);
     }
+
+  function drawLoadingWheel(progress) {
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2 + 80; // Position below the text
+    const radius = 25;
+
+    // Draw the full circle (background)
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = 'gray';
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    // Draw the filled portion (progress)
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, -0.5 * Math.PI, -0.5 * Math.PI + (progress * 2 * Math.PI));
+    ctx.strokeStyle = 'lime'; // Bright green
+    ctx.lineWidth = 5;
+    ctx.stroke();
+    }
+
 
     // --- Game Logic ---
 
@@ -170,6 +199,9 @@ canvas {
         bgMusic.play();
         gameOverMusic.pause();
         gameOverMusic.currentTime = 0;
+        holdingSpace = false; // Reset hold state
+        holdStartTime = 0;   // Reset hold start time
+
     }
 
     function updateGame() {
@@ -204,27 +236,44 @@ canvas {
             drawGame();
         } else {
             drawGameOver();
+            if (holdingSpace) {
+              const elapsedTime = Date.now() - holdStartTime;
+              const progress = Math.min(elapsedTime / holdDuration, 1); // Clamp to 1
+              drawLoadingWheel(progress);
+               if (elapsedTime >= holdDuration) {
+                    resetGame(); // Restart after hold duration
+                }
+            }
+
         }
         requestAnimationFrame(gameLoop);
     }
 
+
     // --- Event Listeners ---
     function handleInput() {
-        if (!gameOver) {
-            birdVelocity = jumpStrength;
-            // Play one of the flap sounds, cycling through them:
-            flapSounds[currentFlapSound].currentTime = 0; // Reset
-            flapSounds[currentFlapSound].play();
-            currentFlapSound = (currentFlapSound + 1) % flapSounds.length; // Cycle to the next sound
-
-        } else {
-            resetGame();
-        }
+      if (!gameOver) {
+          birdVelocity = jumpStrength;
+          flapSounds[currentFlapSound].currentTime = 0;
+          flapSounds[currentFlapSound].play();
+          currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
+      }
     }
 
-    document.addEventListener('keydown', (event) => {
+     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            handleInput();
+            if (!gameOver) {
+                handleInput();
+            } else {
+                holdingSpace = true;
+                holdStartTime = Date.now(); // Record the time when space is pressed
+            }
+        }
+    });
+
+    document.addEventListener('keyup', (event) => {
+        if (event.code === 'Space' && gameOver) {
+            holdingSpace = false; // Stop holding
         }
     });
 
