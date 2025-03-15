@@ -15,10 +15,9 @@ body {
 }
 canvas {
     border: 1px solid black;
-    background-image: url('gamebg.png'); /* Make sure this path is correct */
+    background-image: url('gamebg.png'); 
     background-size: cover;
     display: block;
-    /* touch-action: manipulation;  This is generally a good idea, BUT it interferes with touchend for hold-to-restart, so we handle it differently */
 }
 </style>
 </head>
@@ -58,7 +57,7 @@ canvas {
     let touchFlapTriggered = false;
 
     // Audio
-    const bgMusic = new Audio('gameplay.mp3');  // Make sure these paths are correct
+    const bgMusic = new Audio('gameplay.mp3');  
     bgMusic.loop = true;
     bgMusic.volume = 0.3;
 
@@ -76,23 +75,22 @@ canvas {
     const pointSound = new Audio('point.mp3');
     pointSound.volume = 0.7;
 
-    // Image loading (with onload handlers)
+    // Image
     const birdImg = new Image();
-    birdImg.src = 'ballen.png'; // Make sure this path is correct
+    birdImg.src = 'ballen.png'; 
     let birdReady = false;
     birdImg.onload = () => { birdReady = true; };
 
     const pipeTopImg = new Image();
-    pipeTopImg.src = 'pipe_top.png'; // Make sure this path is correct
+    pipeTopImg.src = 'pipe_top.png'; 
     let pipeTopReady = false;
     pipeTopImg.onload = () => { pipeTopReady = true; };
 
     const pipeBottomImg = new Image();
-    pipeBottomImg.src = 'pipe_bottom.png'; // Make sure this path is correct
+    pipeBottomImg.src = 'pipe_bottom.png'; 
     let pipeBottomReady = false;
     pipeBottomImg.onload = () => { pipeBottomReady = true; };
 
-    // --- Drawing Functions ---
     function drawBird() {
         if (birdReady) {
             ctx.drawImage(birdImg, birdX - birdRadius, birdY - birdRadius, birdRadius * 2, birdRadius * 2);
@@ -120,7 +118,7 @@ canvas {
         let textWidth = ctx.measureText(text).width;
         ctx.strokeText(text, 10, 30);
         text = "High Score: " + highScore;
-        textWidth = ctx.measureText(text).width; //reusing for efficiency
+        textWidth = ctx.measureText(text).width;
         ctx.strokeText(text, 10, 60);
 
         ctx.fillStyle = "white";
@@ -149,20 +147,20 @@ canvas {
 
     function drawLoadingWheel(progress) {
         const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2 + 80; // Position below the text
+        const centerY = canvas.height / 2 + 80; 
         const radius = 25;
 
-        // Draw the full circle (background)
+ 
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
         ctx.strokeStyle = 'gray';
         ctx.lineWidth = 5;
         ctx.stroke();
 
-        // Draw the filled portion (progress)
+
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, -0.5 * Math.PI, -0.5 * Math.PI + (progress * 2 * Math.PI));
-        ctx.strokeStyle = 'lime'; // Bright green
+        ctx.strokeStyle = 'lime'; 
         ctx.lineWidth = 5;
         ctx.stroke();
     }
@@ -275,7 +273,6 @@ canvas {
         requestAnimationFrame(gameLoop);
     }
 
-// --- Event Listeners ---
     function handleInput(source) {
         if (!gameOver) {
             if (source === 'space' && !spaceFlapTriggered) {
@@ -297,9 +294,9 @@ canvas {
 
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            event.preventDefault(); // Prevent page scrolling!
+            event.preventDefault(); 
             if (!gameOver) {
-                handleInput('space'); // Pass 'space' as the source
+                handleInput('space'); 
             } else if (!holdingSpace) {
                 holdingSpace = true;
                 holdStartTime = Date.now();
@@ -310,23 +307,21 @@ canvas {
     document.addEventListener('keyup', (event) => {
         if (event.code === 'Space') {
             holdingSpace = false;
-            spaceFlapTriggered = false; // Reset the flap trigger
+            spaceFlapTriggered = false;
         }
     });
     document.addEventListener('mousedown', (event) => {
   
-      // Prevent default behavior (like text selection) on mousedown. This *also* prevents zoom on double-tap
+
       event.preventDefault();
-        handleInput('touch'); //Consider mouse as touch for simplicity
+        handleInput('touch'); 
     });
 
 
-  //Use pointer events for best cross-device compatiblity
    document.addEventListener('pointerdown', (event) => {
       if(event.pointerType === 'touch'){
           if (!gameOver) {
-            handleInput('touch');  // Pass 'touch' as the source
-            //Crucially, we do *not* prevent default here on pointerdown; we wait until pointerup
+            handleInput('touch'); 
           } else if (!holdingTouch) {
             holdingTouch = true;
             touchHoldStartTime = Date.now();
@@ -338,16 +333,14 @@ canvas {
     document.addEventListener('pointerup', (event) => {
         if (event.pointerType === 'touch') {
             holdingTouch = false;
-            touchFlapTriggered = false; // Reset the flap trigger
-             //Prevent default *here* to prevent zoom on rapid single taps, but *not* prevent it during a hold.
-              if(Date.now() - touchHoldStartTime < holdDuration){ //If it's not a long press, prevent zoom
+            touchFlapTriggered = false;
+              if(Date.now() - touchHoldStartTime < holdDuration){ 
                 event.preventDefault();
               }
         }
     });
 
 
-    // --- Start Game ---
     bgMusic.play();
     gameLoop();
 
