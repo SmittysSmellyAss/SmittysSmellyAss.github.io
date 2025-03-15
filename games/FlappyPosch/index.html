@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Flappy Posch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <style>
 body {
     margin: 0;
@@ -17,6 +18,7 @@ canvas {
     background-image: url('gamebg.png'); /* Make sure this path is correct */
     background-size: cover;
     display: block;
+    touch-action: manipulation; /*For preventing zoom*/
 }
 </style>
 </head>
@@ -47,9 +49,13 @@ canvas {
     // Hold to Restart Variables
     let holdingSpace = false;
     let holdStartTime = 0;
-    let holdingTouch = false; // Add this
-    let touchHoldStartTime = 0; // Add this for separate touch timing
+    let holdingTouch = false;
+    let touchHoldStartTime = 0;
     const holdDuration = 3000; // 3 seconds in milliseconds
+
+    // Flap Control
+    let spaceFlapTriggered = false;
+    let touchFlapTriggered = false;
 
     // Audio
     const bgMusic = new Audio('gameplay.mp3');  // Make sure these paths are correct
@@ -207,10 +213,12 @@ canvas {
         bgMusic.play();
         gameOverMusic.pause();
         gameOverMusic.currentTime = 0;
-        holdingSpace = false; // Reset hold state
+        holdingSpace = false;
         holdStartTime = 0;
-        holdingTouch = false; // Reset touch hold state
-        touchHoldStartTime = 0; // Reset touch hold start time
+        holdingTouch = false;
+        touchHoldStartTime = 0;
+        spaceFlapTriggered = false;
+        touchFlapTriggered = false;
     }
 
     function updateGame() {
@@ -245,7 +253,7 @@ canvas {
         } else {
             drawGameOver();
             // --- Hold-to-Restart Logic ---
-            if (holdingSpace || holdingTouch) { // Check BOTH conditions
+            if (holdingSpace || holdingTouch) {
                 let elapsedTime;
                 let progress;
 
@@ -267,13 +275,23 @@ canvas {
         requestAnimationFrame(gameLoop);
     }
 
-    // --- Event Listeners ---
-    function handleInput() {
+// --- Event Listeners ---
+    function handleInput(source) {
         if (!gameOver) {
-            birdVelocity = jumpStrength;
-            flapSounds[currentFlapSound].currentTime = 0;
-            flapSounds[currentFlapSound].play();
-            currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
+            if (source === 'space' && !spaceFlapTriggered) {
+                birdVelocity = jumpStrength;
+                flapSounds[currentFlapSound].currentTime = 0;
+                flapSounds[currentFlapSound].play();
+                currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
+                spaceFlapTriggered = true; // Mark that a flap has been triggered
+            } else if (source === 'touch' && !touchFlapTriggered) {
+                birdVelocity = jumpStrength;
+                flapSounds[currentFlapSound].currentTime = 0;
+                flapSounds[currentFlapSound].play();
+                currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
+                touchFlapTriggered = true;  // Mark that a flap has been triggered
+
+            }
         }
     }
 
@@ -281,8 +299,8 @@ canvas {
         if (event.code === 'Space') {
             event.preventDefault(); // Prevent page scrolling!
             if (!gameOver) {
-                handleInput();
-            } else if (!holdingSpace) {  // Only start holding if not already holding
+                handleInput('space'); // Pass 'space' as the source
+            } else if (!holdingSpace) {
                 holdingSpace = true;
                 holdStartTime = Date.now();
             }
@@ -291,30 +309,16 @@ canvas {
 
     document.addEventListener('keyup', (event) => {
         if (event.code === 'Space') {
-            holdingSpace = false; // Reset holdingSpace on keyup
-            // Do NOT reset holdStartTime here.
+            holdingSpace = false;
+            spaceFlapTriggered = false; // Reset the flap trigger
         }
     });
-
-    document.addEventListener('mousedown', handleInput);
+    document.addEventListener('mousedown', (event) => {
+        handleInput('touch'); //Consider mouse as touch for simplicity
+     });
 
     document.addEventListener('touchstart', (event) => {
-        event.preventDefault(); // Prevent scrolling on mobile
+        event.preventDefault(); // Prevent scrolling AND zooming
         if (!gameOver) {
-            handleInput(); // Handle jump during gameplay
-        } else if (!holdingTouch) { // Start hold if not already holding
-             holdingTouch = true;
-             touchHoldStartTime = Date.now();
-        }
-    });
-
-    document.addEventListener('touchend', (event) => {
-        holdingTouch = false; // Reset holdingTouch on touch end
-    });
-    // --- Start Game ---
-    bgMusic.play();
-    gameLoop();
-
-</script>
-</body>
-</html>
+            handleInput('touch');  // Pass 'touch' as the source
+        } else if
