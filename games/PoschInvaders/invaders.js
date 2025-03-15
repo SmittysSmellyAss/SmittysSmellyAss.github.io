@@ -113,7 +113,7 @@ function submitScore(playerName, score) {
         return;
     }
 
-    fetch("https://titanium-glittery-impala.glitch.me:3000/leaderboard", {
+    fetch("https://titanium-glittery-impala.glitch.me/leaderboard", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
