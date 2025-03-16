@@ -88,7 +88,7 @@ canvas {
         gameLoop();
     };
 
-     const pipeTopImg = new Image();
+    const pipeTopImg = new Image();
     pipeTopImg.src = 'pipe_top.png';
     let pipeTopReady = false;
     pipeTopImg.onload = () => { pipeTopReady = true; };
@@ -126,7 +126,7 @@ canvas {
         }
     }
 
-     function drawPipe(pipe) {
+    function drawPipe(pipe) {
         if (pipeTopReady && pipeBottomReady) {
             ctx.drawImage(pipeTopImg, pipe.x, 0, pipeWidth, pipe.topHeight);
             ctx.drawImage(pipeBottomImg, pipe.x, pipe.topHeight + pipeGap, pipeWidth, canvas.height - (pipe.topHeight + pipeGap));
@@ -196,24 +196,24 @@ canvas {
     let isScrolling = false; // Flag to indicate if we're scrolling
     let nextBackgroundImage = new Image(); // Store the next background image object
 
-     async function changeBackground() {
+    async function changeBackground() {
         const possibleBackgrounds = [];
         for (let i = 1; ; i++) {
             const bgImageName = `gamebg_${i}.png`;
-            const img = new Image();
-            img.src = bgImageName;
-
-            try{
-                await new Promise((resolve, reject) => {
-                    img.onload = resolve;
-                    img.onerror = reject;
-                });
-                possibleBackgrounds.push(bgImageName);
+            const imgPath = bgImageName; // Corrected: Use the image name directly
+            try {
+                const response = await fetch(imgPath, { method: 'HEAD' }); // Efficiently check if the file exists
+                if (response.ok) {
+                    possibleBackgrounds.push(bgImageName);
+                } else {
+                    break; // Stop checking if the file doesn't exist
+                }
             } catch (error) {
-                break;
+                break; // Stop if there's any error fetching
             }
         }
-        if(possibleBackgrounds.length > 1){
+
+        if (possibleBackgrounds.length > 1) {
             let newBackground;
             do {
                 newBackground = possibleBackgrounds[Math.floor(Math.random() * possibleBackgrounds.length)];
@@ -223,10 +223,8 @@ canvas {
             nextBackgroundImage.src = nextBackground; // Preload the image
             isScrolling = true;  // Start scrolling
             scrollX = canvas.width; // Start offscreen to the right
-
         }
-     }
-
+    }
 
     function scrollBackground() {
         if (isScrolling) {
@@ -243,14 +241,18 @@ canvas {
             if (scrollX <= 0) {
                 // Scrolling finished
                 isScrolling = false;
-                canvas.style.backgroundImage = `url('${nextBackground}')`;
+                canvas.style.backgroundImage = `url('${nextBackground}')`;  // Corrected: Set background image
                 currentBackground = nextBackground;
                 nextBackground = null; // Clear for the next change
             }
+        } else { //IMPORTANT, draw initial if not scrolling
+                let currentBg = new Image();
+            currentBg.src = currentBackground;
+            ctx.drawImage(currentBg, 0, 0, canvas.width, canvas.height);
         }
     }
 
-      function checkCollision() {
+    function checkCollision() {
         if (birdY - birdRadius < 0 || birdY + birdRadius > canvas.height) {
             return true;
         }
@@ -259,10 +261,10 @@ canvas {
             if (birdX + birdRadius < pipe.x || birdX - birdRadius > pipe.x + pipeWidth) {
                 continue;
             }
-            if (birdY + birdRadius < 0 || birdY - birdRadius > pipe.topHeight + pipeGap) {
-                continue;
-            }
-             for (let y = 0; y < birdCollisionMap.length; y++) {
+             if (birdY + birdRadius < 0 || birdY - birdRadius > pipe.topHeight + pipeGap) {
+                continue;
+            }
+            for (let y = 0; y < birdCollisionMap.length; y++) {
                 for (let x = 0; x < birdCollisionMap[y].length; x++) {
                     if (birdCollisionMap[y][x]) {
                         const birdPixelX = Math.floor(birdX - birdRadius + x);
@@ -287,25 +289,20 @@ canvas {
             pipe.x -= pipeSpeed;
 
             if (!pipe.scored && birdX > pipe.x + pipeWidth/2) {
-              score++;
-              pointSound.currentTime = 0; // reset play time
-              pointSound.play();
-              pipe.scored = true;
-            }
+                score++;
+                pointSound.currentTime = 0; // reset play time
+                pointSound.play();
+                pipe.scored = true;
+           }
 
             if (pipe.x + pipeWidth < 0) {
                 pipes.splice(i, 1);
             }
         }
-        // Add a new pipe, and potentially trigger a background change
+        // Add a new pipe
         if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 300) {
             const topHeight = Math.floor(Math.random() * (canvas.height - pipeGap - 150)) + 75;
-              pipes.push({ x: canvas.width, topHeight: topHeight, scored: false});
-
-            // Check for background change every 25 points
-            if (score > 0 && score % 25 === 0 && !isScrolling) {
-               changeBackground(); // get the next image ready
-            }
+            pipes.push({ x: canvas.width, topHeight: topHeight, scored: false});
         }
     }
 
@@ -323,19 +320,24 @@ canvas {
         holdStartTime = 0;
         holdingTouch = false;
         touchHoldStartTime = 0;
-         spaceFlapTriggered = false;
+        spaceFlapTriggered = false;
         touchFlapTriggered = false;
         canvas.style.backgroundImage = `url('gamebg.png')`;
         currentBackground = 'gamebg.png';
-        nextBackground = null;       // Reset background transition variables
+        nextBackground = null;      // Reset background transition variables
         isScrolling = false;
         scrollX = 0;
     }
 
-     function updateGame() {
+    function updateGame() {
+         // Check for background change every 25 points *before* updating pipes
+        if (score > 0 && score % 25 === 0 && !isScrolling) {
+            changeBackground(); // get the next image ready
+        }
         birdVelocity += gravity;
         birdY += birdVelocity;
-        updatePipes();
+        updatePipes();  // *Then* update the pipes
+
         if (checkCollision()) {
             gameOver = true;
             bgMusic.pause();
@@ -345,17 +347,18 @@ canvas {
                 localStorage.setItem('highScore', highScore);
             }
         }
+
     }
 
     function drawGame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // Draw the scrolling background *before* other elements.
-      if (isScrolling) {
-          scrollBackground();
-      }
-      drawBird();
-      drawPipes();
-      drawScore();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the scrolling background *before* other elements.
+        scrollBackground(); // Always call scrollBackground
+
+        drawBird();
+        drawPipes();
+        drawScore();
     }
 
     function gameLoop() {
@@ -387,7 +390,7 @@ canvas {
             }
         }
     }
-     document.addEventListener('keydown', (event) => {
+    document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
             event.preventDefault(); // Prevent spacebar scrolling
             if (!gameOver) {
@@ -406,7 +409,7 @@ canvas {
         }
     });
 
-     document.addEventListener('mousedown', (event) => {
+    document.addEventListener('mousedown', (event) => {
         event.preventDefault();
         handleInput('touch');
 
@@ -414,23 +417,23 @@ canvas {
 
     document.addEventListener('pointerdown', (event) => { //for mobile
         if(event.pointerType === 'touch'){
-            if (!gameOver) {
-              handleInput('touch');
-            } else if(!holdingTouch){
-              holdingTouch = true;
-              touchHoldStartTime = Date.now();
-            }
+             if (!gameOver) {
+                handleInput('touch');
+             } else if(!holdingTouch){
+                 holdingTouch = true;
+                 touchHoldStartTime = Date.now();
+             }
         }
 
     });
-      document.addEventListener('pointerup', (event) => { //for mobile
+    document.addEventListener('pointerup', (event) => { //for mobile
         if (event.pointerType === 'touch') {
-          holdingTouch = false;
-          touchFlapTriggered = false;
-          //prevent click after hold
-          if(Date.now() - touchHoldStartTime < holdDuration){
+            holdingTouch = false;
+            touchFlapTriggered = false;
+            //prevent click after hold
+            if(Date.now() - touchHoldStartTime < holdDuration){
                 event.preventDefault();
-          }
+            }
         }
     });
 </script>
