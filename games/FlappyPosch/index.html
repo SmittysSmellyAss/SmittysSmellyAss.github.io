@@ -319,9 +319,9 @@ canvas {
                 pipe.scored = true;
 
                 // Background change logic
-                if (score % 50 === 0) {
+                if (score % 10 === 0) {
                     changeBackground();
-                } else if (score > 50 && (score % 5) === 0) {
+                } else if (score > 10 && (score % 5) === 0) {
                     updateBackgroundOpacity();
                 }
             }
