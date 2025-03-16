@@ -34,13 +34,13 @@ canvas {
     let birdX = 50;
     const birdRadius = 25;
     let birdVelocity = 0;
-    const gravity = 900;  //  Gravity, tuned for delta time.
-    const jumpStrength = -400; // Jump strength, tuned for delta time.
+    const gravity = 1000;  // Gravity.
+    const jumpStrength = -300; // Slightly reduced jump strength
 
     const pipeWidth = 70;
     let pipes = [];
     const pipeGap = 170;
-    let pipeSpeed = 180; // Pipe speed, in pixels per second.
+    let pipeSpeed = 180; // Pipe speed.
     let score = 0;
     let gameOver = false;
     let highScore = localStorage.getItem('highScore') || 0;
@@ -52,9 +52,9 @@ canvas {
     let touchHoldStartTime = 0;
     const holdDuration = 3000;
 
-    // Flap Control - REMOVED the flap triggers.  We handle it all in one place now.
-    // let spaceFlapTriggered = false;
-    // let touchFlapTriggered = false;
+    // Flap Control - Re-introduce a single flap trigger
+    let hasFlapped = false;
+
 
     // Audio
     const bgMusic = new Audio('gameplay.mp3');
@@ -253,8 +253,7 @@ canvas {
         holdStartTime = 0;
         holdingTouch = false;
         touchHoldStartTime = 0;
-        // spaceFlapTriggered = false; // Removed
-        // touchFlapTriggered = false; // Removed
+        hasFlapped = false; // Reset flap trigger on game reset
         canvas.style.backgroundImage = `url('${currentBackground}')`; // Reset background
         lastBackgroundChangeScore = 0; // Reset background change tracker
         preloadNextBackground(); // Preload the *next* background
@@ -359,22 +358,23 @@ canvas {
         }
         requestAnimationFrame(gameLoop);
     }
-  // Simplified input handling (no need for separate flap triggers)
+  //  input handling (one flap per press)
     function handleInput() {
-        if (!gameOver) {
-            birdVelocity = jumpStrength; // Set velocity directly.
+        if (!gameOver && !hasFlapped) { // Check if already flapped
+            birdVelocity = jumpStrength;
             flapSounds[currentFlapSound].currentTime = 0;
             flapSounds[currentFlapSound].play();
             currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
+            hasFlapped = true; // Set the flap trigger
         }
     }
 
 
     document.addEventListener('keydown', (event) => {
     if (event.code === 'Space') {
-        event.preventDefault(); // Prevent default spacebar behavior (scrolling)
+        event.preventDefault();
         if (!gameOver) {
-            handleInput(); // Call the simplified handler
+            handleInput();
         } else if (!holdingSpace) {
             holdingSpace = true;
             holdStartTime = Date.now();
@@ -384,20 +384,21 @@ canvas {
 
 document.addEventListener('keyup', (event) => {
     if (event.code === 'Space') {
-        holdingSpace = false; // Only need to reset holdingSpace
+        holdingSpace = false;
+        hasFlapped = false; // Reset flap trigger on key *release*
     }
 });
 
 
     document.addEventListener('mousedown', (event) => {
         event.preventDefault();
-        handleInput(); // Call the simplified handler
+        handleInput();
 
     });
 
    document.addEventListener('pointerdown', (event) => {
     if (event.pointerType === 'touch') {
-        event.preventDefault(); // Prevent scrolling/zooming on touch devices
+        event.preventDefault();
         if (!gameOver) {
           handleInput();
         } else if (!holdingTouch) {
@@ -409,7 +410,8 @@ document.addEventListener('keyup', (event) => {
 
 document.addEventListener('pointerup', (event) => {
     if (event.pointerType === 'touch') {
-      holdingTouch = false; // Only need to reset on pointer up.
+      holdingTouch = false;
+        hasFlapped = false; // Reset on touch release
       event.preventDefault();
     }
 });
