@@ -40,7 +40,7 @@ canvas {
     const pipeWidth = 70;
     let pipes = [];
     const pipeGap = 170;
-    let pipeSpeed = 2;
+    let pipeSpeed = 2; // Initial pipe speed
     let score = 0;
     let gameOver = false;
     let highScore = localStorage.getItem('highScore') || 0;
@@ -216,10 +216,10 @@ canvas {
 
 
 
-    function updatePipes() {
+    function updatePipes(dt) {
         for (let i = pipes.length - 1; i >= 0; i--) {
             const pipe = pipes[i];
-            pipe.x -= pipeSpeed;
+            pipe.x -= pipeSpeed * dt * 60; // Multiply by dt and a scaling factor
 
             if (!pipe.scored && birdX > pipe.x + pipeWidth / 2) {
                 score++;
@@ -296,11 +296,11 @@ canvas {
       }
     }
 
-    function updateGame() {
+    function updateGame(dt) {
 
-        birdVelocity += gravity;
-        birdY += birdVelocity;
-        updatePipes();
+        birdVelocity += gravity * dt;  // Apply gravity with delta time
+        birdY += birdVelocity * dt * 60; // Scale by dt and a factor for visual smoothness
+        updatePipes(dt);
 
         // Check for background change
         if (score === lastBackgroundChangeScore + backgroundChangeInterval - 1) { //one point before.
@@ -334,9 +334,17 @@ canvas {
         drawScore();
     }
 
+  // --- Delta Time Variables ---
+    let lastFrameTime = performance.now();
+
     function gameLoop() {
+      const now = performance.now();
+      const dt = (now - lastFrameTime) / 1000; // Delta time in seconds
+      lastFrameTime = now;
+
+
         if (!gameOver) {
-            updateGame();
+            updateGame(dt); // Pass delta time to updateGame
             drawGame();
         } else {
             drawGameOver();
