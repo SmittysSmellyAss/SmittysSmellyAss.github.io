@@ -34,13 +34,13 @@ canvas {
     let birdX = 50;
     const birdRadius = 25;
     let birdVelocity = 0;
-    const gravity = 0.5;
-    const jumpStrength = -8;
+    const gravity = 15;  // Increased gravity.  Experiment with this!
+    const jumpStrength = -350; // Increased jump strength (make it *more* negative)
 
     const pipeWidth = 70;
     let pipes = [];
     const pipeGap = 170;
-    let pipeSpeed = 2; // Initial pipe speed
+    let pipeSpeed = 180; // Increased pipe speed (was 2 before dt, then 2*60)
     let score = 0;
     let gameOver = false;
     let highScore = localStorage.getItem('highScore') || 0;
@@ -219,7 +219,7 @@ canvas {
     function updatePipes(dt) {
         for (let i = pipes.length - 1; i >= 0; i--) {
             const pipe = pipes[i];
-            pipe.x -= pipeSpeed * dt * 60; // Multiply by dt and a scaling factor
+            pipe.x -= pipeSpeed * dt; // No *60 needed
 
             if (!pipe.scored && birdX > pipe.x + pipeWidth / 2) {
                 score++;
@@ -299,7 +299,7 @@ canvas {
     function updateGame(dt) {
 
         birdVelocity += gravity * dt;  // Apply gravity with delta time
-        birdY += birdVelocity * dt * 60; // Scale by dt and a factor for visual smoothness
+        birdY += birdVelocity * dt; // Scale by dt, remove * 60
         updatePipes(dt);
 
         // Check for background change
@@ -362,7 +362,7 @@ canvas {
     function handleInput(source) {
         if (!gameOver) {
             if ((source === 'space' && !spaceFlapTriggered) || (source === 'touch' && !touchFlapTriggered)) {
-                birdVelocity = jumpStrength;
+                birdVelocity = jumpStrength * dt; // Apply jump strength with dt, no *60
                 flapSounds[currentFlapSound].currentTime = 0;
                 flapSounds[currentFlapSound].play();
                 currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
