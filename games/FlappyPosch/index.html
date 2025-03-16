@@ -18,32 +18,16 @@ canvas {
     background-image: url('gamebg.png');  /* Initial background */
     background-size: cover;
     display: block;
-    position: relative; /* Important for layering */
-}
-/* Style for the overlaying background canvas */
-#backgroundCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;  /* Ensure it covers the game canvas */
-    height: 100%;
-    z-index: -1; /* Place it behind the main canvas */
-    opacity: 0;   /* Initially transparent */
-    transition: opacity 0.5s ease; /* Smooth opacity transition */
-    pointer-events: none; /*  make the top canvas unclickable */
 }
 </style>
 </head>
 <body>
 
 <canvas id="gameCanvas" width="1000" height="1000"></canvas>
-<canvas id="backgroundCanvas" width="1000" height="1000"></canvas> 
 
 <script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    const bgCanvas = document.getElementById('backgroundCanvas'); // Get the background canvas
-    const bgCtx = bgCanvas.getContext('2d');
 
     // Game Variables
     let birdY = canvas.height / 2;
@@ -104,7 +88,7 @@ canvas {
         gameLoop();
     };
 
-    const pipeTopImg = new Image();
+     const pipeTopImg = new Image();
     pipeTopImg.src = 'pipe_top.png';
     let pipeTopReady = false;
     pipeTopImg.onload = () => { pipeTopReady = true; };
@@ -135,13 +119,14 @@ canvas {
         }
     }
 
+
     function drawBird() {
         if (birdReady) {
             ctx.drawImage(birdImg, birdX - birdRadius, birdY - birdRadius, birdRadius * 2, birdRadius * 2);
         }
     }
 
-    function drawPipe(pipe) {
+     function drawPipe(pipe) {
         if (pipeTopReady && pipeBottomReady) {
             ctx.drawImage(pipeTopImg, pipe.x, 0, pipeWidth, pipe.topHeight);
             ctx.drawImage(pipeBottomImg, pipe.x, pipe.topHeight + pipeGap, pipeWidth, canvas.height - (pipe.topHeight + pipeGap));
@@ -154,22 +139,19 @@ canvas {
         }
     }
 
-      function drawScore() {
+    function drawScore() {
         ctx.font = "bold 20px Arial";
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 2;
         let text = "Score: " + score;
-        let textWidth = ctx.measureText(text).width;
         ctx.strokeText(text, 10, 30);
         text = "High Score: " + highScore;
-        textWidth = ctx.measureText(text).width;
         ctx.strokeText(text, 10, 60);
 
         ctx.fillStyle = "white";
         ctx.fillText("Score: " + score, 10, 30);
         ctx.fillText("High Score: " + highScore, 10, 60);
     }
-
     function drawGameOver() {
         ctx.font = "bold 30px Arial";
         ctx.strokeStyle = 'black';
@@ -208,77 +190,67 @@ canvas {
     }
 
     // --- Background Image Logic ---
-    let currentBackground = 'gamebg.png'; // Keep track of the current background
-    let nextBackground = null;          // The next background to transition to
-    let backgroundOpacity = 0;           // Opacity of the next background
+    let currentBackground = 'gamebg.png';
+    let nextBackground = null;
+    let scrollX = 0;  // X position for scrolling the background
+    let isScrolling = false; // Flag to indicate if we're scrolling
+    let nextBackgroundImage = new Image(); // Store the next background image object
 
-    function changeBackground() {
-        // Find all images that start with "gamebg_"
+     async function changeBackground() {
         const possibleBackgrounds = [];
-        for (let i = 1; ; i++) { // Loop indefinitely until we don't find a matching image
+        for (let i = 1; ; i++) {
             const bgImageName = `gamebg_${i}.png`;
-            // Check if image exists.  This is a bit tricky in the browser.
-            // We'll use an Image object and check its `onerror` event.
             const img = new Image();
             img.src = bgImageName;
-            let imageExists = false;
 
-             // Use a Promise to handle the asynchronous image loading and error checking
-            const imagePromise = new Promise((resolve) => {
-                img.onload = () => {
-                    possibleBackgrounds.push(bgImageName);
-                    resolve();  // Image exists
-                };
-                img.onerror = () => {
-                    resolve();  // Image doesn't exist
-                };
-            });
-             // Return the promise and break when the image doesn't exist after image exists
-            if (!imageExists) {
-               imageExists =  imagePromise;
-               if(!imageExists) break;
-
+            try{
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                });
+                possibleBackgrounds.push(bgImageName);
+            } catch (error) {
+                break;
             }
+        }
+        if(possibleBackgrounds.length > 1){
+            let newBackground;
+            do {
+                newBackground = possibleBackgrounds[Math.floor(Math.random() * possibleBackgrounds.length)];
+            } while (newBackground === currentBackground);
+
+            nextBackground = newBackground;
+            nextBackgroundImage.src = nextBackground; // Preload the image
+            isScrolling = true;  // Start scrolling
+            scrollX = canvas.width; // Start offscreen to the right
 
         }
-           imageExists.then(() => { // Ensure that we have the backgrounds list before selecting
-               //  Select a random background *different* from the current one
-               if (possibleBackgrounds.length > 1) { // only if other backgrounds exist
-                   let newBackground;
-                   do {
-                       newBackground = possibleBackgrounds[Math.floor(Math.random() * possibleBackgrounds.length)];
-                   } while (newBackground === currentBackground);
+     }
 
-                   nextBackground = newBackground;
-                   backgroundOpacity = 0; // Reset opacity
-                   bgCanvas.style.opacity = 0;
-                   // Load and draw the next background onto the background canvas
-                   const nextBgImage = new Image();
-                   nextBgImage.src = nextBackground;
-                   nextBgImage.onload = () => {
-                       bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height); // Clear previous
-                       bgCtx.drawImage(nextBgImage, 0, 0, bgCanvas.width, bgCanvas.height);
-                   };
-                }
-           });
-    }
 
-    function updateBackgroundOpacity() {
-        if (nextBackground) {
-            backgroundOpacity += 0.2;  // Increase by 20%
-            bgCanvas.style.opacity = backgroundOpacity;
+    function scrollBackground() {
+        if (isScrolling) {
+            // Draw the current background
+            let currentBg = new Image();
+            currentBg.src = currentBackground;
+            ctx.drawImage(currentBg, 0, 0, canvas.width, canvas.height);
 
-            if (backgroundOpacity >= 1) {
-                // Transition complete.  Set the main canvas background and reset.
+            // Draw the next background, scrolling in
+            ctx.drawImage(nextBackgroundImage, scrollX, 0, canvas.width, canvas.height);
+
+            scrollX -= pipeSpeed; // Scroll at the same speed as the pipes
+
+            if (scrollX <= 0) {
+                // Scrolling finished
+                isScrolling = false;
                 canvas.style.backgroundImage = `url('${nextBackground}')`;
                 currentBackground = nextBackground;
-                nextBackground = null;
-                bgCanvas.style.opacity = 0; // Hide background canvas
+                nextBackground = null; // Clear for the next change
             }
         }
     }
-    // --- Collision Check ---
-    function checkCollision() {
+
+      function checkCollision() {
         if (birdY - birdRadius < 0 || birdY + birdRadius > canvas.height) {
             return true;
         }
@@ -287,10 +259,10 @@ canvas {
             if (birdX + birdRadius < pipe.x || birdX - birdRadius > pipe.x + pipeWidth) {
                 continue;
             }
-            if(birdY + birdRadius < 0 || birdY - birdRadius > pipe.topHeight + pipeGap){
+            if (birdY + birdRadius < 0 || birdY - birdRadius > pipe.topHeight + pipeGap) {
                 continue;
             }
-            for (let y = 0; y < birdCollisionMap.length; y++) {
+             for (let y = 0; y < birdCollisionMap.length; y++) {
                 for (let x = 0; x < birdCollisionMap[y].length; x++) {
                     if (birdCollisionMap[y][x]) {
                         const birdPixelX = Math.floor(birdX - birdRadius + x);
@@ -308,31 +280,32 @@ canvas {
         return false;
     }
 
+
     function updatePipes() {
         for (let i = pipes.length - 1; i >= 0; i--) {
             const pipe = pipes[i];
             pipe.x -= pipeSpeed;
-            if (!pipe.scored && birdX > pipe.x + pipeWidth / 2) {
-                score++;
-                pointSound.currentTime = 0;
-                pointSound.play();
-                pipe.scored = true;
 
-                // Background change logic
-                if (score % 10 === 0) {
-                    changeBackground();
-                } else if (score > 10 && (score % 5) === 0) {
-                    updateBackgroundOpacity();
-                }
+            if (!pipe.scored && birdX > pipe.x + pipeWidth/2) {
+              score++;
+              pointSound.currentTime = 0; // reset play time
+              pointSound.play();
+              pipe.scored = true;
             }
+
             if (pipe.x + pipeWidth < 0) {
                 pipes.splice(i, 1);
             }
         }
-
+        // Add a new pipe, and potentially trigger a background change
         if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 300) {
             const topHeight = Math.floor(Math.random() * (canvas.height - pipeGap - 150)) + 75;
-            pipes.push({ x: canvas.width, topHeight, scored: false });
+              pipes.push({ x: canvas.width, topHeight: topHeight, scored: false});
+
+            // Check for background change every 25 points
+            if (score > 0 && score % 25 === 0 && !isScrolling) {
+               changeBackground(); // get the next image ready
+            }
         }
     }
 
@@ -350,16 +323,16 @@ canvas {
         holdStartTime = 0;
         holdingTouch = false;
         touchHoldStartTime = 0;
-        spaceFlapTriggered = false;
+         spaceFlapTriggered = false;
         touchFlapTriggered = false;
-        nextBackground = null;          // Reset background transition
-        backgroundOpacity = 0;
-        bgCanvas.style.opacity = 0;
-        canvas.style.backgroundImage = `url('gamebg.png')`; //reset to normal background
+        canvas.style.backgroundImage = `url('gamebg.png')`;
         currentBackground = 'gamebg.png';
+        nextBackground = null;       // Reset background transition variables
+        isScrolling = false;
+        scrollX = 0;
     }
 
-    function updateGame() {
+     function updateGame() {
         birdVelocity += gravity;
         birdY += birdVelocity;
         updatePipes();
@@ -375,10 +348,14 @@ canvas {
     }
 
     function drawGame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawBird();
-        drawPipes();
-        drawScore();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw the scrolling background *before* other elements.
+      if (isScrolling) {
+          scrollBackground();
+      }
+      drawBird();
+      drawPipes();
+      drawScore();
     }
 
     function gameLoop() {
@@ -386,7 +363,7 @@ canvas {
             updateGame();
             drawGame();
         } else {
-            drawGameOver();
+           drawGameOver();
             if (holdingSpace || holdingTouch) {
                 let elapsedTime = (holdingSpace) ? Date.now() - holdStartTime : Date.now() - touchHoldStartTime;
                 let progress = Math.min(elapsedTime / holdDuration, 1);
@@ -398,7 +375,6 @@ canvas {
         }
         requestAnimationFrame(gameLoop);
     }
-
     function handleInput(source) {
         if (!gameOver) {
             if ((source === 'space' && !spaceFlapTriggered) || (source === 'touch' && !touchFlapTriggered)) {
@@ -411,51 +387,52 @@ canvas {
             }
         }
     }
-
-    document.addEventListener('keydown', (event) => {
+     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            event.preventDefault();
+            event.preventDefault(); // Prevent spacebar scrolling
             if (!gameOver) {
                 handleInput('space');
-            } else if (!holdingSpace) {
+            } else if (!holdingSpace) { // Only start holding if not already holding
                 holdingSpace = true;
                 holdStartTime = Date.now();
             }
         }
     });
-     document.addEventListener('keyup', (event) => {
+
+    document.addEventListener('keyup', (event) => {
         if (event.code === 'Space') {
-            holdingSpace = false;
+            holdingSpace = false; // Reset holding state on keyup
             spaceFlapTriggered = false;
         }
     });
 
-    document.addEventListener('mousedown', (event) => {
+     document.addEventListener('mousedown', (event) => {
         event.preventDefault();
         handleInput('touch');
+
     });
 
-    document.addEventListener('pointerdown', (event) => {
+    document.addEventListener('pointerdown', (event) => { //for mobile
         if(event.pointerType === 'touch'){
             if (!gameOver) {
-                handleInput('touch');
-            } else if (!holdingTouch) {
-                holdingTouch = true;
-                touchHoldStartTime = Date.now();
+              handleInput('touch');
+            } else if(!holdingTouch){
+              holdingTouch = true;
+              touchHoldStartTime = Date.now();
             }
         }
-    });
 
-    document.addEventListener('pointerup', (event) => {
+    });
+      document.addEventListener('pointerup', (event) => { //for mobile
         if (event.pointerType === 'touch') {
-            holdingTouch = false;
-            touchFlapTriggered = false;
-            if(Date.now() - touchHoldStartTime < holdDuration){
+          holdingTouch = false;
+          touchFlapTriggered = false;
+          //prevent click after hold
+          if(Date.now() - touchHoldStartTime < holdDuration){
                 event.preventDefault();
-            }
+          }
         }
     });
-
 </script>
 </body>
 </html>
