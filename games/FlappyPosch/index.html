@@ -233,7 +233,7 @@ canvas {
             }
         }
 
-        if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 300) {
+        if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 400) {
             const topHeight = Math.floor(Math.random() * (canvas.height - pipeGap - 150)) + 75;
             pipes.push({ x: canvas.width, topHeight: topHeight, scored: false });
         }
