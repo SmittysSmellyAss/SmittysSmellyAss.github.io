@@ -83,7 +83,7 @@ canvas {
 
     birdImg.onload = () => {
         birdReady = true;
-        createBirdCollisionMap();
+        createBirdCollisionMap(); // Create the collision map *once*
         bgMusic.play();
         gameLoop();
     };
@@ -94,7 +94,7 @@ canvas {
     pipeBottomImg.src = 'pipe_bottom.png';
 
 
-    // Offscreen Canvas for Bird
+    // Offscreen Canvas for Bird (used for collision map)
     const offscreenCanvas = document.createElement('canvas');
     const offscreenCtx = offscreenCanvas.getContext('2d');
     offscreenCanvas.width = birdRadius * 2;
@@ -198,16 +198,14 @@ canvas {
                 continue;
             }
 
+            // Optimized collision check using pre-calculated birdCollisionMap
             for (let y = 0; y < birdCollisionMap.length; y++) {
                 for (let x = 0; x < birdCollisionMap[y].length; x++) {
                     if (birdCollisionMap[y][x]) {
                         const birdPixelX = Math.floor(birdX - birdRadius + x);
                         const birdPixelY = Math.floor(birdY - birdRadius + y);
-                        if (birdPixelX >= pipe.x && birdPixelX < pipe.x + pipeWidth && birdPixelY < pipe.topHeight) {
-                            return true;
-                        }
-                        if (birdPixelX >= pipe.x && birdPixelX < pipe.x + pipeWidth && birdPixelY >= pipe.topHeight + pipeGap) {
-                            return true;
+                        if (birdPixelX >= pipe.x && birdPixelX < pipe.x + pipeWidth && (birdPixelY < pipe.topHeight || birdPixelY >= pipe.topHeight + pipeGap)) {
+                            return true; // Collision detected
                         }
                     }
                 }
@@ -257,28 +255,32 @@ canvas {
         touchHoldStartTime = 0;
         spaceFlapTriggered = false;
         touchFlapTriggered = false;
-          // Reset to the default background
-        canvas.style.backgroundImage = "url('gamebg.png')";
+        canvas.style.backgroundImage = "url('gamebg.png')"; // Reset background
         lastBackgroundChangeScore = 0; // Reset background change tracker
 
     }
 
-     // --- Background Change (Dynamic Loading) ---
+    // --- Background Change (Static List) ---
     let lastBackgroundChangeScore = 0;
     const backgroundChangeInterval = 25;
-    // We'll get the available backgrounds dynamically
+    // Hardcoded list of background images (MUST MATCH YOUR FILES)
+    const backgrounds = [
+        "gamebg.png",
+        "gamebg_2.png",
+        "gamebg_3.png",
+        "gamebg_4.png",
+        "gamebg_5.png",
+        "gamebg_6.png",
+        // Add all your background image filenames here
+    ];
 
     function changeBackground() {
-      fetch('list_backgrounds.php') // Call our PHP script
-          .then(response => response.json())
-          .then(backgrounds => {
-              if (backgrounds.length > 0) {
-                  const randomIndex = Math.floor(Math.random() * backgrounds.length);
-                  canvas.style.backgroundImage = `url('backgrounds/${backgrounds[randomIndex]}')`;  // Use the 'backgrounds' folder
-              }
-          })
-          .catch(error => console.error('Error fetching backgrounds:', error));
+        if (backgrounds.length > 0) {
+            const randomIndex = Math.floor(Math.random() * backgrounds.length);
+            canvas.style.backgroundImage = `url('backgrounds/${backgrounds[randomIndex]}')`;
+        }
     }
+
 
     function updateGame() {
 
@@ -383,10 +385,7 @@ canvas {
         if (event.pointerType === 'touch') {
             holdingTouch = false;
             touchFlapTriggered = false;
-
-            if(Date.now() - touchHoldStartTime < holdDuration){
-                event.preventDefault();
-            }
+			event.preventDefault();
         }
     });
 </script>
