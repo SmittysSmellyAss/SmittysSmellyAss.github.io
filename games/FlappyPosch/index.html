@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <style>
 body {
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #70c5ce;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #70c5ce;
 }
 canvas {
-    border: 1px solid black;
-    background-image: url('gamebg.png');  /* Initial background */
-    background-size: cover;
-    display: block;
+  border: 1px solid black;
+  background-image: url('gamebg.png');  /* Initial background */
+  background-size: cover;
+  display: block;
 }
 </style>
 </head>
@@ -255,9 +255,9 @@ canvas {
         touchHoldStartTime = 0;
         spaceFlapTriggered = false;
         touchFlapTriggered = false;
-        canvas.style.backgroundImage = "url('gamebg.png')"; // Reset background
+        canvas.style.backgroundImage = `url('${currentBackground}')`; // Reset background
         lastBackgroundChangeScore = 0; // Reset background change tracker
-
+        preloadNextBackground(); // Preload the *next* background
     }
 
     // --- Background Change (Static List) ---
@@ -274,13 +274,27 @@ canvas {
         // Add all your background image filenames here
     ];
 
-    function changeBackground() {
-        if (backgrounds.length > 0) {
-            const randomIndex = Math.floor(Math.random() * backgrounds.length);
-            canvas.style.backgroundImage = `url('backgrounds/${backgrounds[randomIndex]}')`;
-        }
+    let currentBackground = backgrounds[0]; // Store the current background URL
+    let nextBackgroundIndex = 1;  // Index of the next background to preload
+
+    // Function to preload the next background image
+    function preloadNextBackground() {
+      if (nextBackgroundIndex < backgrounds.length) {
+        const img = new Image();
+        img.src = `backgrounds/${backgrounds[nextBackgroundIndex]}`;
+        // No need for onload handler, just preloading.
+        nextBackgroundIndex = (nextBackgroundIndex + 1) % backgrounds.length; // Loop through backgrounds
+      }
     }
 
+    function changeBackground() {
+      if (backgrounds.length > 0) {
+        // Use the preloaded image (if available)
+        currentBackground = `backgrounds/${backgrounds[(nextBackgroundIndex + backgrounds.length -1) % backgrounds.length]}`; //wrap the index.
+        canvas.style.backgroundImage = `url('${currentBackground}')`;
+        preloadNextBackground(); // Start preloading the *next* background immediately
+      }
+    }
 
     function updateGame() {
 
@@ -289,6 +303,10 @@ canvas {
         updatePipes();
 
         // Check for background change
+        if (score === lastBackgroundChangeScore + backgroundChangeInterval - 1) { //one point before.
+            preloadNextBackground();  // Preload for next score increase.
+
+        }
         if (score >= lastBackgroundChangeScore + backgroundChangeInterval) {
             changeBackground();
             lastBackgroundChangeScore = score;
@@ -385,9 +403,12 @@ canvas {
         if (event.pointerType === 'touch') {
             holdingTouch = false;
             touchFlapTriggered = false;
-			event.preventDefault();
+            event.preventDefault();
         }
     });
+
+    // Initial background preload
+    preloadNextBackground();
 </script>
 </body>
 </html>
