@@ -241,7 +241,6 @@ canvas {
         }
     }
 
-
     function resetGame() {
         birdY = canvas.height / 2;
         birdVelocity = 0;
@@ -264,16 +263,22 @@ canvas {
 
     }
 
-    // --- Background Change ---
+     // --- Background Change (Dynamic Loading) ---
     let lastBackgroundChangeScore = 0;
     const backgroundChangeInterval = 25;
-    const backgroundImages = ['gamebg_1.png', 'gamebg_2.png', 'gamebg_3.png']; // Add your background image names here
+    // We'll get the available backgrounds dynamically
 
     function changeBackground() {
-        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-        canvas.style.backgroundImage = `url('${backgroundImages[randomIndex]}')`;
+      fetch('list_backgrounds.php') // Call our PHP script
+          .then(response => response.json())
+          .then(backgrounds => {
+              if (backgrounds.length > 0) {
+                  const randomIndex = Math.floor(Math.random() * backgrounds.length);
+                  canvas.style.backgroundImage = `url('backgrounds/${backgrounds[randomIndex]}')`;  // Use the 'backgrounds' folder
+              }
+          })
+          .catch(error => console.error('Error fetching backgrounds:', error));
     }
-
 
     function updateGame() {
 
