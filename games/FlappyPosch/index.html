@@ -34,13 +34,13 @@ canvas {
     let birdX = 50;
     const birdRadius = 25;
     let birdVelocity = 0;
-    const gravity = 15;  // Increased gravity.  Experiment with this!
-    const jumpStrength = -350; // Increased jump strength (make it *more* negative)
+    const gravity = 900;  //  Gravity, tuned for delta time.
+    const jumpStrength = -400; // Jump strength, tuned for delta time.
 
     const pipeWidth = 70;
     let pipes = [];
     const pipeGap = 170;
-    let pipeSpeed = 180; // Increased pipe speed (was 2 before dt, then 2*60)
+    let pipeSpeed = 180; // Pipe speed, in pixels per second.
     let score = 0;
     let gameOver = false;
     let highScore = localStorage.getItem('highScore') || 0;
@@ -52,9 +52,9 @@ canvas {
     let touchHoldStartTime = 0;
     const holdDuration = 3000;
 
-    // Flap Control
-    let spaceFlapTriggered = false;
-    let touchFlapTriggered = false;
+    // Flap Control - REMOVED the flap triggers.  We handle it all in one place now.
+    // let spaceFlapTriggered = false;
+    // let touchFlapTriggered = false;
 
     // Audio
     const bgMusic = new Audio('gameplay.mp3');
@@ -219,7 +219,7 @@ canvas {
     function updatePipes(dt) {
         for (let i = pipes.length - 1; i >= 0; i--) {
             const pipe = pipes[i];
-            pipe.x -= pipeSpeed * dt; // No *60 needed
+            pipe.x -= pipeSpeed * dt; //  Pixels per second * seconds = pixels
 
             if (!pipe.scored && birdX > pipe.x + pipeWidth / 2) {
                 score++;
@@ -253,8 +253,8 @@ canvas {
         holdStartTime = 0;
         holdingTouch = false;
         touchHoldStartTime = 0;
-        spaceFlapTriggered = false;
-        touchFlapTriggered = false;
+        // spaceFlapTriggered = false; // Removed
+        // touchFlapTriggered = false; // Removed
         canvas.style.backgroundImage = `url('${currentBackground}')`; // Reset background
         lastBackgroundChangeScore = 0; // Reset background change tracker
         preloadNextBackground(); // Preload the *next* background
@@ -298,8 +298,8 @@ canvas {
 
     function updateGame(dt) {
 
-        birdVelocity += gravity * dt;  // Apply gravity with delta time
-        birdY += birdVelocity * dt; // Scale by dt, remove * 60
+        birdVelocity += gravity * dt;  // Apply gravity
+        birdY += birdVelocity * dt;  //  pixels/second * seconds = pixels
         updatePipes(dt);
 
         // Check for background change
@@ -359,61 +359,60 @@ canvas {
         }
         requestAnimationFrame(gameLoop);
     }
-    function handleInput(source) {
+  // Simplified input handling (no need for separate flap triggers)
+    function handleInput() {
         if (!gameOver) {
-            if ((source === 'space' && !spaceFlapTriggered) || (source === 'touch' && !touchFlapTriggered)) {
-                birdVelocity = jumpStrength * dt; // Apply jump strength with dt, no *60
-                flapSounds[currentFlapSound].currentTime = 0;
-                flapSounds[currentFlapSound].play();
-                currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
-                if (source === 'space') spaceFlapTriggered = true;
-                if (source === 'touch') touchFlapTriggered = true;
-            }
+            birdVelocity = jumpStrength; // Set velocity directly.
+            flapSounds[currentFlapSound].currentTime = 0;
+            flapSounds[currentFlapSound].play();
+            currentFlapSound = (currentFlapSound + 1) % flapSounds.length;
         }
     }
-    document.addEventListener('keydown', (event) => {
-        if (event.code === 'Space') {
-            event.preventDefault();
-            if (!gameOver) {
-                handleInput('space');
-            } else if (!holdingSpace) {
-                holdingSpace = true;
-                holdStartTime = Date.now();
-            }
-        }
-    });
 
-    document.addEventListener('keyup', (event) => {
-        if (event.code === 'Space') {
-            holdingSpace = false;
-            spaceFlapTriggered = false;
+
+    document.addEventListener('keydown', (event) => {
+    if (event.code === 'Space') {
+        event.preventDefault(); // Prevent default spacebar behavior (scrolling)
+        if (!gameOver) {
+            handleInput(); // Call the simplified handler
+        } else if (!holdingSpace) {
+            holdingSpace = true;
+            holdStartTime = Date.now();
         }
-    });
+    }
+});
+
+document.addEventListener('keyup', (event) => {
+    if (event.code === 'Space') {
+        holdingSpace = false; // Only need to reset holdingSpace
+    }
+});
+
 
     document.addEventListener('mousedown', (event) => {
         event.preventDefault();
-        handleInput('touch');
+        handleInput(); // Call the simplified handler
 
     });
 
-    document.addEventListener('pointerdown', (event) => { //for mobile
-        if(event.pointerType === 'touch'){
-            if (!gameOver) {
-                handleInput('touch');
-            } else if(!holdingTouch){
-                holdingTouch = true;
-                touchHoldStartTime = Date.now();
-            }
+   document.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'touch') {
+        event.preventDefault(); // Prevent scrolling/zooming on touch devices
+        if (!gameOver) {
+          handleInput();
+        } else if (!holdingTouch) {
+          holdingTouch = true;
+          touchHoldStartTime = Date.now();
         }
+    }
+  });
 
-    });
-    document.addEventListener('pointerup', (event) => { //for mobile
-        if (event.pointerType === 'touch') {
-            holdingTouch = false;
-            touchFlapTriggered = false;
-            event.preventDefault();
-        }
-    });
+document.addEventListener('pointerup', (event) => {
+    if (event.pointerType === 'touch') {
+      holdingTouch = false; // Only need to reset on pointer up.
+      event.preventDefault();
+    }
+});
 
     // Initial background preload
     preloadNextBackground();
