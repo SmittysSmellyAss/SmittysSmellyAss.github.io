@@ -113,7 +113,7 @@ function submitScore(playerName, score) {
         return;
     }
 
-    fetch("https://5d72f246-c007-466d-bd5e-7e6d302a223d-00-wvskqeapdfqt.riker.replit.dev/leaderboard", {
+    fetch("https://5d72f246-c007-466d-bd5e-7e6d302a223d-00-wvskqeapdfqt.riker.replit.dev:3000/leaderboard", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
