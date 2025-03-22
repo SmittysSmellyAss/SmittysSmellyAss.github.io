@@ -204,7 +204,7 @@ canvas {
     let holdStartTime = 0;
     let holdingTouch = false;
     let touchHoldStartTime = 0;
-    const holdDuration = 3000;
+    const holdDuration = 1000;
 
     // Flap Control - Re-introduce a single flap trigger
     let hasFlapped = false;
@@ -213,10 +213,10 @@ canvas {
     // Audio
     const bgMusic = new Audio('gameplay.mp3');
     bgMusic.loop = true;
-    bgMusic.volume = 0.3;
+    bgMusic.volume = 0.2;
 
     const gameOverMusic = new Audio('over.mp3');
-    gameOverMusic.volume = 0.5;
+    gameOverMusic.volume = 0.3;
 
     const flapSounds = [];
     for (let i = 0; i < 3; i++) {
