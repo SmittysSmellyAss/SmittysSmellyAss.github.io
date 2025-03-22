@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opossum Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center vertically */
+            flex-grow: 1;  /* Allow the container to take up available space */
+            width: 100%;
+
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 272px; /* Size similar to google logo */
+            height: auto;
+        }
+
+        .search-form {
+            width: 100%;
+            max-width: 584px; /* Similar to Google's search bar width */
+            text-align: center;
+
+        }
+        .search-bar {
+             display: flex; /* Use flexbox for easier layout */
+             align-items: center; /* Vertically center items */
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 5px 8px 0 14px; /* Adjusted padding */
+             width: 100%; /* Full width of the container */
+              max-width: 584px;
+              margin: 0 auto;
+            height: 44px;
+        }
+        .search-bar:hover{
+             box-shadow: 0 1px 6px rgba(32,33,36,.28);
+             border-color: rgba(223,225,229,0);
+        }
+        .search-bar input[type="text"] {
+            flex-grow: 1; /* Take up remaining space */
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 0;
+              margin-left: 5px; /* Add some margin between icon and text */
+             background-color: transparent;
+
+        }
+        .search-bar input[type="submit"]{
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-family: arial,sans-serif;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 54px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+
+        }
+        .search-bar input[type="submit"]:hover{
+              box-shadow: 0 1px 1px rgba(0,0,0,.1);
+              background-color: #f8f9fa;
+              border: 1px solid #dadce0;
+              color: #202124;
+        }
+
+          .button-container {
+            margin-top: 18px;
+        }
+
+        .button-container input[type="submit"] {
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-family: arial,sans-serif;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 54px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .button-container input[type="submit"]:hover {
+            box-shadow: 0 1px 1px rgba(0,0,0,.1);
+            background-color: #f8f9fa;
+            border: 1px solid #dadce0;
+            color: #202124;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            color: #70757a;
+             background-color: #f2f2f2;
+              width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Opossum_2.jpg/292px-Opossum_2.jpg" alt="Opossum Logo">
+        </div>
+        <form class="search-form" action="https://www.google.com/search" method="get">
+           <div class="search-bar">
+
+                <input type="text" name="q" >
+              <div class="button-container" style="display: inline-block">
+                    <input type="submit" value="Opossum Search">
+               </div>
+            </div>
+
+        </form>
+
+    </div>
+      <footer>
+        Powered by opossum search
+    </footer>
+</body>
+</html>
