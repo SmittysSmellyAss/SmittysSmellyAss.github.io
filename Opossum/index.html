@@ -133,10 +133,10 @@
         <div class="logo">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Opossum_2.jpg/292px-Opossum_2.jpg" alt="Opossum Logo">
         </div>
-        <form class="search-form" action="https://www.google.com/search" method="get">
+        <form class="search-form" action="https://www.google.com/search" method="get" id="searchForm">
            <div class="search-bar">
 
-                <input type="text" name="q" >
+                <input type="text" name="q" id="searchInput">
               <div class="button-container" style="display: inline-block">
                     <input type="submit" value="Opossum Search">
                </div>
@@ -148,5 +148,17 @@
       <footer>
         Powered by opossum search
     </footer>
+
+    <script>
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const query = searchInput.value;
+            const opossumQuery = query + ' opossum';
+            window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(opossumQuery);
+        });
+    </script>
 </body>
 </html>
